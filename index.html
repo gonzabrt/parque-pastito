@@ -1,232 +1,200 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#17251d">
-  <title>Parque Pastito</title>
-  <style>
-    :root{
-      --bg:#17251d; --panel:#203329; --panel2:#293d31; --cream:#f3ead8;
-      --muted:#c4c8b7; --sage:#a9bd9b; --gold:#e4c98e; --line:rgba(243,234,216,.15);
-      --shadow:0 18px 50px rgba(0,0,0,.22);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--cream);font-family:Georgia,serif;line-height:1.65}
-    button{font:inherit}
-    .wrap{width:min(1080px, calc(100% - 36px));margin:auto}
-    .eyebrow{font:700 .72rem/1.4 system-ui,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--sage)}
-    h1,h2,h3,p{margin-top:0}
-    h1,h2,h3{font-weight:500;line-height:1.12}
-    h1{font-size:clamp(3.4rem,10vw,7.2rem);letter-spacing:-.055em;margin:18px 0}
-    h2{font-size:clamp(2rem,5vw,3.5rem);letter-spacing:-.035em}
-    h3{font-size:1.55rem}
-    p{color:var(--muted)}
-    a{color:inherit}
-    .hero{min-height:92svh;display:grid;align-items:center;position:relative;overflow:hidden;padding:80px 0}
-    .hero:before,.hero:after{content:"";position:absolute;border:1px solid rgba(169,189,155,.2);border-radius:50%;pointer-events:none}
-    .hero:before{width:520px;height:520px;right:-180px;top:-170px}
-    .hero:after{width:340px;height:340px;right:-85px;top:-80px}
-    .hero-content{position:relative;z-index:1;max-width:760px}
-    .hero p{font-size:1.12rem;max-width:560px}
-    .hero .small-note{font: .85rem system-ui,sans-serif;color:#aebba9;margin-top:30px}
-    .btn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(228,201,142,.6);border-radius:999px;padding:12px 20px;background:transparent;color:var(--cream);cursor:pointer;text-decoration:none;transition:.2s}
-    .btn:hover{background:rgba(228,201,142,.12);transform:translateY(-2px)}
-    .btn.primary{background:var(--gold);color:#263328;border-color:var(--gold);font-weight:700}
-    .topline{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line);font: .82rem system-ui,sans-serif;color:var(--muted)}
-    .topline strong{color:var(--cream);letter-spacing:.12em}
-    section{padding:86px 0;border-bottom:1px solid var(--line)}
-    .intro-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:42px;align-items:center}
-    .note-card{background:var(--panel);border:1px solid var(--line);padding:28px;border-radius:22px;box-shadow:var(--shadow)}
-    .note-card .hand{font-style:italic;font-size:1.35rem;color:var(--cream)}
-    .map-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
-    .place{min-height:190px;text-align:left;padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:18px;color:var(--cream);cursor:pointer;transition:.22s;display:flex;flex-direction:column;justify-content:space-between}
-    .place:hover{transform:translateY(-4px);background:var(--panel2);border-color:rgba(228,201,142,.55)}
-    .place .symbol{font-size:1.7rem}
-    .place small{font: .78rem system-ui,sans-serif;color:var(--sage);letter-spacing:.08em;text-transform:uppercase}
-    .place strong{font-size:1.35rem;font-weight:500}
-    .detail{display:none;margin-top:22px;background:#1d2d23;border:1px solid rgba(228,201,142,.35);border-radius:18px;padding:26px}
-    .detail.open{display:block;animation:appear .3s ease}
-    @keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-    .detail p:last-child{margin-bottom:0}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .memory{padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025)}
-    .memory .date{font: .75rem system-ui,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--sage)}
-    .photo-slot{min-height:190px;border:1px dashed rgba(169,189,155,.5);border-radius:16px;display:grid;place-items:center;text-align:center;padding:20px;background:rgba(255,255,255,.025);color:var(--muted);font: .9rem system-ui,sans-serif}
-    .photo-slot span{display:block;font-size:2rem;margin-bottom:8px}
-    .flower-stage{background:linear-gradient(145deg,#263b2d,#1b2b22);border-radius:24px;padding:38px;text-align:center;border:1px solid var(--line)}
-    .bouquet{font-size:clamp(3rem,10vw,5.5rem);letter-spacing:-.12em;margin:12px 0 20px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.2))}
-    .letter{max-width:720px;margin:auto;background:#efe5d2;color:#344135;padding:clamp(25px,6vw,55px);border-radius:4px 18px 4px 18px;box-shadow:var(--shadow);transform:rotate(-.4deg)}
-    .letter p{color:#536050}
-    .letter .sign{font-style:italic;color:#344135;font-size:1.4rem}
-    footer{padding:35px 0 55px;text-align:center;color:#9eac9c;font: .8rem system-ui,sans-serif}
-    .tiny{font: .8rem system-ui,sans-serif;color:#9eac9c}
-    .hidden{display:none}
-    @media(max-width:700px){
-      .intro-grid,.two-col{grid-template-columns:1fr}
-      .map-grid{grid-template-columns:repeat(2,1fr)}
-      .place{min-height:165px;padding:17px}
-      section{padding:64px 0}
-      .topline{font-size:.7rem}
-    }
-    @media(max-width:420px){.map-grid{grid-template-columns:1fr 1fr}.place strong{font-size:1.15rem}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#dce8c9">
+<title>Parque Pastito</title>
+<style>
+:root{
+ --sky:#dcebdc;--paper:#fff8e9;--ink:#465344;--grass:#a8bf8b;--grass2:#78966b;
+ --path:#d8b98d;--path2:#caa678;--pink:#e9b7b2;--yellow:#f1d77e;--shadow:rgba(57,73,48,.18)
+}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;background:#dce8d4;transition:background 1s,color 1s}
+body.night{--sky:#18283c;--paper:#26384a;--ink:#f2e8d4;--grass:#425c50;--grass2:#31493f;--path:#8b765e;--path2:#715d4a;--pink:#b77f88;--yellow:#e5c66e;--shadow:rgba(0,0,0,.3);background:#18283c}
+button{font:inherit;color:inherit}
+.cover{min-height:100svh;display:grid;place-items:center;padding:24px;background:linear-gradient(#d9e9d8 0 45%,#b5ca9e 45%);position:relative;overflow:hidden}
+.cover-card{max-width:620px;width:100%;text-align:center;padding:36px 24px 30px;background:var(--paper);border:3px solid #8c9e73;border-radius:48% 48% 24px 24px/28% 28% 24px 24px;box-shadow:0 12px 30px var(--shadow);position:relative;z-index:1}
+.cover h1{font-size:clamp(2.5rem,8vw,4.7rem);margin:12px 0;color:#617b56;font-weight:normal}
+.cover p{font-size:1.2rem;margin:12px 0 25px}
+.cover small{display:block;margin-top:18px;font-style:italic}
+.enter,.action{border:0;border-radius:999px;background:#718c63;color:#fff9e9;padding:13px 23px;cursor:pointer;box-shadow:0 4px 0 #536d49;transition:.2s}
+.enter:hover,.action:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.cover-art{font-size:3.3rem;letter-spacing:8px}
+#park{display:none;min-height:100vh;padding:18px 14px 50px;background:linear-gradient(var(--sky) 0 220px,var(--grass) 220px);transition:background 1s}
+.topbar{max-width:1100px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.brand{font-size:1.45rem;font-weight:bold;color:var(--ink)}
+.iconbtn{border:1px solid #8a9c79;background:var(--paper);border-radius:50%;width:44px;height:44px;cursor:pointer;font-size:1.2rem}
+.intro{text-align:center;max-width:700px;margin:8px auto 16px}
+.intro h2{font-weight:normal;font-size:clamp(1.8rem,5vw,2.6rem);margin:4px}
+.intro p{margin:4px}
+.map-wrap{max-width:1100px;margin:auto;background:#b9ce9e;border:8px solid #e8ddbd;border-radius:34px;padding:14px;box-shadow:0 12px 30px var(--shadow);position:relative;overflow:hidden}
+.map{min-height:720px;position:relative;border-radius:24px;overflow:hidden;background:
+ radial-gradient(ellipse at 15% 20%,#c8d9a8 0 13%,transparent 13.5%),
+ radial-gradient(ellipse at 83% 24%,#c8d9a8 0 15%,transparent 15.5%),
+ radial-gradient(ellipse at 16% 78%,#9fbd88 0 15%,transparent 15.5%),
+ radial-gradient(ellipse at 87% 78%,#a5c18c 0 17%,transparent 17.5%),
+ linear-gradient(135deg,#abc58f,#c4d5a5 50%,#a9c18e)}
+.map:before{content:"";position:absolute;inset:0;opacity:.24;background-image:radial-gradient(#617e56 1px,transparent 1.5px);background-size:19px 19px}
+.path{position:absolute;left:42%;top:20%;width:25%;height:76%;border-left:35px solid var(--path);border-radius:50%;transform:rotate(17deg);filter:drop-shadow(2px 2px 0 #b99b75);opacity:.95}
+.path:after{content:"";position:absolute;left:-145px;top:46%;width:260px;height:32px;border-top:30px solid var(--path);border-radius:50%;transform:rotate(-12deg)}
+.path2{position:absolute;left:15%;top:47%;width:60%;height:20%;border-top:28px solid var(--path);border-radius:50%;transform:rotate(-8deg);opacity:.95}
+.zone{position:absolute;z-index:2;text-align:center;cursor:pointer;border:0;background:transparent;padding:5px;min-width:110px;max-width:170px;transition:transform .2s}
+.zone:hover{transform:translateY(-5px) scale(1.04)}
+.zone .art{display:block;font-size:clamp(2.4rem,6vw,4rem);filter:drop-shadow(2px 4px 1px #60754b66)}
+.zone .tag{display:inline-block;background:var(--paper);color:#465344;border:1px solid #a3a77c;border-radius:14px;padding:5px 9px;font-size:.88rem;box-shadow:0 3px 5px var(--shadow)}
+body.night .zone .tag{color:#f2e8d4}
+.entrance{left:40%;bottom:2%}.perli{left:3%;top:10%}.shop{left:5%;bottom:20%}.flowers{right:4%;top:23%}.memories{left:39%;top:36%}.cabin{right:8%;bottom:14%}.missions{left:40%;top:4%}.pastito{left:4%;top:55%;min-width:80px}.yellow{right:5%;top:55%;min-width:80px}
+.tree{position:absolute;font-size:2.3rem;opacity:.86;z-index:1;filter:drop-shadow(1px 3px 1px #536d4955)}
+.t1{left:25%;top:8%}.t2{right:25%;top:5%}.t3{left:25%;bottom:8%}.t4{right:32%;bottom:4%}.t5{right:4%;top:4%}.t6{left:3%;bottom:4%}
+.firefly{position:absolute;color:#fff1a8;animation:blink 2.5s infinite alternate;display:none}
+body.night .firefly{display:block}
+.f1{top:25%;left:28%}.f2{top:67%;right:28%}.f3{top:42%;left:72%}
+@keyframes blink{from{opacity:.15;transform:scale(.7)}to{opacity:1;transform:scale(1.3)}}
+.butterfly{position:absolute;z-index:3;animation:float 5s ease-in-out infinite;font-size:1.35rem}
+.b1{top:30%;left:28%}.b2{right:27%;bottom:32%;animation-delay:1.4s}
+@keyframes float{0%,100%{transform:translate(0,0) rotate(-8deg)}50%{transform:translate(15px,-12px) rotate(12deg)}}
+.footer{text-align:center;margin:14px auto;color:var(--ink);font-size:.9rem}
+.modal{position:fixed;inset:0;background:#1c2a25a8;display:none;place-items:center;padding:18px;z-index:10}
+.modal.open{display:grid}
+.paper{background:var(--paper);color:var(--ink);max-width:720px;width:100%;max-height:86vh;overflow:auto;border:3px solid #a2a77d;border-radius:22px;padding:25px 22px;box-shadow:0 18px 50px #0005;position:relative}
+.paper h2{font-size:1.8rem;font-weight:normal;margin:0 35px 12px 0;color:#718c63}
+body.night .paper h2{color:#d5dcae}
+.paper p{line-height:1.65;white-space:pre-line}
+.close{position:absolute;right:13px;top:10px;border:0;background:transparent;font-size:1.8rem;cursor:pointer}
+.story-list{display:grid;gap:12px}
+.story{border:1px solid #c5b997;background:#f5edd9;color:#4b5947;border-radius:14px;padding:12px;text-align:left;cursor:pointer}
+body.night .story{background:#34485a;color:#f2e8d4}
+.story small{display:block;opacity:.75;margin-top:4px}
+.secret{border-bottom:1px dashed #a7a17f;padding-bottom:12px}
+.mission{padding:10px 12px;background:#f3ecd9;color:#4b5947;border-radius:12px;margin:8px 0}
+body.night .mission{background:#34485a;color:#f2e8d4}
+.boxletters{display:grid;gap:10px}
+.note{font-style:italic;background:#f2ead7;color:#4b5947;padding:15px;border-radius:12px}
+body.night .note{background:#34485a;color:#f2e8d4}
+@media(max-width:650px){
+ #park{padding:12px 8px 35px}.map-wrap{padding:7px;border-width:5px}.map{min-height:680px}
+ .zone{min-width:82px;max-width:120px}.zone .art{font-size:2.5rem}.zone .tag{font-size:.72rem;padding:4px 6px}
+ .entrance{left:34%;bottom:2%}.perli{left:0;top:8%}.shop{left:0;bottom:21%}.flowers{right:0;top:22%}
+ .memories{left:35%;top:37%}.cabin{right:0;bottom:15%}.missions{left:35%;top:3%}.pastito{left:0;top:55%}.yellow{right:0;top:53%}
+ .path{left:38%;width:30%}.path:after{left:-90px;width:180px}.path2{left:10%;width:70%}
+ .paper{padding:22px 17px}
+}
+</style>
 </head>
 <body>
-  <div class="topline wrap"><strong>PARQUE PASTITO</strong><span>un lugarcito hecho para vos</span></div>
+<section class="cover" id="cover">
+ <div class="cover-card">
+  <div class="cover-art">🌼 🌿 🦋</div>
+  <h1>Parque Pastito</h1>
+  <p>esoo</p>
+  <button class="enter" onclick="enterPark()">Entrar al parque</button>
+  <small>ojo q hay par de detalles escondidos ee</small>
+ </div>
+</section>
 
-  <header class="hero">
-    <div class="wrap hero-content">
-      <div class="eyebrow">Un pequeño mundo para Pastito</div>
-      <h1>Bienvenida,<br><em>Pastito.</em></h1>
-      <p>Tenía ganas de hacerte algo así. No es un lugar enorme ni perfecto; es un rinconcito que fui armando con cosas tuyas, recuerdos nuestros y detalles que me hacen acordar a vos.</p>
-      <a class="btn primary" href="#parque">Entrar al parque <span aria-hidden="true">↗</span></a>
-      <div class="small-note">Podés recorrerlo a tu manera. No hay un orden ni una forma correcta.</div>
-    </div>
-  </header>
+<main id="park">
+ <div class="topbar">
+  <div class="brand">🌿 Parque Pastito</div>
+  <button class="iconbtn" id="themeToggle" aria-label="Cambiar día o noche" onclick="toggleTheme()">☀️</button>
+ </div>
+ <header class="intro"><h2>un parque para recorrer</h2><p>andá tocando los lugares, capaz encontrás algo escondido</p></header>
+ <div class="map-wrap">
+  <div class="map">
+   <div class="path"></div><div class="path2"></div>
+   <span class="tree t1">🌳</span><span class="tree t2">🌲</span><span class="tree t3">🌳</span><span class="tree t4">🌲</span><span class="tree t5">🌳</span><span class="tree t6">🌲</span>
+   <span class="firefly f1">✦</span><span class="firefly f2">✦</span><span class="firefly f3">✦</span>
+   <span class="butterfly b1">🦋</span><span class="butterfly b2">🦋</span>
+   <button class="zone missions" onclick="openSection('missions')"><span class="art">🏡</span><span class="tag">misiones y sueños</span></button>
+   <button class="zone perli" onclick="openSection('perli')"><span class="art">🐕</span><span class="tag">rincón de Perli</span></button>
+   <button class="zone shop" onclick="openSection('shop')"><span class="art">🏪</span><span class="tag">bolucompras</span></button>
+   <button class="zone flowers" onclick="openSection('flowers')"><span class="art">🌷</span><span class="tag">jardín de flores</span></button>
+   <button class="zone memories" onclick="openSection('memories')"><span class="art">🪧</span><span class="tag">mi recorrido</span></button>
+   <button class="zone cabin" onclick="openSection('cabin')"><span class="art">🛖</span><span class="tag">cabañita de las cartas</span></button>
+   <button class="zone pastito" onclick="openSection('pastito')"><span class="art">🌱</span><span class="tag">¿?</span></button>
+   <button class="zone yellow" onclick="openSection('yellow')"><span class="art">💐</span><span class="tag">un ramito</span></button>
+   <button class="zone entrance" onclick="openSection('entrance')"><span class="art">🪧</span><span class="tag">entrada del parque</span></button>
+  </div>
+ </div>
+ <p class="footer">hecho de recuerdos, detalles y un par de pastitos 🌱</p>
+</main>
 
-  <main>
-    <section id="parque">
-      <div class="wrap">
-        <div class="eyebrow">01 / Explorá</div>
-        <h2>Un parque a tu manera.</h2>
-        <p>Elegí un rincón. Algunos guardan recuerdos y otros son simplemente detalles que me hacen pensar en vos.</p>
-        <div class="map-grid">
-          <button class="place" data-detail="perli"><span class="symbol">🐾</span><small>Rincón 01</small><strong>El jardín de Perli</strong><span class="tiny">Una compañera del parque</span></button>
-          <button class="place" data-detail="dulceria"><span class="symbol">🍬</span><small>Rincón 02</small><strong>La dulcería</strong><span class="tiny">Un mundo de gomitas</span></button>
-          <button class="place" data-detail="recuerdos"><span class="symbol">✿</span><small>Rincón 03</small><strong>Pequeños recuerdos</strong><span class="tiny">Cosas que quiero guardar</span></button>
-          <button class="place" data-detail="musica"><span class="symbol">♫</span><small>Rincón 04</small><strong>El invernadero musical</strong><span class="tiny">Canciones con historia</span></button>
-          <button class="place" data-detail="osito"><span class="symbol">🧸</span><small>Rincón 05</small><strong>El lugar del osito</strong><span class="tiny">Un regalo que ya tiene su historia</span></button>
-          <button class="place" data-detail="flores"><span class="symbol">💐</span><small>Rincón 06</small><strong>El jardín de flores</strong><span class="tiny">Una sorpresa para vos</span></button>
-        </div>
-        <div class="detail" id="detail" aria-live="polite">
-          <div class="eyebrow" id="detail-label">Rincón</div>
-          <h3 id="detail-title"></h3>
-          <p id="detail-text"></p>
-          <button class="btn" id="close-detail" type="button">Cerrar rincón</button>
-        </div>
-      </div>
-    </section>
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+ <section class="paper"><button class="close" onclick="closeModal()" aria-label="Cerrar">×</button><div id="modalContent"></div></section>
+</div>
+<script>
+const sections={
+ entrance:{title:"Parque Pastito",body:"esoo\n\nUn lugarcito hecho con recuerdos y detalles."},
+ pastito:{title:"El Pastito",body:"esoo despues de tanto decirme que era un pasto termine teniendo un parque"},
+ perli:{title:"El rincón de Perli",body:"El rincón de la segunda al mando en la casa de la ley madre\n\n🐾 inspección oficial de la ley madre\n\nla ley madre mandó a chusmear a la segunda ley al mando\n\nla dueña de la casa estuvo aca"},
+ shop:{title:"Bolucompras de salidas",body:"Si tenemos que estar juntos DEBEMOS pasar por aca\n\n🥤 monsters\n🍟 papas\n🍬 gomitas\n\nNo aceptamos Mercado Pago wacho"},
+ flowers:{title:"El jardín de las flores",body:"No quiero elegir una sola flor porque sé que vos te merecés todas. aparte me encanta verte sonreír cada que aparezco con una flor diferente.\n\n🌹 🌷 🌼\n\nni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque"},
+ yellow:{title:"Un ramito amarillo",body:"💛\n\nUnas flores amarillas, de esas que te regalé."},
+ memories:{title:"mi recorrido de lo más importante",body:""},
+ cabin:{title:"La cabañita de las cartas",body:""},
+ missions:{title:"Lista de misiones secundarias",body:""},
+};
+const stories=[
+ ["26 de abril de 2026",`Estábamos en la casa de Facu por su cumpleaños, esperando para salir a leb a boludear como un dia más, nunca espere q ahi te iba a conocer a vos
 
-    <section id="cosas">
-      <div class="wrap intro-grid">
-        <div>
-          <div class="eyebrow">02 / Cosas tuyas</div>
-          <h2>Esos detalles que son tan vos.</h2>
-          <p>No hacen falta grandes historias para que algo sea importante. A veces alcanza con un gesto que ya conozco, una mirada o esa forma tuya de hacerme notar algo nuevo.</p>
-          <p>Como cuando me mostrás que cambiaste algo —el pelo, un anillo o cualquier detalle— haciendo gestitos hasta que me doy cuenta. O cuando jugás con tu piercing del labio sin darte cuenta.</p>
-        </div>
-        <div class="note-card">
-          <div class="eyebrow">Una observación mía</div>
-          <p class="hand">Cuando estás contenta hacés esos bailecitos, hablás más, te ponés curiosa y sos mucho más cariñosa.</p>
-          <p>Y cuando te quedás más callada de lo normal, muchas veces me doy cuenta de que algo te pasa sin que tengas que decirlo.</p>
-        </div>
-      </div>
-    </section>
+Después de un rato me hice amigo de Nacho y terminó haciendome el aguante para darnos nuestro primer beso.
 
-    <section id="recuerdos">
-      <div class="wrap">
-        <div class="eyebrow">03 / Algunas cosas que quiero guardar</div>
-        <h2>No hace falta llenar una página entera.</h2>
-        <p>Hay momentos que me acuerdo con cariño. Estos son algunos de los que tienen un lugar acá.</p>
-        <div class="two-col">
-          <article class="memory"><div class="date">26 de abril de 2026</div><h3>Cuando nos conocimos</h3><p>Un boliche, un amigo que nos ayudó a conocernos y nosotros terminando bailando juntos. No es el escenario más de película, pero así empezó.</p></article>
-          <article class="memory"><div class="date">17 de mayo de 2026</div><h3>Cuando empezamos a salir</h3><p>Una fecha que forma parte de nuestra historia y que quería dejar guardada.</p></article>
-          <article class="memory"><div class="date">22 de agosto de 2026</div><h3>Ese día</h3><p>Me acuerdo de estar acostados hablando con sinceridad, de verte sonreír y de lo feliz que me fui a dormir esa noche.</p></article>
-          <article class="memory"><div class="date">Un plan pendiente</div><h3>Una merienda juntos</h3><p>Todavía no fuimos a merendar juntos. Queda pendiente, y me gustaría que algún día este rincón tenga una fecha para recordar.</p></article>
-        </div>
-      </div>
-    </section>
+Desde aquel baile me llamaste completamente la atención y después de esa noche, tenía muchísimas ganas de volver a verte y pasar más tiempo con vos.`],
+ ["16 de mayo de 2026",`Bueno, todo comienza el sábado 16 de mayo, boludeando con Mariano en la casa de Facu. Vos me habías invitado a leb y con Mariano no sabiamos si ir pq no teníamos mucha plata y ya estábamos llegando tarde.
 
-    <section id="fotos">
-      <div class="wrap">
-        <div class="eyebrow">04 / Espacios reservados</div>
-        <h2>Acá van nuestras fotos.</h2>
-        <p>Por ahora dejé estos espacios preparados. Cuando puedas pasarme las imágenes, las ponemos acá sin tener que rehacer la página.</p>
-        <div class="two-col">
-          <div class="photo-slot"><div><span>📷</span>Una foto de ustedes</div></div>
-          <div class="photo-slot"><div><span>🐶</span>Una foto de Perli</div></div>
-        </div>
-      </div>
-    </section>
+Después de mucho insistirle (casi rogando nunca migajee tanto), terminamos yendo a tu casa para prepararnos todos ahí y salir.
 
-    <section id="flores">
-      <div class="wrap">
-        <div class="flower-stage">
-          <div class="eyebrow">05 / Para vos</div>
-          <div class="bouquet" aria-label="Ramo de flores">🌹🌷🤍🌸</div>
-          <h2>Un ramo para Pastito.</h2>
-          <p>Me dijiste que te gustan todas las flores. Yo me imaginé un ramo variado, con rosas y lirios. Así que, por ahora, te dejo este.</p>
-          <p class="tiny">Ojalá algún día pueda darte uno de verdad.</p>
-        </div>
-      </div>
-    </section>
+Ese día estaba nervioso. No sabía cómo hablarte ni cómo dar el primer paso. como siempre Nacho tuvo que volver a hacerme el aguante con vos y ahi comenzó todo.
 
-    <section id="carta">
-      <div class="wrap">
-        <div class="eyebrow">06 / Antes de irte</div>
-        <h2>Unas palabras.</h2>
-        <div class="letter">
-          <p>Pastito,</p>
-          <p>Quería hacerte algo que fuera tuyo. Un lugar con detalles que me hacen acordar a vos, con algunas cosas que vivimos y otras que todavía me gustaría compartir.</p>
-          <p>No quería que fuera solamente una página linda. Quería que tuviera un poquito de nosotros, de esas cosas que capaz parecen chiquitas, pero que para mí significan mucho.</p>
-          <p>Sos lo más importante de mi vida. Y aunque a veces no encuentre la mejor manera de decir las cosas, quería que tuvieras algo que pudieras volver a visitar cuando quieras.</p>
-          <p>Gracias por tantos momentos, por las risas, por las charlas y por todas esas pequeñas cosas que te hacen ser vos.</p>
-          <p class="sign">Con mucho cariño.</p>
-        </div>
-        <p class="tiny" style="text-align:center;margin-top:22px">Esta carta es una primera versión: podemos cambiarla para que suene todavía más a vos.</p>
-      </div>
-    </section>
-  </main>
+Terminamos yéndonos a dormir juntos y realmente fue la primera vez que disfruté tanto dormir con alguien. en ese momento no dimensionaba lo especial que te ibas a volver para mi pero es un recuerdo que guardo con muchísimo amor.`],
+ ["21 de agosto de 2026",`sábado 21 de agosto.
 
-  <footer><div class="wrap">Parque Pastito · Hecho con recuerdos reales y algunos rincones todavía por completar.</div></footer>
+Después de mucho insistirme con ir a la wasabi, fuimos. salimos con los boludos de siempre y no fue una noche muy memorable. Lo que realmente la hizo especial fue lo que pasó después.
 
-  <script>
-    const details = {
-      perli: {
-        label:"Rincón 01 · Perli",
-        title:"El jardín de Perli",
-        text:"Perli también tiene su lugar en este parque. Cuando tengamos una foto suya, podemos convertirla en una pequeña compañera que aparezca por distintos rincones."
-      },
-      dulceria: {
-        label:"Rincón 02 · Gomitas",
-        title:"La dulcería",
-        text:"Un rincón lleno de gomitas, porque sé que te gustan. No hacía falta buscar una razón más complicada."
-      },
-      recuerdos: {
-        label:"Rincón 03 · Recuerdos",
-        title:"Pequeños recuerdos",
-        text:"Acá quedan guardadas algunas fechas y momentos importantes. No para contar toda una historia en orden, sino para que ciertas cosas no se pierdan."
-      },
-      musica: {
-        label:"Rincón 04 · Música",
-        title:"El invernadero musical",
-        text:"Este espacio queda preparado para las canciones que tengan un significado real. Más adelante agregamos la música y un reproductor que vos puedas iniciar."
-      },
-      osito: {
-        label:"Rincón 05 · El osito",
-        title:"Un lugar para el osito",
-        text:"El peluche de osito que te regalé tiene su rincón acá. Me gusta que algo que te di haya terminado siendo parte de tus cosas."
-      },
-      flores: {
-        label:"Rincón 06 · Flores",
-        title:"Un ramo para vos",
-        text:"Rosas, lirios y flores variadas. No sé elegir una sola, así que preferí imaginar un ramo mezclado."
-      }
-    };
-    const panel = document.getElementById('detail');
-    document.querySelectorAll('[data-detail]').forEach(button => {
-      button.addEventListener('click', () => {
-        const item = details[button.dataset.detail];
-        document.getElementById('detail-label').textContent = item.label;
-        document.getElementById('detail-title').textContent = item.title;
-        document.getElementById('detail-text').textContent = item.text;
-        panel.classList.add('open');
-        panel.scrollIntoView({behavior:'smooth',block:'nearest'});
-      });
-    });
-    document.getElementById('close-detail').addEventListener('click', () => panel.classList.remove('open'));
-  </script>
+Estábamos acostados, hablando y a mí ya se me había pasado el pedo, ya no tenía alcohol en sangre. lo único q salía de mi boca era todo el amor q tenía guardado para vos. en ese momento, con un poco de miedo, te pedi que seas mi novia.
+
+y cuando dijiste q sí, ver tu cara mientras escuchabas cada palabra q decía, cada gesto, cada sonrisa y cada rasgo tuyo, me hizo dar cuenta de q eras todo para mí, todo lo q necesitaba y todo lo q me hacía feliz.
+
+Hoy, acordarme de eso también me hace pensar en las cosas q hice y en cuánto me arrepiento de haber lastimado algo q nos hacía tan felices.`]
+];
+const letters=[
+ ["una carta de cuando todo empezaba",`Hay tantas cosas que me gustaría decirte, pero mis palabras nunca van a explicar todo lo que te amo.
+Te amo desde la primera vez que dormimos juntos (17/05/26), pero me enganche con nuestro primer beso, aunque haya sido en un boliche, sin charla previa, sin conocernos, me gustaste un montón, me encapriche, tenía tantas ganas de volver a verte, de estar con vos, pero apenas era el comienzo, porque todavía faltaban 21 días para que todos los sentimientos que tenía hacia vos dejaran de ser solo un capricho, yo te quería, te quería conmigo todo el tiempo, en el colegio le hablaba a mis amigas de vos, esperaba tu mensaje siempre, y de un momento al otro, te volviste mi vida entera, se que no soy perfecta, cometo errores, pero nunca te voy a querer lastimar. Quiero que lo nuestro sea para siempre, disfrutemos el comienzo.`],
+ ["una carta de cuando ya éramos novios",`no te imaginas lo feliz que me hace ser tu novia, estos últimos dos meses siendo novios fue lo mejor que me paso, quiero seguir con vos para toda la vida, sin que me faltes ningún finde, que ahora es lo que más espero y disfruto, nuestros findes juntos, que ojala en un futuro se vuelva la vida entera juntos. Aunque tengamos nuestras diferencias siempre te voy a amar, te voy a amar más que a nadie y más que a nada en el mundo.
+Gracias por estar siempre para mí, sos un amor, me encanta como sos conmigo y el tiempo que estamos juntos, en el que me doy cuenta lo segura que estoy de que te amo muchísimo, vos sos todo para mi y nunca pero nunca lo dudes, siempre voy a estar dispuesta a demostrártelo, siempre te voy a apoyar en todo lo que te propongas, te amo amor ♥.
+Nunca pierdas tu simpleza.`]
+];
+const myLetter=`hay muchas cosas de vos que seguro nunca te dije, no pq no las piense, sino pq capaz cada detalle en el momento parece una boludez, hasta que me pongo a recordarlo y me doy cuenta de que esos detalles me vuelven loco y significan muchísimo para mí, aunque no te lo diga.
+
+haciendo el parque pastito para vos me puse a recordar cada cosa y, realmente, cada gesto, cada detalle o cada bailecito que haces cuando estás feliz, cuando te enojas y haces ese ceño fruncido que me deja loco, cuando estamos abrazados o disfrutando de una conversación y termino interrumpiéndote con un beso pq no me aguanto las ganas de demostrarte todo el amor que te tengo.
+
+y también esas cosas que capaz para vos son una pavada, como cuando me llenas de besos o acercás tu cara para q yo también lo haga, son momentos tan simples, pero que disfruto muchísimo y q capaz no te das cuenta de lo feliz que me hacen.
+
+compartir tiempo con vos es una de las cosas que más disfruto. no necesariamente haciendo algo, saliendo o viendo algo, simplemente teniéndote ahí, estando conmigo, hablando, mirándonos, haciendo ruidos raros y riéndonos por eso. me encanta que podamos ser nosotros mismos, pasar un buen rato haciendo absolutamente nada y que, aun así, terminen siendo mis momentos favoritos. creo q eso es algo que hace valer cada mal momento que paso cuando te extraño y no estamos juntos.
+
+también hay mucho de tu forma de ser que admiro, principalmente cómo sos conmigo, lo espontánea que sos y lo buena que sos. me encanta cuando demostrás cariño, cuando te acercás, cuando me hablás como a un bebé (me hago el malo pero m encanta), cuando me hacés sentir querido y cuando compartís conmigo hasta las cosas más boludas. realmente valoro muchísimo todo eso, aunque no te lo diga.
+
+creo que cambiaste muchas cosas en mí, especialmente en la forma en la que me relaciono con alguien. nunca tuve tantas ganas de ver a alguien y pasar tiempo con esa persona como me pasó con vos. me acuerdo q era esperar (y sigue siendo) cada finde con ganas para poder verte y compartir tiempo juntos. la paja era llegar al domingo a la noche y tener que fumarme una semana de mierda para volver a verte, igual, cuando nos veíamos, hacías que todo lo que aguanté valiera la pena.
+
+supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza recuerda toda nuestra relación, cada detalle tuyo y cómo viví cada situación. tenía ganas de que pudieras ver un poco de todo lo que recuerdo y algunas cosas que capaz nunca llegué a expresar de la mejor forma.`;
+function enterPark(){document.getElementById('cover').style.display='none';document.getElementById('park').style.display='block';window.scrollTo(0,0);autoTheme()}
+function toggleTheme(){document.body.classList.toggle('night');document.getElementById('themeToggle').textContent=document.body.classList.contains('night')?'🌙':'☀️'}
+function autoTheme(){const h=new Date().getHours();if(h>=19||h<6){document.body.classList.add('night');document.getElementById('themeToggle').textContent='🌙'}}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function show(title,html){document.getElementById('modalContent').innerHTML='<h2>'+title+'</h2>'+html;document.getElementById('modal').classList.add('open')}
+function openSection(id){
+ if(id==='memories'){show('mi recorrido de lo más importante','<div class="story-list">'+stories.map((s,i)=>`<button class="story" onclick="showStory(${i})"><strong>${s[0]}</strong><small>tocar para recordar</small></button>`).join('')+'</div>');return}
+ if(id==='cabin'){show('La cabañita de las cartas','<p>Un lugar para guardar lo que alguna vez nos escribimos.</p><div class="boxletters">'+letters.map((l,i)=>`<button class="story" onclick="showLetter(${i})">${l[0]}<small>abrir sobre</small></button>`).join('')+`<button class="story" onclick="showMyLetter()">mi carta para vos<small>abrir la carta</small></button></div><p>🧸 Un osito de peluche marrón, guardando el lugar.</p>`);return}
+ if(id==='missions'){show('Lista de misiones secundarias','<p>cosas que todavía nos quedan por hacer</p><div class="mission">🍳 cocinar algo juntos</div><div class="mission">🌅 ver el amanecer en el techo de el nuevo spot</div><div class="mission">🎮 simular nuestra competencia de decorar en el sims</div><div class="mission">🏆 HACER LA COMPETENCIA DE DECORACION</div><div class="mission">🧁 tener nuestra merienda pendiente</div><h2 style="margin-top:22px">sueños</h2><div class="mission">tener una hija</div><div class="mission">casarnos</div><div class="mission">ser felices</div><div class="mission">tener nuestra propia casa</div>');return}
+ if(id==='perli'){show('El rincón de Perli','<p>El rincón de la segunda al mando en la casa de la ley madre</p><div class="note">🐾 inspección oficial de la ley madre</div><p>la ley madre mandó a chusmear a la segunda ley al mando</p><p class="secret">la dueña de la casa estuvo aca</p>');return}
+ if(id==='flowers'){show('El jardín de las flores','<p>No quiero elegir una sola flor porque sé que vos te merecés todas. aparte me encanta verte sonreír cada que aparezco con una flor diferente.</p><p style="font-size:2rem;text-align:center">🌹 🌷 🌼 🌻 🌸</p><div class="note">ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque</div>');return}
+ const s=sections[id];if(s)show(s.title,'<p>'+s.body.replace(/\n/g,'</p><p>')+'</p>')
+}
+function showStory(i){show(stories[i][0],'<p>'+stories[i][1]+'</p>')}
+function showLetter(i){show(letters[i][0],'<p>'+letters[i][1]+'</p>')}
+function showMyLetter(){show('mi carta para vos','<p>'+myLetter+'</p>')}
+autoTheme();
+</script>
 </body>
 </html>
