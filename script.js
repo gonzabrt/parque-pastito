@@ -124,6 +124,7 @@ function startPerliVisit() {
   perliBusy = true;
 
   clearTimeout(perliTimer);
+  perliScene.classList.remove("door-ajar");
 
   perliScene.classList.remove("returning");
   perliScene.classList.add("opening");
