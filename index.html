@@ -1,111 +1,343 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#e9edda">
-<title>Parque Pastito</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap');
-:root{--paper:#f5f0df;--ink:#354638;--muted:#687865;--leaf:#78936d;--deep:#46644d;--pink:#d99b9a;--gold:#e4bd69;--card:#fffdf4;--line:#d9dfc9}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;transition:background .7s,color .7s}
-body.night{--paper:#202d2b;--ink:#edf0dc;--muted:#bdc9b2;--card:#2d3c36;--line:#526657}
-header{text-align:center;padding:32px 16px 12px}.eyebrow{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}h1,h2,h3{font-family:Fraunces,serif;font-weight:500}h1{font-size:clamp(2.8rem,8vw,5.2rem);margin:7px 0 0;letter-spacing:-.05em}header p{color:var(--muted);margin:8px auto}.top-actions{margin:16px}.pill,button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 15px;border-radius:99px;font:inherit;cursor:pointer;transition:.2s}.pill:hover,button:hover{transform:translateY(-2px)}
-main{max-width:1120px;margin:auto;padding:10px 18px 70px}.intro{text-align:center;margin:12px auto 25px;max-width:650px}.intro h2{font-size:1.8rem;margin:0 0 7px}.intro p{color:var(--muted);line-height:1.7}
-.map-frame{background:#e6e0c8;padding:12px;border-radius:30px;box-shadow:0 18px 48px #354b3220;border:1px solid #fff9e7}.map{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(145deg,#b8d1a2,#d0dfb4 48%,#a9c68f);isolation:isolate}.map svg{display:block;width:100%;height:auto;min-height:460px}.map .map-title{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:3;background:#fff8e7d9;border:1px solid #fff;padding:7px 15px;border-radius:30px;font:500 1rem Fraunces,serif;color:#466044;white-space:nowrap}
-.hotspot{cursor:pointer;outline:none}.hotspot:focus .target,.hotspot:hover .target{stroke:#fff;stroke-width:4;filter:drop-shadow(0 3px 4px #30452d66)}.secret-dot{opacity:.01;transition:opacity .25s}.map.show-hints .secret-dot{opacity:.75}.place-label{font:600 14px 'DM Sans',sans-serif;fill:#3d573e;paint-order:stroke;stroke:#f8f0d9;stroke-width:5px;stroke-linejoin:round}.tiny-label{font:600 11px 'DM Sans',sans-serif;fill:#3d573e;paint-order:stroke;stroke:#f8f0d9;stroke-width:4px}
-.map-hint{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 6px 2px;color:#5d745b;font-size:.84rem}.map-hint button{padding:7px 12px;font-size:.8rem}
-section{scroll-margin-top:18px;margin:38px 0}.section-head{text-align:center;margin-bottom:18px}.section-head .eyebrow{margin-bottom:6px}.section-head h2{font-size:2.2rem;margin:0}.section-head p{color:var(--muted);margin:7px auto;max-width:650px;line-height:1.65}.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,4vw,30px);box-shadow:0 8px 25px #314a3510}
-.timeline{display:grid;gap:16px}.memory{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:start}.date{background:#e7eddc;color:#476149;border-radius:18px;padding:16px;text-align:center;font-weight:700}.date span{display:block;font-size:.75rem;font-weight:500}.memory p,.letter p{line-height:1.8;white-space:pre-line;margin:0 0 12px}.memory h3{margin:0 0 10px;font-size:1.35rem}.letters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.letter{border-left:4px solid var(--pink)}.letter h3{margin:0 0 14px}.letter p{font-family:Fraunces,serif;font-size:1.03rem}.my-letter{margin-top:16px;border-left-color:var(--gold)}
-.list-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.list-grid h3{margin-top:0}.list-grid li{margin:12px 0;line-height:1.5}.flowers{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin:20px 0}.flower{font-size:2rem;animation:sway 3s ease-in-out infinite}.flower:nth-child(even){animation-delay:.8s}@keyframes sway{50%{transform:rotate(10deg)}}.quote{text-align:center;font-family:Fraunces,serif;font-size:1.25rem;line-height:1.65;max-width:720px;margin:auto}.bouquet{text-align:center;font-size:3rem;margin:14px}.shop-items{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;font-size:2.5rem}.shop-items span{display:grid;gap:5px;text-align:center}.shop-items small{font-size:.8rem;color:var(--muted)}.dog-area{text-align:center}.dog{font-size:4rem;display:inline-block;animation:bob 2.5s infinite}.secret-message{display:none;margin:14px auto 0;padding:14px;border-radius:16px;background:#edf0df;color:#40543f;max-width:620px;line-height:1.6}.secret-message.show{display:block}.letter p{white-space:pre-line}
-footer{text-align:center;color:var(--muted);padding:30px 10px;font-size:.85rem}
-@keyframes bob{50%{transform:translateY(-7px)}}.firefly{animation:glow 2.8s ease-in-out infinite}@keyframes glow{50%{opacity:.35}}
-body.night .map-frame{background:#52634c;border-color:#39483c}body.night .map{background:linear-gradient(145deg,#526c56,#667a5a 48%,#425c49)}body.night .map .map-title{background:#26372ee8;color:#e9eedb;border-color:#61765e}body.night .place-label,body.night .tiny-label{fill:#f0f1d9;stroke:#425b48}body.night .map-hint{color:#d5e1c8}body.night .date{background:#3d5142;color:#e8eedb}
-@media(max-width:650px){.map-frame{padding:7px}.map svg{min-height:0}.map-hint{font-size:.76rem}.memory{grid-template-columns:1fr}.date{text-align:left}.letters,.list-grid{grid-template-columns:1fr}.section-head h2{font-size:1.9rem}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9edda">
+  <title>Parque Pastito</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
 </head>
 <body>
-<header><div class="eyebrow">un lugar hecho de recuerdos</div><h1>Parque Pastito</h1><p>un parque chiquito con un montón de cosas importantes</p><div class="top-actions"><button id="mode">☾ Cambiar a noche</button></div></header>
+
+<header>
+  <div class="eyebrow">un lugar hecho de recuerdos</div>
+  <h1>Parque Pastito</h1>
+  <p>un parque chiquito con un montón de cosas importantes</p>
+  <div class="top-actions">
+    <button id="mode">☾ Cambiar a noche</button>
+  </div>
+</header>
+
 <main>
-<div class="intro"><h2>Bienvenida al parque</h2><p>esoo<br>ojo q hay par de detalles escondidos ee</p></div>
-<div class="map-frame">
-<div class="map" id="park-map">
-<div class="map-title">Parque Pastito · mapa del parque</div>
-<svg viewBox="0 0 1000 700" role="img" aria-label="Mapa ilustrado de un parque con caminos, arroyo, puente, flores y cabañita">
-<defs>
- <linearGradient id="grass" x2="0" y2="1"><stop stop-color="#d4e2b5"/><stop offset="1" stop-color="#a9c98f"/></linearGradient>
- <linearGradient id="water" x2="0" y2="1"><stop stop-color="#9bd0cb"/><stop offset="1" stop-color="#6eaaa4"/></linearGradient>
- <linearGradient id="roof" x2="0" y2="1"><stop stop-color="#b96e54"/><stop offset="1" stop-color="#87513f"/></linearGradient>
- <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="7" stdDeviation="5" flood-color="#405a3d" flood-opacity=".25"/></filter>
- <g id="tree"><ellipse cx="0" cy="19" rx="31" ry="13" fill="#58784e" opacity=".25"/><rect x="-5" y="0" width="10" height="31" rx="4" fill="#89684a"/><circle cx="-12" cy="-9" r="22" fill="#658b5b"/><circle cx="10" cy="-17" r="25" fill="#789d68"/><circle cx="20" cy="2" r="19" fill="#527b50"/><circle cx="-8" cy="-22" r="13" fill="#91b37a"/></g>
- <g id="bush"><ellipse cx="0" cy="7" rx="32" ry="10" fill="#58784e" opacity=".2"/><circle cx="-18" cy="0" r="15" fill="#628653"/><circle cx="0" cy="-7" r="19" fill="#7da269"/><circle cx="18" cy="0" r="15" fill="#52794e"/></g>
- <g id="flower"><path d="M0 3v22" stroke="#4f8051" stroke-width="3"/><circle cx="0" cy="-4" r="5" fill="#e5bd65"/><g fill="#f5dca0"><ellipse cy="-13" rx="5" ry="8"/><ellipse cy="5" rx="5" ry="8"/><ellipse cx="-9" cy="-4" rx="8" ry="5"/><ellipse cx="9" cy="-4" rx="8" ry="5"/></g></g>
-</defs>
-<path d="M0 0H1000V700H0Z" fill="url(#grass)"/>
-<!-- gentle hill patches -->
-<path d="M0 110Q160 30 300 115T600 90T1000 115V0H0Z" fill="#c3d8a7" opacity=".65"/>
-<path d="M0 570Q160 500 330 590T690 570T1000 580V700H0Z" fill="#93ba83" opacity=".38"/>
-<!-- winding paths -->
-<path d="M500 700C480 610 560 570 500 490S390 390 495 320S610 220 520 0" fill="none" stroke="#cbbf99" stroke-width="62" stroke-linecap="round"/>
-<path d="M500 700C480 610 560 570 500 490S390 390 495 320S610 220 520 0" fill="none" stroke="#f1e5c8" stroke-width="52" stroke-linecap="round"/>
-<path d="M495 500C365 490 310 410 190 315M495 320C650 310 760 250 830 155M510 555C635 575 710 625 820 670" fill="none" stroke="#cbbf99" stroke-width="45" stroke-linecap="round"/>
-<path d="M495 500C365 490 310 410 190 315M495 320C650 310 760 250 830 155M510 555C635 575 710 625 820 670" fill="none" stroke="#f1e5c8" stroke-width="36" stroke-linecap="round"/>
-<!-- stream -->
-<path d="M-20 410C150 360 215 455 350 420S570 360 670 420S850 485 1030 430" fill="none" stroke="#5e9388" stroke-width="45" stroke-linecap="round" opacity=".55"/>
-<path d="M-20 405C150 355 215 450 350 415S570 355 670 415S850 480 1030 425" fill="none" stroke="url(#water)" stroke-width="35" stroke-linecap="round"/>
-<path d="M30 399q35 -12 70 -5M230 416q30 9 55 0M710 424q28 12 56 5M900 442q28 6 55 -4" fill="none" stroke="#d8f0df" stroke-width="4" stroke-linecap="round" opacity=".7"/>
-<!-- bridge -->
-<g transform="translate(480 395)" filter="url(#shadow)"><path d="M-53 0Q0 -28 53 0L53 26Q0 -2 -53 26Z" fill="#9c704c" stroke="#704e38" stroke-width="3"/><path d="M-43 -2V23M-22 -9V16M0 -12V13M22 -9V16M43 -2V23" stroke="#d7ad78" stroke-width="5"/><path d="M-55 -5Q0 -34 55 -5" fill="none" stroke="#76523a" stroke-width="6" stroke-linecap="round"/></g>
-<!-- trees -->
-<use href="#tree" transform="translate(85 100) scale(1.2)"/><use href="#tree" transform="translate(260 100) scale(.85)"/><use href="#tree" transform="translate(420 85) scale(1.05)"/><use href="#tree" transform="translate(870 90) scale(1.2)"/><use href="#tree" transform="translate(940 245) scale(.85)"/><use href="#tree" transform="translate(70 580) scale(1.2)"/><use href="#tree" transform="translate(280 630) scale(.9)"/><use href="#tree" transform="translate(910 610) scale(1.15)"/><use href="#tree" transform="translate(760 560) scale(.8)"/>
-<!-- shrub clusters -->
-<use href="#bush" transform="translate(135 250)"/><use href="#bush" transform="translate(180 270)"/><use href="#bush" transform="translate(225 250)"/><use href="#bush" transform="translate(735 220)"/><use href="#bush" transform="translate(780 200)"/><use href="#bush" transform="translate(825 220)"/><use href="#bush" transform="translate(690 560)"/><use href="#bush" transform="translate(735 575)"/>
-<!-- flower beds -->
-<g transform="translate(820 330)"><ellipse rx="75" ry="35" fill="#83a96c"/><use href="#flower" x="-45" y="0"/><use href="#flower" x="-15" y="-13"/><use href="#flower" x="20" y="5"/><use href="#flower" x="48" y="-10"/><use href="#flower" x="0" y="17"/></g>
-<g transform="translate(315 540)"><ellipse rx="50" ry="24" fill="#83a96c"/><use href="#flower" x="-24" y="0"/><use href="#flower" x="8" y="-7"/><use href="#flower" x="28" y="8"/></g>
-<!-- cabin -->
-<g transform="translate(790 540)" filter="url(#shadow)"><ellipse cx="0" cy="60" rx="80" ry="17" fill="#53774d" opacity=".3"/><rect x="-53" y="0" width="106" height="66" rx="5" fill="#c38b5e" stroke="#80593e" stroke-width="4"/><path d="M-66 5L0 -48L66 5Z" fill="url(#roof)" stroke="#754735" stroke-width="4"/><path d="M-13 66V29Q0 12 13 29V66" fill="#6d4937"/><rect x="23" y="20" width="19" height="22" rx="3" fill="#f8dc91" stroke="#80593e" stroke-width="3"/><path d="M32 20V42M23 31H42" stroke="#a36d46" stroke-width="2"/><rect x="-42" y="22" width="20" height="22" rx="3" fill="#f8dc91" stroke="#80593e" stroke-width="3"/><path d="M-32 22V44M-42 33H-22" stroke="#a36d46" stroke-width="2"/></g>
-<!-- shop -->
-<g transform="translate(190 520)" filter="url(#shadow)"><ellipse cy="44" rx="59" ry="12" fill="#53774d" opacity=".25"/><rect x="-43" y="-5" width="86" height="48" rx="4" fill="#f4e4bd" stroke="#8a684b" stroke-width="3"/><path d="M-51 -5L-40 -34H40L51 -5Z" fill="#d88f78" stroke="#8a684b" stroke-width="3"/><path d="M-34 -32V-5M-17 -32V-5M0 -32V-5M17 -32V-5M34 -32V-5" stroke="#fff1d6" stroke-width="8"/><rect x="-10" y="16" width="20" height="27" fill="#a56d4e"/></g>
-<!-- tiny stone / secret hint near cabin -->
-<ellipse cx="695" cy="590" rx="18" ry="10" fill="#8e9881" stroke="#6e7a69" stroke-width="2"/><path d="M682 587q13 -9 25 0" fill="none" stroke="#c6cfb8" stroke-width="3"/>
-<!-- entrance sign -->
-<g transform="translate(500 630)" filter="url(#shadow)"><path d="M-4 0V48M4 0V48" stroke="#78563b" stroke-width="7"/><rect x="-73" y="-28" width="146" height="34" rx="7" fill="#9a704b" stroke="#694b36" stroke-width="3"/><text x="0" y="-6" text-anchor="middle" font-family="Fraunces,serif" font-size="17" fill="#fff4d9">Parque Pastito</text></g>
-<!-- location labels -->
-<text class="place-label" x="190" y="190" text-anchor="middle">Rincón de Perli</text><text class="place-label" x="190" y="585" text-anchor="middle">Bolucompras</text><text class="place-label" x="820" y="285" text-anchor="middle">Jardín de Flores</text><text class="place-label" x="790" y="625" text-anchor="middle">La Cabañita</text><text class="place-label" x="500" y="275" text-anchor="middle">Mi Recorrido</text><text class="place-label" x="520" y="95" text-anchor="middle">Misiones y Sueños</text>
-<!-- secret clickable targets; almost invisible unless hints enabled -->
-<g class="hotspot" tabindex="0" role="button" aria-label="Investigar los arbustos" onclick="reveal('paw')" onkeydown="if(event.key==='Enter'||event.key===' '){reveal('paw')}"><circle class="target" cx="220" cy="235" r="28" fill="#fff" fill-opacity=".01" stroke="transparent"/><text class="secret-dot" x="205" y="242" font-size="23">🐾</text></g>
-<g class="hotspot" tabindex="0" role="button" aria-label="Descubrir la flor especial" onclick="reveal('flower-secret')" onkeydown="if(event.key==='Enter'||event.key===' '){reveal('flower-secret')}"><circle class="target" cx="840" cy="333" r="26" fill="#fff" fill-opacity=".01" stroke="transparent"/><text class="secret-dot" x="830" y="340" font-size="23">✨</text></g>
-<g class="hotspot" tabindex="0" role="button" aria-label="Buscar el sobre junto a la piedra" onclick="reveal('letter-secret')" onkeydown="if(event.key==='Enter'||event.key===' '){reveal('letter-secret')}"><circle class="target" cx="695" cy="590" r="27" fill="#fff" fill-opacity=".01" stroke="transparent"/><text class="secret-dot" x="684" y="584" font-size="22">✉</text></g>
-<g class="hotspot" tabindex="0" role="button" aria-label="Encontrar al Pastito" onclick="reveal('pastito-secret')" onkeydown="if(event.key==='Enter'||event.key===' '){reveal('pastito-secret')}"><ellipse class="target" cx="375" cy="600" rx="24" ry="20" fill="#fff" fill-opacity=".01" stroke="transparent"/><text class="secret-dot" x="360" y="608" font-size="24">🌱</text></g>
-<!-- normal navigation hotspots -->
-<g class="hotspot" tabindex="0" role="link" aria-label="Ir al rincón de Perli" onclick="location.href='#perli'"><ellipse cx="190" cy="205" rx="85" ry="80" fill="#fff" fill-opacity=".001"/></g>
-<g class="hotspot" tabindex="0" role="link" aria-label="Ir a Bolucompras" onclick="location.href='#bolucompras'"><ellipse cx="190" cy="520" rx="65" ry="65" fill="#fff" fill-opacity=".001"/></g>
-<g class="hotspot" tabindex="0" role="link" aria-label="Ir al jardín de flores" onclick="location.href='#jardin'"><ellipse cx="820" cy="340" rx="85" ry="75" fill="#fff" fill-opacity=".001"/></g>
-<g class="hotspot" tabindex="0" role="link" aria-label="Ir a la cabañita" onclick="location.href='#cartas'"><ellipse cx="790" cy="540" rx="85" ry="80" fill="#fff" fill-opacity=".001"/></g>
-<g class="hotspot" tabindex="0" role="link" aria-label="Ir al recorrido" onclick="location.href='#recorrido'"><ellipse cx="500" cy="300" rx="90" ry="60" fill="#fff" fill-opacity=".001"/></g>
-<g class="hotspot" tabindex="0" role="link" aria-label="Ir a misiones y sueños" onclick="location.href='#misiones'"><ellipse cx="520" cy="90" rx="90" ry="65" fill="#fff" fill-opacity=".001"/></g>
-<!-- fireflies / butterflies -->
-<g class="firefly" fill="#fff1a9"><circle cx="620" cy="160" r="4"/><circle cx="650" cy="180" r="3"/><circle cx="900" cy="500" r="3"/></g><text x="360" y="180" font-size="20">🦋</text><text x="610" y="500" font-size="18">🦋</text>
-</svg>
-</div>
-<div class="map-hint"><span>Explorá el mapa: algunos detalles están escondidos.</span><button id="hint-toggle">Mostrar pistas</button></div>
-<div id="secret-notice" class="secret-message" role="status" aria-live="polite"></div>
-</div>
-<section id="recorrido"><div class="section-head"><div class="eyebrow">los momentos que nos trajeron hasta acá</div><h2>Mi Recorrido de lo Más Importante</h2></div><div class="timeline">
-<article class="card memory"><div class="date">26 de abril<span>de 2026</span></div><div><h3>El primer beso</h3><p>Estábamos en la casa de Facu por su cumpleaños, esperando para salir a leb a boludear como un dia más, nunca espere q ahi te iba a conocer a vos
+  <div class="intro">
+    <h2>Bienvenida al parque</h2>
+    <p>esoo<br>ojo q hay par de detalles escondidos ee</p>
+  </div>
+
+  <!-- MAPA -->
+  <div class="map-frame">
+    <div class="map" id="park-map">
+      <div class="map-title">Parque Pastito · mapa del parque</div>
+
+      <svg viewBox="0 0 1000 700" role="img"
+           aria-label="Mapa ilustrado del Parque Pastito">
+
+        <defs>
+          <linearGradient id="grass" x2="0" y2="1">
+            <stop stop-color="#d4e2b5"/>
+            <stop offset="1" stop-color="#a9c98f"/>
+          </linearGradient>
+
+          <linearGradient id="water" x2="0" y2="1">
+            <stop stop-color="#9bd0cb"/>
+            <stop offset="1" stop-color="#6eaaa4"/>
+          </linearGradient>
+
+          <linearGradient id="roof" x2="0" y2="1">
+            <stop stop-color="#b96e54"/>
+            <stop offset="1" stop-color="#87513f"/>
+          </linearGradient>
+
+          <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
+            <feDropShadow dx="0" dy="7" stdDeviation="5"
+              flood-color="#405a3d" flood-opacity=".25"/>
+          </filter>
+
+          <g id="tree">
+            <ellipse cx="0" cy="19" rx="31" ry="13"
+              fill="#58784e" opacity=".25"/>
+            <rect x="-5" y="0" width="10" height="31"
+              rx="4" fill="#89684a"/>
+            <circle cx="-12" cy="-9" r="22" fill="#658b5b"/>
+            <circle cx="10" cy="-17" r="25" fill="#789d68"/>
+            <circle cx="20" cy="2" r="19" fill="#527b50"/>
+            <circle cx="-8" cy="-22" r="13" fill="#91b37a"/>
+          </g>
+
+          <g id="bush">
+            <ellipse cx="0" cy="7" rx="32" ry="10"
+              fill="#58784e" opacity=".2"/>
+            <circle cx="-18" cy="0" r="15" fill="#628653"/>
+            <circle cx="0" cy="-7" r="19" fill="#7da269"/>
+            <circle cx="18" cy="0" r="15" fill="#52794e"/>
+          </g>
+
+          <g id="flower">
+            <path d="M0 3v22" stroke="#4f8051" stroke-width="3"/>
+            <circle cx="0" cy="-4" r="5" fill="#e5bd65"/>
+            <g fill="#f5dca0">
+              <ellipse cy="-13" rx="5" ry="8"/>
+              <ellipse cy="5" rx="5" ry="8"/>
+              <ellipse cx="-9" cy="-4" rx="8" ry="5"/>
+              <ellipse cx="9" cy="-4" rx="8" ry="5"/>
+            </g>
+          </g>
+        </defs>
+
+        <path d="M0 0H1000V700H0Z" fill="url(#grass)"/>
+
+        <path d="M0 110Q160 30 300 115T600 90T1000 115V0H0Z"
+          fill="#c3d8a7" opacity=".65"/>
+        <path d="M0 570Q160 500 330 590T690 570T1000 580V700H0Z"
+          fill="#93ba83" opacity=".38"/>
+
+        <!-- Caminos -->
+        <path d="M500 700C480 610 560 570 500 490S390 390 495 320S610 220 520 0"
+          fill="none" stroke="#cbbf99" stroke-width="62"
+          stroke-linecap="round"/>
+        <path d="M500 700C480 610 560 570 500 490S390 390 495 320S610 220 520 0"
+          fill="none" stroke="#f1e5c8" stroke-width="52"
+          stroke-linecap="round"/>
+
+        <path d="M495 500C365 490 310 410 190 315M495 320C650 310 760 250 830 155M510 555C635 575 710 625 820 670"
+          fill="none" stroke="#cbbf99" stroke-width="45"
+          stroke-linecap="round"/>
+        <path d="M495 500C365 490 310 410 190 315M495 320C650 310 760 250 830 155M510 555C635 575 710 625 820 670"
+          fill="none" stroke="#f1e5c8" stroke-width="36"
+          stroke-linecap="round"/>
+
+        <!-- Arroyo -->
+        <path d="M-20 410C150 360 215 455 350 420S570 360 670 420S850 485 1030 430"
+          fill="none" stroke="#5e9388" stroke-width="45"
+          stroke-linecap="round" opacity=".55"/>
+        <path d="M-20 405C150 355 215 450 350 415S570 355 670 415S850 480 1030 425"
+          fill="none" stroke="url(#water)" stroke-width="35"
+          stroke-linecap="round"/>
+        <path d="M30 399q35 -12 70 -5M230 416q30 9 55 0M710 424q28 12 56 5M900 442q28 6 55 -4"
+          fill="none" stroke="#d8f0df" stroke-width="4"
+          stroke-linecap="round" opacity=".7"/>
+
+        <!-- Puente -->
+        <g transform="translate(480 395)" filter="url(#shadow)">
+          <path d="M-53 0Q0 -28 53 0L53 26Q0 -2 -53 26Z"
+            fill="#9c704c" stroke="#704e38" stroke-width="3"/>
+          <path d="M-43 -2V23M-22 -9V16M0 -12V13M22 -9V16M43 -2V23"
+            stroke="#d7ad78" stroke-width="5"/>
+          <path d="M-55 -5Q0 -34 55 -5" fill="none"
+            stroke="#76523a" stroke-width="6" stroke-linecap="round"/>
+        </g>
+
+        <!-- Árboles -->
+        <use href="#tree" transform="translate(85 100) scale(1.2)"/>
+        <use href="#tree" transform="translate(260 100) scale(.85)"/>
+        <use href="#tree" transform="translate(420 85) scale(1.05)"/>
+        <use href="#tree" transform="translate(870 90) scale(1.2)"/>
+        <use href="#tree" transform="translate(940 245) scale(.85)"/>
+        <use href="#tree" transform="translate(70 580) scale(1.2)"/>
+        <use href="#tree" transform="translate(280 630) scale(.9)"/>
+        <use href="#tree" transform="translate(910 610) scale(1.15)"/>
+        <use href="#tree" transform="translate(760 560) scale(.8)"/>
+
+        <!-- Arbustos -->
+        <use href="#bush" transform="translate(135 250)"/>
+        <use href="#bush" transform="translate(180 270)"/>
+        <use href="#bush" transform="translate(225 250)"/>
+        <use href="#bush" transform="translate(735 220)"/>
+        <use href="#bush" transform="translate(780 200)"/>
+        <use href="#bush" transform="translate(825 220)"/>
+        <use href="#bush" transform="translate(690 560)"/>
+        <use href="#bush" transform="translate(735 575)"/>
+
+        <!-- Jardines -->
+        <g transform="translate(820 330)">
+          <ellipse rx="75" ry="35" fill="#83a96c"/>
+          <use href="#flower" x="-45" y="0"/>
+          <use href="#flower" x="-15" y="-13"/>
+          <use href="#flower" x="20" y="5"/>
+          <use href="#flower" x="48" y="-10"/>
+          <use href="#flower" x="0" y="17"/>
+        </g>
+
+        <g transform="translate(315 540)">
+          <ellipse rx="50" ry="24" fill="#83a96c"/>
+          <use href="#flower" x="-24" y="0"/>
+          <use href="#flower" x="8" y="-7"/>
+          <use href="#flower" x="28" y="8"/>
+        </g>
+
+        <!-- Cabañita -->
+        <g transform="translate(790 540)" filter="url(#shadow)">
+          <ellipse cx="0" cy="60" rx="80" ry="17"
+            fill="#53774d" opacity=".3"/>
+          <rect x="-53" y="0" width="106" height="66" rx="5"
+            fill="#c38b5e" stroke="#80593e" stroke-width="4"/>
+          <path d="M-66 5L0 -48L66 5Z"
+            fill="url(#roof)" stroke="#754735" stroke-width="4"/>
+          <path d="M-13 66V29Q0 12 13 29V66" fill="#6d4937"/>
+          <rect x="23" y="20" width="19" height="22" rx="3"
+            fill="#f8dc91" stroke="#80593e" stroke-width="3"/>
+          <path d="M32 20V42M23 31H42"
+            stroke="#a36d46" stroke-width="2"/>
+          <rect x="-42" y="22" width="20" height="22" rx="3"
+            fill="#f8dc91" stroke="#80593e" stroke-width="3"/>
+          <path d="M-32 22V44M-42 33H-22"
+            stroke="#a36d46" stroke-width="2"/>
+        </g>
+
+        <!-- Bolucompras -->
+        <g transform="translate(190 520)" filter="url(#shadow)">
+          <ellipse cy="44" rx="59" ry="12"
+            fill="#53774d" opacity=".25"/>
+          <rect x="-43" y="-5" width="86" height="48" rx="4"
+            fill="#f4e4bd" stroke="#8a684b" stroke-width="3"/>
+          <path d="M-51 -5L-40 -34H40L51 -5Z"
+            fill="#d88f78" stroke="#8a684b" stroke-width="3"/>
+          <path d="M-34 -32V-5M-17 -32V-5M0 -32V-5M17 -32V-5M34 -32V-5"
+            stroke="#fff1d6" stroke-width="8"/>
+          <rect x="-10" y="16" width="20" height="27" fill="#a56d4e"/>
+        </g>
+
+        <!-- Piedra del secreto -->
+        <ellipse cx="695" cy="590" rx="18" ry="10"
+          fill="#8e9881" stroke="#6e7a69" stroke-width="2"/>
+        <path d="M682 587q13 -9 25 0" fill="none"
+          stroke="#c6cfb8" stroke-width="3"/>
+
+        <!-- Entrada -->
+        <g transform="translate(500 630)" filter="url(#shadow)">
+          <path d="M-4 0V48M4 0V48"
+            stroke="#78563b" stroke-width="7"/>
+          <rect x="-73" y="-28" width="146" height="34" rx="7"
+            fill="#9a704b" stroke="#694b36" stroke-width="3"/>
+          <text x="0" y="-6" text-anchor="middle"
+            font-family="Fraunces,serif" font-size="17"
+            fill="#fff4d9">Parque Pastito</text>
+        </g>
+
+        <!-- Carteles -->
+        <text class="place-label" x="190" y="190" text-anchor="middle">Rincón de Perli</text>
+        <text class="place-label" x="190" y="585" text-anchor="middle">Bolucompras</text>
+        <text class="place-label" x="820" y="285" text-anchor="middle">Jardín de Flores</text>
+        <text class="place-label" x="790" y="625" text-anchor="middle">La Cabañita</text>
+        <text class="place-label" x="500" y="275" text-anchor="middle">Mi Recorrido</text>
+        <text class="place-label" x="520" y="95" text-anchor="middle">Misiones y Sueños</text>
+
+        <!-- Secretos escondidos -->
+        <g class="hotspot" tabindex="0" role="button"
+           aria-label="Investigar los arbustos"
+           data-secret="paw">
+          <circle class="target" cx="220" cy="235" r="28"
+            fill="#fff" fill-opacity=".01" stroke="transparent"/>
+          <text class="secret-dot" x="205" y="242" font-size="23">🐾</text>
+        </g>
+
+        <g class="hotspot" tabindex="0" role="button"
+           aria-label="Descubrir la flor especial"
+           data-secret="flower-secret">
+          <circle class="target" cx="840" cy="333" r="26"
+            fill="#fff" fill-opacity=".01" stroke="transparent"/>
+          <text class="secret-dot" x="830" y="340" font-size="23">✨</text>
+        </g>
+
+        <g class="hotspot" tabindex="0" role="button"
+           aria-label="Buscar el sobre junto a la piedra"
+           data-secret="letter-secret">
+          <circle class="target" cx="695" cy="590" r="27"
+            fill="#fff" fill-opacity=".01" stroke="transparent"/>
+          <text class="secret-dot" x="684" y="584" font-size="22">✉</text>
+        </g>
+
+        <g class="hotspot" tabindex="0" role="button"
+           aria-label="Encontrar al Pastito"
+           data-secret="pastito-secret">
+          <ellipse class="target" cx="375" cy="600" rx="24" ry="20"
+            fill="#fff" fill-opacity=".01" stroke="transparent"/>
+          <text class="secret-dot" x="360" y="608" font-size="24">🌱</text>
+        </g>
+
+        <!-- Zonas clicables del mapa -->
+        <a class="map-link" href="#perli">
+          <ellipse cx="190" cy="205" rx="85" ry="80" fill="transparent"/>
+        </a>
+        <a class="map-link" href="#bolucompras">
+          <ellipse cx="190" cy="520" rx="65" ry="65" fill="transparent"/>
+        </a>
+        <a class="map-link" href="#jardin">
+          <ellipse cx="820" cy="340" rx="85" ry="75" fill="transparent"/>
+        </a>
+        <a class="map-link" href="#cartas">
+          <ellipse cx="790" cy="540" rx="85" ry="80" fill="transparent"/>
+        </a>
+        <a class="map-link" href="#recorrido">
+          <ellipse cx="500" cy="300" rx="90" ry="60" fill="transparent"/>
+        </a>
+        <a class="map-link" href="#misiones">
+          <ellipse cx="520" cy="90" rx="90" ry="65" fill="transparent"/>
+        </a>
+
+        <!-- Detalles decorativos -->
+        <g class="firefly" fill="#fff1a9">
+          <circle cx="620" cy="160" r="4"/>
+          <circle cx="650" cy="180" r="3"/>
+          <circle cx="900" cy="500" r="3"/>
+        </g>
+        <text x="360" y="180" font-size="20">🦋</text>
+        <text x="610" y="500" font-size="18">🦋</text>
+      </svg>
+    </div>
+
+    <div class="map-hint">
+      <span>Explorá el mapa: algunos detalles están escondidos.</span>
+      <button id="hint-toggle">Mostrar pistas</button>
+    </div>
+
+    <div id="secret-notice" class="secret-message"
+         role="status" aria-live="polite"></div>
+  </div>
+
+  <!-- RECORRIDO -->
+  <section id="recorrido">
+    <div class="section-head">
+      <div class="eyebrow">los momentos que nos trajeron hasta acá</div>
+      <h2>Mi Recorrido de lo Más Importante</h2>
+    </div>
+
+    <div class="timeline">
+      <article class="card memory">
+        <div class="date">26 de abril<span>de 2026</span></div>
+        <div>
+          <h3>El primer beso</h3>
+          <p>Estábamos en la casa de Facu por su cumpleaños, esperando para salir a leb a boludear como un dia más, nunca espere q ahi te iba a conocer a vos
 
 Después de un rato me hice amigo de Nacho y terminó haciendome el aguante para darnos nuestro primer beso.
 
-Desde aquel baile me llamaste completamente la atención y después de esa noche, tenía muchísimas ganas de volver a verte y pasar más tiempo con vos.</p></div></article>
-<article class="card memory"><div class="date">16 de mayo<span>de 2026</span></div><div><h3>Cuando empezó todo</h3><p>Bueno, todo comienza el sábado 16 de mayo, boludeando con Mariano en la casa de Facu. Vos me habías invitado a leb y con Mariano no sabiamos si ir pq no teníamos mucha plata y ya estábamos llegando tarde.
+Desde aquel baile me llamaste completamente la atención y después de esa noche, tenía muchísimas ganas de volver a verte y pasar más tiempo con vos.</p>
+        </div>
+      </article>
+
+      <article class="card memory">
+        <div class="date">16 de mayo<span>de 2026</span></div>
+        <div>
+          <h3>Cuando empezó todo</h3>
+          <p>Bueno, todo comienza el sábado 16 de mayo, boludeando con Mariano en la casa de Facu. Vos me habías invitado a leb y con Mariano no sabiamos si ir pq no teníamos mucha plata y ya estábamos llegando tarde.
 
 Después de mucho insistirle (casi rogando nunca migajee tanto), terminamos yendo a tu casa para prepararnos todos ahí y salir.
 
 Ese día estaba nervioso. No sabía cómo hablarte ni cómo dar el primer paso. como siempre Nacho tuvo que volver a hacerme el aguante con vos y ahi comenzó todo.
 
-Terminamos yéndonos a dormir juntos y realmente fue la primera vez que disfruté tanto dormir con alguien. en ese momento no dimensionaba lo especial que te ibas a volver para mi pero es un recuerdo que guardo con muchísimo amor.</p></div></article>
-<article class="card memory"><div class="date">21 de agosto<span>de 2026</span></div><div><h3>La pregunta</h3><p>sábado 21 de agosto.
+Terminamos yéndonos a dormir juntos y realmente fue la primera vez que disfruté tanto dormir con alguien. en ese momento no dimensionaba lo especial que te ibas a volver para mi pero es un recuerdo que guardo con muchísimo amor.</p>
+        </div>
+      </article>
+
+      <article class="card memory">
+        <div class="date">21 de agosto<span>de 2026</span></div>
+        <div>
+          <h3>La pregunta</h3>
+          <p>sábado 21 de agosto.
 
 Después de mucho insistirme con ir a la wasabi, fuimos. salimos con los boludos de siempre y no fue una noche muy memorable. Lo que realmente la hizo especial fue lo que pasó después.
 
@@ -113,14 +345,38 @@ Estábamos acostados, hablando y a mí ya se me había pasado el pedo, ya no ten
 
 y cuando dijiste q sí, ver tu cara mientras escuchabas cada palabra q decía, cada gesto, cada sonrisa y cada rasgo tuyo, me hizo dar cuenta de q eras todo para mí, todo lo q necesitaba y todo lo q me hacía feliz.
 
-Hoy, acordarme de eso también me hace pensar en las cosas q hice y en cuánto me arrepiento de haber lastimado algo q nos hacía tan felices.</p></div></article></div></section>
-<section id="cartas"><div class="section-head"><div class="eyebrow">cosas que guardamos</div><h2>La Cabañita de las Cartas</h2><p>Un rinconcito para volver a leer lo que alguna vez nos dijimos.</p></div><div class="letters">
-<article class="card letter"><h3>Una carta de cuando todo empezaba</h3><p>Hay tantas cosas que me gustaría decirte, pero mis palabras nunca van a explicar todo lo que te amo.
-Te amo desde la primera vez que dormimos juntos (17/05/26), pero me enganche con nuestro primer beso, aunque haya sido en un boliche, sin charla previa, sin conocernos, me gustaste un montón, me encapriche, tenía tantas ganas de volver a verte, de estar con vos, pero apenas era el comienzo, porque todavía faltaban 21 días para que todos los sentimientos que tenía hacia vos dejaran de ser solo un capricho, yo te quería, te quería conmigo todo el tiempo, en el colegio le hablaba a mis amigas de vos, esperaba tu mensaje siempre, y de un momento al otro, te volviste mi vida entera, se que no soy perfecta, cometo errores, pero nunca te voy a querer lastimar. Quiero que lo nuestro sea para siempre, disfrutemos el comienzo.</p></article>
-<article class="card letter"><h3>Una carta de cuando ya éramos novios</h3><p>no te imaginas lo feliz que me hace ser tu novia, estos últimos dos meses siendo novios fue lo mejor que me paso, quiero seguir con vos para toda la vida, sin que me faltes ningún finde, que ahora es lo que más espero y disfruto, nuestros findes juntos, que ojala en un futuro se vuelva la vida entera juntos. Aunque tengamos nuestras diferencias siempre te voy a amar, te voy a amar más que a nadie y más que a nada en el mundo.
+Hoy, acordarme de eso también me hace pensar en las cosas q hice y en cuánto me arrepiento de haber lastimado algo q nos hacía tan felices.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CARTAS -->
+  <section id="cartas">
+    <div class="section-head">
+      <div class="eyebrow">cosas que guardamos</div>
+      <h2>La Cabañita de las Cartas</h2>
+      <p>Un rinconcito para volver a leer lo que alguna vez nos dijimos.</p>
+    </div>
+
+    <div class="letters">
+      <article class="card letter">
+        <h3>Una carta de cuando todo empezaba</h3>
+        <p>Hay tantas cosas que me gustaría decirte, pero mis palabras nunca van a explicar todo lo que te amo.
+Te amo desde la primera vez que dormimos juntos (17/05/26), pero me enganche con nuestro primer beso, aunque haya sido en un boliche, sin charla previa, sin conocernos, me gustaste un montón, me encapriche, tenía tantas ganas de volver a verte, de estar con vos, pero apenas era el comienzo, porque todavía faltaban 21 días para que todos los sentimientos que tenía hacia vos dejaran de ser solo un capricho, yo te quería, te quería conmigo todo el tiempo, en el colegio le hablaba a mis amigas de vos, esperaba tu mensaje siempre, y de un momento al otro, te volviste mi vida entera, se que no soy perfecta, cometo errores, pero nunca te voy a querer lastimar. Quiero que lo nuestro sea para siempre, disfrutemos el comienzo.</p>
+      </article>
+
+      <article class="card letter">
+        <h3>Una carta de cuando ya éramos novios</h3>
+        <p>no te imaginas lo feliz que me hace ser tu novia, estos últimos dos meses siendo novios fue lo mejor que me paso, quiero seguir con vos para toda la vida, sin que me faltes ningún finde, que ahora es lo que más espero y disfruto, nuestros findes juntos, que ojala en un futuro se vuelva la vida entera juntos. Aunque tengamos nuestras diferencias siempre te voy a amar, te voy a amar más que a nadie y más que a nada en el mundo.
 Gracias por estar siempre para mí, sos un amor, me encanta como sos conmigo y el tiempo que estamos juntos, en el que me doy cuenta lo segura que estoy de que te amo muchísimo, vos sos todo para mi y nunca pero nunca lo dudes, siempre voy a estar dispuesta a demostrártelo, siempre te voy a apoyar en todo lo que te propongas, te amo amor ♥.
-Nunca pierdas tu simpleza.</p></article></div>
-<article class="card letter my-letter"><h3>Lo que quería decirte</h3><p>hay muchas cosas de vos que seguro nunca te dije, no pq las piense, sino pq capaz cada detalle en el momento parece una boludez, hasta que me pongo a recordarlo y me doy cuenta de que esos detalles me vuelven loco y significan muchísimo para mí, aunque no te lo diga.
+Nunca pierdas tu simpleza.</p>
+      </article>
+    </div>
+
+    <article class="card letter my-letter">
+      <h3>Lo que quería decirte</h3>
+      <p>hay muchas cosas de vos que seguro nunca te dije, no pq las piense, sino pq capaz cada detalle en el momento parece una boludez, hasta que me pongo a recordarlo y me doy cuenta de que esos detalles me vuelven loco y significan muchísimo para mí, aunque no te lo diga.
 
 haciendo el parque pastito para vos me puse a recordar cada cosa y, realmente, cada gesto, cada detalle o cada bailecito que haces cuando estás feliz, cuando te enojas y haces ese ceño fruncido que me deja loco, cuando estamos abrazados o disfrutando de una conversación y termino interrumpiéndote con un beso pq no me aguanto las ganas de demostrarte todo el amor que te tengo.
 
@@ -132,26 +388,119 @@ también hay mucho de tu forma de ser que admiro, principalmente cómo sos conmi
 
 creo que cambiaste muchas cosas en mí, especialmente en la forma en la que me relaciono con alguien. nunca tuve tantas ganas de ver a alguien y pasar tiempo con esa persona como me pasó con vos. me acuerdo q era esperar (y sigue siendo) cada finde con ganas para poder verte y compartir tiempo juntos. la paja era llegar al domingo a la noche y tener que fumarme una semana de mierda para volver a verte, igual, cuando nos veíamos, hacías que todo lo que aguanté valiera la pena.
 
-supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza recuerda toda nuestra relación, cada detalle tuyo y cómo viví cada situación. tenía ganas de que pudieras ver un poco de todo lo que recuerdo y algunas cosas que capaz nunca llegué a expresar de la mejor forma.</p></article><div class="bouquet">🧸</div></section>
-<section id="jardin"><div class="section-head"><div class="eyebrow">un detalle para vos</div><h2>El Jardín de las Flores</h2></div><div class="card"><div class="flowers"><span class="flower">🌷</span><span class="flower">🌼</span><span class="flower">🌹</span><span class="flower">🌻</span><span class="flower">🌸</span><span class="flower">🌺</span></div><p class="quote">No quiero elegir una sola flor porque sé que vos te merecés todas. aparte me encanta verte sonreír cada que aparezco con una flor diferente.</p><div class="bouquet">💐</div><p class="quote">ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque</p></div></section>
-<section id="misiones"><div class="section-head"><div class="eyebrow">cosas que todavía podemos hacer</div><h2>Lista de Misiones Secundarias</h2></div><div class="list-grid"><article class="card"><h3>Misiones</h3><ul><li>cocinar algo juntos</li><li>ver el amanecer en el techo de el nuevo spot</li><li>simular nuestra competencia de decorar en el sims</li><li>HACER LA COMPETENCIA DE DECORACION</li><li>tener nuestra merienda pendiente</li></ul></article><article class="card"><h3>Sueños</h3><ul><li>tener una hija</li><li>casarnos</li><li>ser felices</li><li>tener nuestra propia casa</li></ul></article></div></section>
-<section id="bolucompras"><div class="section-head"><div class="eyebrow">parada obligatoria</div><h2>Bolucompras de Salidas</h2><p>Si tenemos que estar juntos DEBEMOS pasar por aca</p></div><div class="card"><div class="shop-items"><span>🥤<small>monsters</small></span><span>🍟<small>papas</small></span><span>🍬<small>gomitas</small></span></div><p class="quote" style="margin-top:20px">No aceptamos Mercado Pago wacho</p></div></section>
-<section id="perli"><div class="section-head"><div class="eyebrow">la segunda al mando</div><h2>El Rincón de Perli</h2><p>El rincón de la segunda al mando en la casa de la ley madre</p></div><div class="card dog-area"><div class="dog">🐕</div><p>inspección oficial de la ley madre</p><button id="door">Tocar la puerta</button><div id="perli-secret" class="secret-message">la ley madre mandó a chusmear a la segunda ley al mando</div></div></section>
-<section id="secretos"><div class="section-head"><div class="eyebrow">para quienes exploran</div><h2>Secretos Entre Caminos</h2><p>Los secretos no están listados acá: hay que encontrarlos en el mapa.</p></div><div class="card"><p class="quote">No todo lo importante tiene un cartel. A veces hay que mirar un poquito mejor.</p></div></section>
-<footer>Hecho con recuerdos, detalles y un poquito de pasto. 🌱</footer>
+supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza recuerda toda nuestra relación, cada detalle tuyo y cómo viví cada situación. tenía ganas de que pudieras ver un poco de todo lo que recuerdo y algunas cosas que capaz nunca llegué a expresar de la mejor forma.</p>
+    </article>
+
+    <div class="bouquet">🧸</div>
+  </section>
+
+  <!-- JARDÍN -->
+  <section id="jardin">
+    <div class="section-head">
+      <div class="eyebrow">un detalle para vos</div>
+      <h2>El Jardín de las Flores</h2>
+    </div>
+
+    <div class="card">
+      <div class="flowers">
+        <span class="flower">🌷</span>
+        <span class="flower">🌼</span>
+        <span class="flower">🌹</span>
+        <span class="flower">🌻</span>
+        <span class="flower">🌸</span>
+        <span class="flower">🌺</span>
+      </div>
+
+      <p class="quote">No quiero elegir una sola flor porque sé que vos te merecés todas. aparte me encanta verte sonreír cada que aparezco con una flor diferente.</p>
+
+      <div class="bouquet">💐</div>
+
+      <p class="quote">ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque</p>
+    </div>
+  </section>
+
+  <!-- MISIONES -->
+  <section id="misiones">
+    <div class="section-head">
+      <div class="eyebrow">cosas que todavía podemos hacer</div>
+      <h2>Lista de Misiones Secundarias</h2>
+    </div>
+
+    <div class="list-grid">
+      <article class="card">
+        <h3>Misiones</h3>
+        <ul>
+          <li>cocinar algo juntos</li>
+          <li>ver el amanecer en el techo de el nuevo spot</li>
+          <li>simular nuestra competencia de decorar en el sims</li>
+          <li>HACER LA COMPETENCIA DE DECORACION</li>
+          <li>tener nuestra merienda pendiente</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Sueños</h3>
+        <ul>
+          <li>tener una hija</li>
+          <li>casarnos</li>
+          <li>ser felices</li>
+          <li>tener nuestra propia casa</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- BOLUCOMPRAS -->
+  <section id="bolucompras">
+    <div class="section-head">
+      <div class="eyebrow">parada obligatoria</div>
+      <h2>Bolucompras de Salidas</h2>
+      <p>Si tenemos que estar juntos DEBEMOS pasar por aca</p>
+    </div>
+
+    <div class="card">
+      <div class="shop-items">
+        <span>🥤<small>monsters</small></span>
+        <span>🍟<small>papas</small></span>
+        <span>🍬<small>gomitas</small></span>
+      </div>
+      <p class="quote shop-quote">No aceptamos mp pedazo de gato</p>
+    </div>
+  </section>
+
+  <!-- PERLI -->
+  <section id="perli">
+    <div class="section-head">
+      <div class="eyebrow">la segunda al mando</div>
+      <h2>El Rincón de Perli</h2>
+      <p>El rincón de la segunda al mando en la casa de la ley madre</p>
+    </div>
+
+    <div class="card dog-area">
+      <div class="dog">🐕</div>
+      <p>inspección oficial de la ley madre</p>
+      <button id="door">Tocar la puerta</button>
+      <div id="perli-secret" class="secret-message">
+        la ley madre mandó a chusmear a la segunda ley al mando
+      </div>
+    </div>
+  </section>
+
+  <!-- SECRETOS -->
+  <section id="secretos">
+    <div class="section-head">
+      <div class="eyebrow">para quienes exploran</div>
+      <h2>Secretos Entre Caminos</h2>
+      <p>los esater egss hay que buscaaar.</p>
+    </div>
+
+    <div class="card">
+      <p class="quote">a veces hay que mirar un poquito mejor.</p>
+    </div>
+  </section>
+
+  <footer>basado en hechos reales arre 🌱</footer>
 </main>
-<script>
-const mode=document.getElementById('mode');
-mode.addEventListener('click',()=>{document.body.classList.toggle('night');mode.textContent=document.body.classList.contains('night')?'☀ Cambiar a día':'☾ Cambiar a noche'});
-(function(){const h=new Date().getHours();if(h>=19||h<6){document.body.classList.add('night');mode.textContent='☀ Cambiar a día'}})();
-document.getElementById('hint-toggle').addEventListener('click',()=>{const map=document.getElementById('park-map');map.classList.toggle('show-hints');document.getElementById('hint-toggle').textContent=map.classList.contains('show-hints')?'Ocultar pistas':'Mostrar pistas'});
-const messages={
- paw:'Encontraste las huellitas de Perli. Parece que la Segunda al Mando estuvo inspeccionando esta parte del parque.',
- 'flower-secret':'Encontraste la flor especial. ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque',
- 'letter-secret':'Debajo de la piedra había un sobre: ojala nunca te olvides de todo lo que significas para mi, y si algun dia te olvidas este lugar siempre va a estar aca para recordartelo',
- 'pastito-secret':'Encontraste a El Pastito. esoo despues de tanto decirme que era un pasto termine teniendo un parque'
-};
-function reveal(key){const box=document.getElementById('secret-notice');box.textContent=messages[key];box.classList.add('show');box.scrollIntoView({behavior:'smooth',block:'nearest'})}
-document.getElementById('door').addEventListener('click',()=>{const s=document.getElementById('perli-secret');s.classList.toggle('show');document.getElementById('door').textContent=s.classList.contains('show')?'Perli ya terminó la inspección':'Tocar la puerta'});
-</script>
-</body></html>
+
+</body>
+ </html>
