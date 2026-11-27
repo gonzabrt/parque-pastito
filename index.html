@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -28,265 +29,396 @@
     <p>esoo<br>ojo q hay par de detalles escondidos ee</p>
   </div>
 
-  <!-- MAPA -->
+  <!-- MAPA DEL PARQUE -->
   <div class="map-frame">
     <div class="map" id="park-map">
-      <div class="map-title">Parque Pastito · mapa del parque</div>
-
-      <svg viewBox="0 0 1000 700" role="img"
-           aria-label="Mapa ilustrado del Parque Pastito">
-
+      <svg viewBox="0 0 1000 720" role="img"
+           aria-label="Mapa ilustrado e interactivo del Parque Pastito">
         <defs>
-          <linearGradient id="grass" x2="0" y2="1">
-            <stop stop-color="#d4e2b5"/>
-            <stop offset="1" stop-color="#a9c98f"/>
+          <linearGradient id="meadow" x2=".2" y2="1">
+            <stop stop-color="#d5e4b9"/>
+            <stop offset=".55" stop-color="#b8d49c"/>
+            <stop offset="1" stop-color="#94bd83"/>
           </linearGradient>
-
           <linearGradient id="water" x2="0" y2="1">
-            <stop stop-color="#9bd0cb"/>
-            <stop offset="1" stop-color="#6eaaa4"/>
+            <stop stop-color="#b4ded5"/>
+            <stop offset="1" stop-color="#6da9a0"/>
           </linearGradient>
-
+          <linearGradient id="wood" x2="0" y2="1">
+            <stop stop-color="#bd9061"/>
+            <stop offset="1" stop-color="#80583e"/>
+          </linearGradient>
           <linearGradient id="roof" x2="0" y2="1">
-            <stop stop-color="#b96e54"/>
+            <stop stop-color="#c78362"/>
             <stop offset="1" stop-color="#87513f"/>
           </linearGradient>
-
-          <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%">
-            <feDropShadow dx="0" dy="7" stdDeviation="5"
+          <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%">
+            <feDropShadow dx="0" dy="7" stdDeviation="6"
               flood-color="#405a3d" flood-opacity=".25"/>
+          </filter>
+          <filter id="soft-shadow" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="3" stdDeviation="3"
+              flood-color="#405a3d" flood-opacity=".2"/>
           </filter>
 
           <g id="tree">
-            <ellipse cx="0" cy="19" rx="31" ry="13"
-              fill="#58784e" opacity=".25"/>
-            <rect x="-5" y="0" width="10" height="31"
-              rx="4" fill="#89684a"/>
-            <circle cx="-12" cy="-9" r="22" fill="#658b5b"/>
-            <circle cx="10" cy="-17" r="25" fill="#789d68"/>
-            <circle cx="20" cy="2" r="19" fill="#527b50"/>
-            <circle cx="-8" cy="-22" r="13" fill="#91b37a"/>
+            <ellipse cy="29" rx="34" ry="11" fill="#526e48" opacity=".2"/>
+            <path d="M-5 28L-3 -4H5L7 28Z" fill="#876345"/>
+            <circle cx="-15" cy="-13" r="22" fill="#638957"/>
+            <circle cx="12" cy="-22" r="26" fill="#7fa16a"/>
+            <circle cx="24" cy="0" r="19" fill="#52794e"/>
+            <circle cx="-8" cy="-31" r="14" fill="#9ab77c"/>
+            <circle cx="8" cy="-4" r="17" fill="#729862"/>
           </g>
-
           <g id="bush">
-            <ellipse cx="0" cy="7" rx="32" ry="10"
-              fill="#58784e" opacity=".2"/>
-            <circle cx="-18" cy="0" r="15" fill="#628653"/>
-            <circle cx="0" cy="-7" r="19" fill="#7da269"/>
-            <circle cx="18" cy="0" r="15" fill="#52794e"/>
+            <ellipse cy="9" rx="31" ry="9" fill="#4f7049" opacity=".2"/>
+            <circle cx="-17" cy="0" r="15" fill="#668d58"/>
+            <circle cy="-8" r="19" fill="#82a66c"/>
+            <circle cx="18" cy="0" r="15" fill="#547d50"/>
+            <circle cx="-4" cy="-13" r="7" fill="#9dbb7d"/>
           </g>
-
           <g id="flower">
-            <path d="M0 3v22" stroke="#4f8051" stroke-width="3"/>
-            <circle cx="0" cy="-4" r="5" fill="#e5bd65"/>
-            <g fill="#f5dca0">
-              <ellipse cy="-13" rx="5" ry="8"/>
+            <path d="M0 3Q-3 16 0 27" stroke="#4e8050" stroke-width="3" fill="none"/>
+            <path d="M0 16q-10 -8 -13 0q8 5 13 0" fill="#6c9a61"/>
+            <g fill="#f5d99b">
+              <ellipse cy="-10" rx="5" ry="8"/>
               <ellipse cy="5" rx="5" ry="8"/>
-              <ellipse cx="-9" cy="-4" rx="8" ry="5"/>
-              <ellipse cx="9" cy="-4" rx="8" ry="5"/>
+              <ellipse cx="-9" cy="-3" rx="8" ry="5"/>
+              <ellipse cx="9" cy="-3" rx="8" ry="5"/>
             </g>
+            <circle cy="-3" r="4" fill="#dcae55"/>
+          </g>
+          <g id="blue-flower">
+            <path d="M0 3V25" stroke="#4e8050" stroke-width="3"/>
+            <g fill="#9ab8d0">
+              <ellipse cy="-10" rx="5" ry="8"/>
+              <ellipse cy="5" rx="5" ry="8"/>
+              <ellipse cx="-9" cy="-3" rx="8" ry="5"/>
+              <ellipse cx="9" cy="-3" rx="8" ry="5"/>
+            </g>
+            <circle cy="-3" r="4" fill="#e9d48a"/>
+          </g>
+          <g id="sign">
+            <path d="M0 10V42" stroke="#79583d" stroke-width="6"/>
+            <rect x="-69" y="-19" width="138" height="34" rx="7"
+              fill="url(#wood)" stroke="#704e37" stroke-width="3"/>
           </g>
         </defs>
 
-        <path d="M0 0H1000V700H0Z" fill="url(#grass)"/>
+        <!-- Terreno -->
+        <path d="M0 0H1000V720H0Z" fill="url(#meadow)"/>
+        <path d="M0 90Q150 15 300 92T600 76T1000 85V0H0Z"
+          fill="#e0e8c5" opacity=".6"/>
+        <path d="M0 590Q160 510 330 590T690 570T1000 590V720H0Z"
+          fill="#83ad78" opacity=".25"/>
+        <path d="M20 330Q130 270 240 330T470 330"
+          fill="none" stroke="#d9e5b9" stroke-width="30" opacity=".25"/>
+        <path d="M670 80Q800 25 970 100" fill="none"
+          stroke="#e7edce" stroke-width="25" opacity=".3"/>
 
-        <path d="M0 110Q160 30 300 115T600 90T1000 115V0H0Z"
-          fill="#c3d8a7" opacity=".65"/>
-        <path d="M0 570Q160 500 330 590T690 570T1000 580V700H0Z"
-          fill="#93ba83" opacity=".38"/>
+        <!-- Caminos principales -->
+        <g class="paths">
+          <path d="M500 720C475 650 470 590 500 535S540 455 500 405S430 335 485 275S575 190 540 0"
+            fill="none" stroke="#b9a47e" stroke-width="65" stroke-linecap="round"/>
+          <path d="M500 720C475 650 470 590 500 535S540 455 500 405S430 335 485 275S575 190 540 0"
+            fill="none" stroke="#f0dfbd" stroke-width="54" stroke-linecap="round"/>
+          <path d="M495 510C390 505 320 450 245 365S170 300 145 260"
+            fill="none" stroke="#b9a47e" stroke-width="47" stroke-linecap="round"/>
+          <path d="M495 510C390 505 320 450 245 365S170 300 145 260"
+            fill="none" stroke="#f0dfbd" stroke-width="38" stroke-linecap="round"/>
+          <path d="M500 405C615 390 690 330 760 245S820 180 855 145"
+            fill="none" stroke="#b9a47e" stroke-width="48" stroke-linecap="round"/>
+          <path d="M500 405C615 390 690 330 760 245S820 180 855 145"
+            fill="none" stroke="#f0dfbd" stroke-width="39" stroke-linecap="round"/>
+          <path d="M510 535C620 555 700 610 800 665"
+            fill="none" stroke="#b9a47e" stroke-width="43" stroke-linecap="round"/>
+          <path d="M510 535C620 555 700 610 800 665"
+            fill="none" stroke="#f0dfbd" stroke-width="34" stroke-linecap="round"/>
+          <path d="M480 590C385 620 300 625 220 615"
+            fill="none" stroke="#b9a47e" stroke-width="35" stroke-linecap="round"/>
+          <path d="M480 590C385 620 300 625 220 615"
+            fill="none" stroke="#f0dfbd" stroke-width="27" stroke-linecap="round"/>
+        </g>
 
-        <!-- Caminos -->
-        <path d="M500 700C480 610 560 570 500 490S390 390 495 320S610 220 520 0"
-          fill="none" stroke="#cbbf99" stroke-width="62"
-          stroke-linecap="round"/>
-        <path d="M500 700C480 610 560 570 500 490S390 390 495 320S610 220 520 0"
-          fill="none" stroke="#f1e5c8" stroke-width="52"
-          stroke-linecap="round"/>
-
-        <path d="M495 500C365 490 310 410 190 315M495 320C650 310 760 250 830 155M510 555C635 575 710 625 820 670"
-          fill="none" stroke="#cbbf99" stroke-width="45"
-          stroke-linecap="round"/>
-        <path d="M495 500C365 490 310 410 190 315M495 320C650 310 760 250 830 155M510 555C635 575 710 625 820 670"
-          fill="none" stroke="#f1e5c8" stroke-width="36"
-          stroke-linecap="round"/>
-
-        <!-- Arroyo -->
-        <path d="M-20 410C150 360 215 455 350 420S570 360 670 420S850 485 1030 430"
-          fill="none" stroke="#5e9388" stroke-width="45"
-          stroke-linecap="round" opacity=".55"/>
-        <path d="M-20 405C150 355 215 450 350 415S570 355 670 415S850 480 1030 425"
-          fill="none" stroke="url(#water)" stroke-width="35"
-          stroke-linecap="round"/>
-        <path d="M30 399q35 -12 70 -5M230 416q30 9 55 0M710 424q28 12 56 5M900 442q28 6 55 -4"
-          fill="none" stroke="#d8f0df" stroke-width="4"
-          stroke-linecap="round" opacity=".7"/>
+        <!-- Arroyo diagonal -->
+        <g class="stream">
+          <path d="M-35 485C100 420 185 430 280 455S430 500 535 440S720 335 835 385S950 445 1035 395"
+            fill="none" stroke="#5e9288" stroke-width="54" stroke-linecap="round" opacity=".5"/>
+          <path d="M-35 478C100 413 185 423 280 448S430 493 535 433S720 328 835 378S950 438 1035 388"
+            fill="none" stroke="url(#water)" stroke-width="43" stroke-linecap="round"/>
+          <path d="M25 465q34 -15 66 -13M190 440q32 0 58 13M335 472q34 8 64 0M610 397q31 -18 59 -21M800 374q32 0 56 17M920 416q28 10 54 0"
+            fill="none" stroke="#e3f5e8" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+          <path d="M90 454q25 -8 42 -5M555 420q22 -13 44 -15M720 365q19 -8 36 -6"
+            fill="none" stroke="#d5eee1" stroke-width="2" opacity=".8"/>
+        </g>
 
         <!-- Puente -->
-        <g transform="translate(480 395)" filter="url(#shadow)">
-          <path d="M-53 0Q0 -28 53 0L53 26Q0 -2 -53 26Z"
-            fill="#9c704c" stroke="#704e38" stroke-width="3"/>
-          <path d="M-43 -2V23M-22 -9V16M0 -12V13M22 -9V16M43 -2V23"
-            stroke="#d7ad78" stroke-width="5"/>
-          <path d="M-55 -5Q0 -34 55 -5" fill="none"
-            stroke="#76523a" stroke-width="6" stroke-linecap="round"/>
+        <g class="bridge" transform="translate(493 454)" filter="url(#shadow)">
+          <path d="M-67 -5Q0 -43 67 -5L67 25Q0 -13 -67 25Z"
+            fill="#916342" stroke="#68472f" stroke-width="4"/>
+          <path d="M-54 -10V19M-29 -20V9M0 -25V4M29 -20V9M54 -10V19"
+            stroke="#d7ad79" stroke-width="7"/>
+          <path d="M-70 -9Q0 -48 70 -9" fill="none"
+            stroke="#755039" stroke-width="7" stroke-linecap="round"/>
+          <path d="M-60 25Q0 -5 60 25" fill="none"
+            stroke="#6c4b35" stroke-width="3"/>
         </g>
 
-        <!-- Árboles -->
-        <use href="#tree" transform="translate(85 100) scale(1.2)"/>
-        <use href="#tree" transform="translate(260 100) scale(.85)"/>
-        <use href="#tree" transform="translate(420 85) scale(1.05)"/>
-        <use href="#tree" transform="translate(870 90) scale(1.2)"/>
-        <use href="#tree" transform="translate(940 245) scale(.85)"/>
-        <use href="#tree" transform="translate(70 580) scale(1.2)"/>
-        <use href="#tree" transform="translate(280 630) scale(.9)"/>
-        <use href="#tree" transform="translate(910 610) scale(1.15)"/>
-        <use href="#tree" transform="translate(760 560) scale(.8)"/>
+        <!-- Vegetación de los bordes -->
+        <use href="#tree" transform="translate(75 100) scale(1.25)"/>
+        <use href="#tree" transform="translate(260 90) scale(.9)"/>
+        <use href="#tree" transform="translate(440 75) scale(.9)"/>
+        <use href="#tree" transform="translate(900 85) scale(1.25)"/>
+        <use href="#tree" transform="translate(950 260) scale(.85)"/>
+        <use href="#tree" transform="translate(65 620) scale(1.1)"/>
+        <use href="#tree" transform="translate(280 665) scale(.8)"/>
+        <use href="#tree" transform="translate(925 635) scale(1.2)"/>
+        <use href="#tree" transform="translate(760 650) scale(.8)"/>
+        <use href="#tree" transform="translate(90 350) scale(.75)"/>
+        <use href="#tree" transform="translate(880 510) scale(.8)"/>
 
-        <!-- Arbustos -->
-        <use href="#bush" transform="translate(135 250)"/>
-        <use href="#bush" transform="translate(180 270)"/>
-        <use href="#bush" transform="translate(225 250)"/>
-        <use href="#bush" transform="translate(735 220)"/>
-        <use href="#bush" transform="translate(780 200)"/>
-        <use href="#bush" transform="translate(825 220)"/>
-        <use href="#bush" transform="translate(690 560)"/>
-        <use href="#bush" transform="translate(735 575)"/>
+        <use href="#bush" transform="translate(110 230) scale(1.2)"/>
+        <use href="#bush" transform="translate(160 255)"/>
+        <use href="#bush" transform="translate(220 220) scale(.9)"/>
+        <use href="#bush" transform="translate(720 190)"/>
+        <use href="#bush" transform="translate(770 165) scale(1.1)"/>
+        <use href="#bush" transform="translate(835 210)"/>
+        <use href="#bush" transform="translate(680 590)"/>
+        <use href="#bush" transform="translate(740 615)"/>
+        <use href="#bush" transform="translate(310 570)"/>
+        <use href="#bush" transform="translate(360 600) scale(.8)"/>
 
-        <!-- Jardines -->
-        <g transform="translate(820 330)">
-          <ellipse rx="75" ry="35" fill="#83a96c"/>
-          <use href="#flower" x="-45" y="0"/>
-          <use href="#flower" x="-15" y="-13"/>
-          <use href="#flower" x="20" y="5"/>
-          <use href="#flower" x="48" y="-10"/>
-          <use href="#flower" x="0" y="17"/>
+        <!-- Pradera de flores -->
+        <g class="flower-meadow">
+          <ellipse cx="820" cy="325" rx="100" ry="65" fill="#91b879" opacity=".65"/>
+          <use href="#flower" transform="translate(760 320) scale(.9)"/>
+          <use href="#flower" transform="translate(790 295) scale(1.1)"/>
+          <use href="#blue-flower" transform="translate(820 325)"/>
+          <use href="#flower" transform="translate(850 300) scale(1.1)"/>
+          <use href="#flower" transform="translate(880 330)"/>
+          <use href="#blue-flower" transform="translate(790 350) scale(.8)"/>
+          <use href="#flower" transform="translate(840 360) scale(.9)"/>
+          <use href="#flower" transform="translate(900 355) scale(.8)"/>
+          <use href="#blue-flower" transform="translate(865 285) scale(.8)"/>
+          <use href="#flower" transform="translate(745 350) scale(.7)"/>
+          <use href="#flower" transform="translate(815 280) scale(.75)"/>
+          <use href="#blue-flower" transform="translate(905 300) scale(.75)"/>
+        </g>
+        <g class="little-flowers">
+          <use href="#flower" transform="translate(310 520) scale(.7)"/>
+          <use href="#blue-flower" transform="translate(340 535) scale(.7)"/>
+          <use href="#flower" transform="translate(375 520) scale(.65)"/>
+          <use href="#flower" transform="translate(610 580) scale(.6)"/>
+          <use href="#blue-flower" transform="translate(640 600) scale(.6)"/>
+          <use href="#flower" transform="translate(680 570) scale(.65)"/>
+          <use href="#flower" transform="translate(130 555) scale(.7)"/>
+          <use href="#blue-flower" transform="translate(165 570) scale(.65)"/>
         </g>
 
-        <g transform="translate(315 540)">
-          <ellipse rx="50" ry="24" fill="#83a96c"/>
-          <use href="#flower" x="-24" y="0"/>
-          <use href="#flower" x="8" y="-7"/>
-          <use href="#flower" x="28" y="8"/>
-        </g>
-
-        <!-- Cabañita -->
-        <g transform="translate(790 540)" filter="url(#shadow)">
-          <ellipse cx="0" cy="60" rx="80" ry="17"
-            fill="#53774d" opacity=".3"/>
-          <rect x="-53" y="0" width="106" height="66" rx="5"
-            fill="#c38b5e" stroke="#80593e" stroke-width="4"/>
-          <path d="M-66 5L0 -48L66 5Z"
-            fill="url(#roof)" stroke="#754735" stroke-width="4"/>
-          <path d="M-13 66V29Q0 12 13 29V66" fill="#6d4937"/>
-          <rect x="23" y="20" width="19" height="22" rx="3"
-            fill="#f8dc91" stroke="#80593e" stroke-width="3"/>
-          <path d="M32 20V42M23 31H42"
-            stroke="#a36d46" stroke-width="2"/>
-          <rect x="-42" y="22" width="20" height="22" rx="3"
-            fill="#f8dc91" stroke="#80593e" stroke-width="3"/>
-          <path d="M-32 22V44M-42 33H-22"
-            stroke="#a36d46" stroke-width="2"/>
+        <!-- Rincón de Perli: casita -->
+        <g transform="translate(175 300)" filter="url(#shadow)">
+          <ellipse cy="57" rx="77" ry="17" fill="#496b47" opacity=".25"/>
+          <path d="M-62 0L0 -48L62 0V52H-62Z"
+            fill="#d7b48a" stroke="#8a684b" stroke-width="4"/>
+          <path d="M-72 3L0 -58L72 3" fill="none"
+            stroke="#8a5140" stroke-width="14" stroke-linejoin="round"/>
+          <path d="M-17 52V20Q0 0 17 20V52" fill="#79513b"/>
+          <rect x="28" y="14" width="19" height="22" rx="3"
+            fill="#f5df9d" stroke="#8a684b" stroke-width="3"/>
+          <path d="M37 14V36M28 25H47" stroke="#9b744f" stroke-width="2"/>
+          <text x="0" y="78" text-anchor="middle" font-size="13"
+            fill="#3e5d3d" font-weight="700">Perli</text>
         </g>
 
         <!-- Bolucompras -->
-        <g transform="translate(190 520)" filter="url(#shadow)">
-          <ellipse cy="44" rx="59" ry="12"
-            fill="#53774d" opacity=".25"/>
-          <rect x="-43" y="-5" width="86" height="48" rx="4"
-            fill="#f4e4bd" stroke="#8a684b" stroke-width="3"/>
-          <path d="M-51 -5L-40 -34H40L51 -5Z"
-            fill="#d88f78" stroke="#8a684b" stroke-width="3"/>
-          <path d="M-34 -32V-5M-17 -32V-5M0 -32V-5M17 -32V-5M34 -32V-5"
-            stroke="#fff1d6" stroke-width="8"/>
-          <rect x="-10" y="16" width="20" height="27" fill="#a56d4e"/>
+        <g transform="translate(195 575)" filter="url(#shadow)">
+          <ellipse cy="48" rx="65" ry="13" fill="#496b47" opacity=".25"/>
+          <rect x="-48" y="-7" width="96" height="54" rx="5"
+            fill="#f3e4c3" stroke="#88684b" stroke-width="4"/>
+          <path d="M-57 -7L-43 -39H43L57 -7Z"
+            fill="#d98f79" stroke="#88684b" stroke-width="4"/>
+          <path d="M-35 -37V-7M-17 -37V-7M0 -37V-7M17 -37V-7M35 -37V-7"
+            stroke="#fff0d4" stroke-width="8"/>
+          <rect x="-11" y="18" width="22" height="29" fill="#a16c4c"/>
+          <circle cx="-29" cy="18" r="4" fill="#e7c17a"/>
+          <circle cx="30" cy="18" r="4" fill="#e7c17a"/>
         </g>
 
-        <!-- Piedra del secreto -->
-        <ellipse cx="695" cy="590" rx="18" ry="10"
-          fill="#8e9881" stroke="#6e7a69" stroke-width="2"/>
-        <path d="M682 587q13 -9 25 0" fill="none"
-          stroke="#c6cfb8" stroke-width="3"/>
+        <!-- La Cabañita -->
+        <g transform="translate(805 565)" filter="url(#shadow)">
+          <ellipse cy="73" rx="92" ry="18" fill="#496b47" opacity=".28"/>
+          <rect x="-62" y="-2" width="124" height="76" rx="5"
+            fill="#c99568" stroke="#80593e" stroke-width="4"/>
+          <path d="M-77 3L0 -62L77 3Z" fill="url(#roof)"
+            stroke="#754735" stroke-width="5"/>
+          <path d="M-16 74V34Q0 14 16 34V74Z" fill="#684733"/>
+          <rect x="28" y="18" width="21" height="25" rx="3"
+            fill="#f7df9d" stroke="#80593e" stroke-width="3"/>
+          <path d="M38 18V43M28 30H49" stroke="#a36d46" stroke-width="2"/>
+          <rect x="-49" y="18" width="21" height="25" rx="3"
+            fill="#f7df9d" stroke="#80593e" stroke-width="3"/>
+          <path d="M-39 18V43M-49 30H-28" stroke="#a36d46" stroke-width="2"/>
+          <path d="M-69 5L0 -52L69 5" fill="none"
+            stroke="#d79a75" stroke-width="4"/>
+        </g>
 
-        <!-- Entrada -->
-        <g transform="translate(500 630)" filter="url(#shadow)">
-          <path d="M-4 0V48M4 0V48"
-            stroke="#78563b" stroke-width="7"/>
-          <rect x="-73" y="-28" width="146" height="34" rx="7"
+        <!-- Osito sentado junto a la cabañita -->
+        <g class="bear" transform="translate(690 560)" filter="url(#soft-shadow)">
+          <ellipse cx="0" cy="34" rx="27" ry="11" fill="#5e794e" opacity=".25"/>
+          <circle cx="-13" cy="-14" r="11" fill="#74452f"/>
+          <circle cx="13" cy="-14" r="11" fill="#74452f"/>
+          <circle cy="-7" r="24" fill="#87523a"/>
+          <ellipse cy="23" rx="24" ry="29" fill="#87523a"/>
+          <ellipse cy="1" rx="14" ry="12" fill="#bd8a69"/>
+          <circle cx="-8" cy="-11" r="3.2" fill="#171511"/>
+          <circle cx="8" cy="-11" r="3.2" fill="#171511"/>
+          <ellipse cy="-1" rx="4" ry="3" fill="#171511"/>
+          <path d="M-6 9Q0 14 6 9" fill="none" stroke="#4b2e25" stroke-width="2"/>
+          <path d="M-11 24Q-25 13 -27 29M11 24Q25 13 27 29"
+            fill="none" stroke="#74452f" stroke-width="9" stroke-linecap="round"/>
+          <path d="M-5 -32L0 -25L5 -32L0 -38Z" fill="#e9bd56"/>
+        </g>
+
+        <!-- Banca junto al arroyo -->
+        <g transform="translate(590 490)" filter="url(#soft-shadow)">
+          <path d="M-35 0H35M-35 12H35M-27 12V34M27 12V34"
+            stroke="#79583d" stroke-width="7" stroke-linecap="round"/>
+          <path d="M-35 -7H35" stroke="#bd9061" stroke-width="9" stroke-linecap="round"/>
+          <path d="M-29 -4V-22M29 -4V-22" stroke="#79583d" stroke-width="4"/>
+          <path d="M-29 -22H29" stroke="#bd9061" stroke-width="8" stroke-linecap="round"/>
+        </g>
+
+        <!-- Pastito: brote con carita -->
+        <g class="pastito" transform="translate(520 655)">
+          <ellipse cy="19" rx="26" ry="7" fill="#54754a" opacity=".25"/>
+          <path d="M0 12Q-14 -7 -11 -27Q-2 -19 0 -7Q3 -32 18 -36Q19 -13 5 1Q19 -9 28 -5Q22 12 0 12Z"
+            fill="#5e9b59" stroke="#477c49" stroke-width="2"/>
+          <ellipse cy="4" rx="13" ry="15" fill="#91bd70"/>
+          <circle cx="-5" cy="1" r="2" fill="#304b32"/>
+          <circle cx="5" cy="1" r="2" fill="#304b32"/>
+          <path d="M-4 8Q0 12 4 8" fill="none" stroke="#47613d" stroke-width="1.7" stroke-linecap="round"/>
+          <path d="M-10 8L-21 2M10 8L21 2" stroke="#5e9b59" stroke-width="4" stroke-linecap="round"/>
+        </g>
+
+        <!-- Otras apariciones escondidas de Pastito -->
+        <g class="pastito-small" transform="translate(875 370) scale(.7)">
+          <path d="M0 10Q-17 -12 -8 -30Q0 -21 3 -7Q8 -35 24 -35Q24 -13 8 3Q23 -5 29 2Q19 18 0 10Z"
+            fill="#5e9b59"/>
+          <ellipse cy="8" rx="12" ry="14" fill="#91bd70"/>
+          <circle cx="-4" cy="5" r="1.8" fill="#304b32"/>
+          <circle cx="4" cy="5" r="1.8" fill="#304b32"/>
+          <path d="M-3 11Q0 14 3 11" stroke="#47613d" fill="none"/>
+        </g>
+        <g class="pastito-small" transform="translate(745 145) scale(.55)">
+          <path d="M0 10Q-17 -12 -8 -30Q0 -21 3 -7Q8 -35 24 -35Q24 -13 8 3Q23 -5 29 2Q19 18 0 10Z"
+            fill="#5e9b59"/>
+          <ellipse cy="8" rx="12" ry="14" fill="#91bd70"/>
+          <circle cx="-4" cy="5" r="1.8" fill="#304b32"/>
+          <circle cx="4" cy="5" r="1.8" fill="#304b32"/>
+          <path d="M-3 11Q0 14 3 11" stroke="#47613d" fill="none"/>
+        </g>
+
+        <!-- Carteles de madera -->
+        <g class="wood-sign" transform="translate(175 205)">
+          <use href="#sign"/>
+          <text class="sign-text" text-anchor="middle" y="3">Rincón de Perli</text>
+        </g>
+        <g class="wood-sign" transform="translate(195 645) scale(.9)">
+          <use href="#sign"/>
+          <text class="sign-text" text-anchor="middle" y="3">Bolucompras</text>
+        </g>
+        <g class="wood-sign" transform="translate(825 255)">
+          <use href="#sign"/>
+          <text class="sign-text" text-anchor="middle" y="3">Jardín de Flores</text>
+        </g>
+        <g class="wood-sign" transform="translate(805 665) scale(.9)">
+          <use href="#sign"/>
+          <text class="sign-text" text-anchor="middle" y="3">La Cabañita</text>
+        </g>
+        <g class="wood-sign" transform="translate(485 330) scale(.9)">
+          <use href="#sign"/>
+          <text class="sign-text" text-anchor="middle" y="3">Mi Recorrido</text>
+        </g>
+        <g class="wood-sign" transform="translate(540 105) scale(.9)">
+          <use href="#sign"/>
+          <text class="sign-text" text-anchor="middle" y="3">Misiones y Sueños</text>
+        </g>
+
+        <!-- Entrada del parque -->
+        <g transform="translate(500 710)" filter="url(#shadow)">
+          <path d="M-85 -7V-64M85 -7V-64" stroke="#76543b" stroke-width="9"/>
+          <path d="M-91 -62Q0 -105 91 -62" fill="none"
+            stroke="#76543b" stroke-width="10" stroke-linecap="round"/>
+          <rect x="-72" y="-66" width="144" height="34" rx="8"
             fill="#9a704b" stroke="#694b36" stroke-width="3"/>
-          <text x="0" y="-6" text-anchor="middle"
-            font-family="Fraunces,serif" font-size="17"
-            fill="#fff4d9">Parque Pastito</text>
+          <text x="0" y="-44" text-anchor="middle"
+            font-family="Fraunces,serif" font-size="17" fill="#fff4d9">La entrada</text>
         </g>
 
-        <!-- Carteles -->
-        <text class="place-label" x="190" y="190" text-anchor="middle">Rincón de Perli</text>
-        <text class="place-label" x="190" y="585" text-anchor="middle">Bolucompras</text>
-        <text class="place-label" x="820" y="285" text-anchor="middle">Jardín de Flores</text>
-        <text class="place-label" x="790" y="625" text-anchor="middle">La Cabañita</text>
-        <text class="place-label" x="500" y="275" text-anchor="middle">Mi Recorrido</text>
-        <text class="place-label" x="520" y="95" text-anchor="middle">Misiones y Sueños</text>
+        <!-- Huellitas de Perli -->
+        <g class="paw-trail" fill="#806c53" opacity=".75">
+          <ellipse cx="245" cy="390" rx="5" ry="7" transform="rotate(-25 245 390)"/>
+          <circle cx="238" cy="380" r="3.5"/><circle cx="246" cy="377" r="3.5"/><circle cx="253" cy="382" r="3.5"/>
+          <ellipse cx="270" cy="410" rx="5" ry="7" transform="rotate(20 270 410)"/>
+          <circle cx="263" cy="399" r="3.5"/><circle cx="271" cy="397" r="3.5"/><circle cx="278" cy="402" r="3.5"/>
+          <ellipse cx="295" cy="425" rx="5" ry="7" transform="rotate(-20 295 425)"/>
+          <circle cx="288" cy="414" r="3.5"/><circle cx="296" cy="412" r="3.5"/><circle cx="303" cy="417" r="3.5"/>
+        </g>
 
-        <!-- Secretos escondidos -->
+        <!-- Elementos secretos: se pueden descubrir con clic -->
         <g class="hotspot" tabindex="0" role="button"
-           aria-label="Investigar los arbustos"
-           data-secret="paw">
-          <circle class="target" cx="220" cy="235" r="28"
-            fill="#fff" fill-opacity=".01" stroke="transparent"/>
-          <text class="secret-dot" x="205" y="242" font-size="23">🐾</text>
+           aria-label="Investigar las huellitas de Perli" data-secret="paw">
+          <circle class="target" cx="250" cy="395" r="30"/>
+          <text class="secret-dot" x="233" y="403" font-size="25">🐾</text>
         </g>
-
         <g class="hotspot" tabindex="0" role="button"
-           aria-label="Descubrir la flor especial"
-           data-secret="flower-secret">
-          <circle class="target" cx="840" cy="333" r="26"
-            fill="#fff" fill-opacity=".01" stroke="transparent"/>
-          <text class="secret-dot" x="830" y="340" font-size="23">✨</text>
+           aria-label="Descubrir la flor especial" data-secret="flower-secret">
+          <circle class="target" cx="900" cy="345" r="28"/>
+          <text class="secret-dot" x="888" y="352" font-size="23">✦</text>
         </g>
-
         <g class="hotspot" tabindex="0" role="button"
-           aria-label="Buscar el sobre junto a la piedra"
-           data-secret="letter-secret">
-          <circle class="target" cx="695" cy="590" r="27"
-            fill="#fff" fill-opacity=".01" stroke="transparent"/>
-          <text class="secret-dot" x="684" y="584" font-size="22">✉</text>
+           aria-label="Buscar la carta secreta" data-secret="letter-secret">
+          <circle class="target" cx="660" cy="610" r="29"/>
+          <text class="secret-dot" x="650" y="617" font-size="22">✉</text>
         </g>
-
         <g class="hotspot" tabindex="0" role="button"
-           aria-label="Encontrar al Pastito"
-           data-secret="pastito-secret">
-          <ellipse class="target" cx="375" cy="600" rx="24" ry="20"
-            fill="#fff" fill-opacity=".01" stroke="transparent"/>
-          <text class="secret-dot" x="360" y="608" font-size="24">🌱</text>
+           aria-label="Encontrar al Pastito escondido" data-secret="pastito-secret">
+          <circle class="target" cx="520" cy="655" r="30"/>
+          <text class="secret-dot" x="508" y="664" font-size="24">🌱</text>
         </g>
 
-        <!-- Zonas clicables del mapa -->
-        <a class="map-link" href="#perli">
-          <ellipse cx="190" cy="205" rx="85" ry="80" fill="transparent"/>
+        <!-- Áreas clicables -->
+        <a class="map-link" href="#perli" aria-label="Ir al Rincón de Perli">
+          <ellipse cx="175" cy="290" rx="105" ry="105"/>
         </a>
-        <a class="map-link" href="#bolucompras">
-          <ellipse cx="190" cy="520" rx="65" ry="65" fill="transparent"/>
+        <a class="map-link" href="#bolucompras" aria-label="Ir a Bolucompras">
+          <ellipse cx="195" cy="575" rx="95" ry="90"/>
         </a>
-        <a class="map-link" href="#jardin">
-          <ellipse cx="820" cy="340" rx="85" ry="75" fill="transparent"/>
+        <a class="map-link" href="#jardin" aria-label="Ir al Jardín de Flores">
+          <ellipse cx="825" cy="330" rx="125" ry="115"/>
         </a>
-        <a class="map-link" href="#cartas">
-          <ellipse cx="790" cy="540" rx="85" ry="80" fill="transparent"/>
+        <a class="map-link" href="#cartas" aria-label="Ir a La Cabañita">
+          <ellipse cx="800" cy="570" rx="120" ry="110"/>
         </a>
-        <a class="map-link" href="#recorrido">
-          <ellipse cx="500" cy="300" rx="90" ry="60" fill="transparent"/>
+        <a class="map-link" href="#recorrido" aria-label="Ir a Mi Recorrido">
+          <ellipse cx="490" cy="330" rx="95" ry="65"/>
         </a>
-        <a class="map-link" href="#misiones">
-          <ellipse cx="520" cy="90" rx="90" ry="65" fill="transparent"/>
+        <a class="map-link" href="#misiones" aria-label="Ir a Misiones y Sueños">
+          <ellipse cx="540" cy="105" rx="110" ry="65"/>
         </a>
 
-        <!-- Detalles decorativos -->
-        <g class="firefly" fill="#fff1a9">
+        <!-- Mariposas y luciérnagas -->
+        <g class="butterfly" font-size="23">
+          <text x="350" y="180">🦋</text>
+          <text x="620" y="535">🦋</text>
+        </g>
+        <g class="fireflies" fill="#fff1a9">
           <circle cx="620" cy="160" r="4"/>
-          <circle cx="650" cy="180" r="3"/>
+          <circle cx="650" cy="185" r="3"/>
           <circle cx="900" cy="500" r="3"/>
+          <circle cx="360" cy="570" r="3"/>
+          <circle cx="740" cy="450" r="3"/>
         </g>
-        <text x="360" y="180" font-size="20">🦋</text>
-        <text x="610" y="500" font-size="18">🦋</text>
       </svg>
     </div>
 
@@ -294,9 +426,7 @@
       <span>Explorá el mapa: algunos detalles están escondidos.</span>
       <button id="hint-toggle">Mostrar pistas</button>
     </div>
-
-    <div id="secret-notice" class="secret-message"
-         role="status" aria-live="polite"></div>
+    <div id="secret-notice" class="secret-message" role="status" aria-live="polite"></div>
   </div>
 
   <!-- RECORRIDO -->
@@ -305,7 +435,6 @@
       <div class="eyebrow">los momentos que nos trajeron hasta acá</div>
       <h2>Mi Recorrido de lo Más Importante</h2>
     </div>
-
     <div class="timeline">
       <article class="card memory">
         <div class="date">26 de abril<span>de 2026</span></div>
@@ -318,7 +447,6 @@ Después de un rato me hice amigo de Nacho y terminó haciendome el aguante para
 Desde aquel baile me llamaste completamente la atención y después de esa noche, tenía muchísimas ganas de volver a verte y pasar más tiempo con vos.</p>
         </div>
       </article>
-
       <article class="card memory">
         <div class="date">16 de mayo<span>de 2026</span></div>
         <div>
@@ -332,7 +460,6 @@ Ese día estaba nervioso. No sabía cómo hablarte ni cómo dar el primer paso. 
 Terminamos yéndonos a dormir juntos y realmente fue la primera vez que disfruté tanto dormir con alguien. en ese momento no dimensionaba lo especial que te ibas a volver para mi pero es un recuerdo que guardo con muchísimo amor.</p>
         </div>
       </article>
-
       <article class="card memory">
         <div class="date">21 de agosto<span>de 2026</span></div>
         <div>
@@ -358,23 +485,23 @@ Hoy, acordarme de eso también me hace pensar en las cosas q hice y en cuánto m
       <h2>La Cabañita de las Cartas</h2>
       <p>Un rinconcito para volver a leer lo que alguna vez nos dijimos.</p>
     </div>
-
     <div class="letters">
-      <article class="card letter">
+      <article class="card letter received-letter">
+        <div class="letter-label">carta recibida</div>
         <h3>Una carta de cuando todo empezaba</h3>
         <p>Hay tantas cosas que me gustaría decirte, pero mis palabras nunca van a explicar todo lo que te amo.
 Te amo desde la primera vez que dormimos juntos (17/05/26), pero me enganche con nuestro primer beso, aunque haya sido en un boliche, sin charla previa, sin conocernos, me gustaste un montón, me encapriche, tenía tantas ganas de volver a verte, de estar con vos, pero apenas era el comienzo, porque todavía faltaban 21 días para que todos los sentimientos que tenía hacia vos dejaran de ser solo un capricho, yo te quería, te quería conmigo todo el tiempo, en el colegio le hablaba a mis amigas de vos, esperaba tu mensaje siempre, y de un momento al otro, te volviste mi vida entera, se que no soy perfecta, cometo errores, pero nunca te voy a querer lastimar. Quiero que lo nuestro sea para siempre, disfrutemos el comienzo.</p>
       </article>
-
-      <article class="card letter">
+      <article class="card letter received-letter">
+        <div class="letter-label">carta recibida</div>
         <h3>Una carta de cuando ya éramos novios</h3>
         <p>no te imaginas lo feliz que me hace ser tu novia, estos últimos dos meses siendo novios fue lo mejor que me paso, quiero seguir con vos para toda la vida, sin que me faltes ningún finde, que ahora es lo que más espero y disfruto, nuestros findes juntos, que ojala en un futuro se vuelva la vida entera juntos. Aunque tengamos nuestras diferencias siempre te voy a amar, te voy a amar más que a nadie y más que a nada en el mundo.
 Gracias por estar siempre para mí, sos un amor, me encanta como sos conmigo y el tiempo que estamos juntos, en el que me doy cuenta lo segura que estoy de que te amo muchísimo, vos sos todo para mi y nunca pero nunca lo dudes, siempre voy a estar dispuesta a demostrártelo, siempre te voy a apoyar en todo lo que te propongas, te amo amor ♥.
 Nunca pierdas tu simpleza.</p>
       </article>
     </div>
-
     <article class="card letter my-letter">
+      <div class="letter-label">carta del guía</div>
       <h3>Lo que quería decirte</h3>
       <p>hay muchas cosas de vos que seguro nunca te dije, no pq las piense, sino pq capaz cada detalle en el momento parece una boludez, hasta que me pongo a recordarlo y me doy cuenta de que esos detalles me vuelven loco y significan muchísimo para mí, aunque no te lo diga.
 
@@ -390,7 +517,6 @@ creo que cambiaste muchas cosas en mí, especialmente en la forma en la que me r
 
 supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza recuerda toda nuestra relación, cada detalle tuyo y cómo viví cada situación. tenía ganas de que pudieras ver un poco de todo lo que recuerdo y algunas cosas que capaz nunca llegué a expresar de la mejor forma.</p>
     </article>
-
     <div class="bouquet">🧸</div>
   </section>
 
@@ -400,8 +526,7 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
       <div class="eyebrow">un detalle para vos</div>
       <h2>El Jardín de las Flores</h2>
     </div>
-
-    <div class="card">
+    <div class="card garden-card">
       <div class="flowers">
         <span class="flower">🌷</span>
         <span class="flower">🌼</span>
@@ -410,11 +535,8 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
         <span class="flower">🌸</span>
         <span class="flower">🌺</span>
       </div>
-
       <p class="quote">No quiero elegir una sola flor porque sé que vos te merecés todas. aparte me encanta verte sonreír cada que aparezco con una flor diferente.</p>
-
       <div class="bouquet">💐</div>
-
       <p class="quote">ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque</p>
     </div>
   </section>
@@ -425,7 +547,6 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
       <div class="eyebrow">cosas que podemos hacer</div>
       <h2>Lista de Misiones Secundarias</h2>
     </div>
-
     <div class="list-grid">
       <article class="card">
         <h3>Misiones</h3>
@@ -437,7 +558,6 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
           <li>tener nuestra merienda pendiente</li>
         </ul>
       </article>
-
       <article class="card">
         <h3>Sueños</h3>
         <ul>
@@ -457,7 +577,6 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
       <h2>Bolucompras de Salidas</h2>
       <p>Si tenemos que estar juntos DEBEMOS pasar por aca</p>
     </div>
-
     <div class="card">
       <div class="shop-items">
         <span>🥤<small>monsters</small></span>
@@ -475,11 +594,33 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
       <h2>El Rincón de Perli</h2>
       <p>El rincón de la segunda al mando en la casa de la ley madre</p>
     </div>
-
     <div class="card dog-area">
-      <div class="dog">🐕</div>
+      <div class="perli-scene" id="perli-scene">
+        <div class="perli-house">
+          <div class="house-roof"></div>
+          <div class="house-wall">
+            <div class="house-window"></div>
+            <div class="doorway">
+              <div class="door-panel"></div>
+              <div class="perli-dog" aria-label="Perli, la segunda al mando">
+                <span class="dog-ear left"></span>
+                <span class="dog-ear right"></span>
+                <span class="dog-head">
+                  <i class="eye left"></i><i class="eye right"></i>
+                  <i class="muzzle"></i>
+                  <i class="nose"></i>
+                </span>
+                <span class="dog-body"></span>
+                <span class="dog-paw left"></span>
+                <span class="dog-paw right"></span>
+              </div>
+            </div>
+          </div>
+          <div class="house-sign">inspección oficial de la ley madre</div>
+        </div>
+      </div>
       <p>inspección oficial de la ley madre</p>
-      <button id="door">Tocar la puerta</button>
+      <button id="door" type="button">Abrir la puerta</button>
       <div id="perli-secret" class="secret-message">
         la ley madre mandó a chusmear a la segunda ley al mando
       </div>
@@ -493,7 +634,6 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
       <h2>Secretos Entre Caminos</h2>
       <p>los easter egss hay que buscaaar.</p>
     </div>
-
     <div class="card">
       <p class="quote">a veces hay que mirar un poquito mejor.</p>
     </div>
@@ -501,6 +641,5 @@ supongo que por eso hice el parque, quería q tuvieras algo de cómo mi cabeza r
 
   <footer>basado en hechos reales arre 🌱</footer>
 </main>
-
 </body>
- </html>
+</html>
