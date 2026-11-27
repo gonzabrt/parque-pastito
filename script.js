@@ -1,18 +1,18 @@
+// PARQUE PASTITO — interacciones
+"use strict";
 
-// ==========================================
-// MODO DÍA Y NOCHE
-// ==========================================
-
+// Tema manual con preferencia automática inicial según la hora.
 const modeButton = document.getElementById("mode");
+const prefersNight = () => {
+  const hour = new Date().getHours();
+  return hour >= 19 || hour < 6;
+};
 
 function updateModeButton() {
   if (!modeButton) return;
-
   const isNight = document.body.classList.contains("night");
-
-  modeButton.textContent = isNight
-    ? "☀ Cambiar a día"
-    : "☾ Cambiar a noche";
+  modeButton.textContent = isNight ? "☀ Cambiar a día" : "☾ Cambiar a noche";
+  modeButton.setAttribute("aria-pressed", String(isNight));
 }
 
 function toggleTheme() {
@@ -20,177 +20,108 @@ function toggleTheme() {
   updateModeButton();
 }
 
-if (modeButton) {
-  modeButton.addEventListener("click", toggleTheme);
-}
+if (modeButton) modeButton.addEventListener("click", toggleTheme);
+if (prefersNight()) document.body.classList.add("night");
+updateModeButton();
 
-function autoTheme() {
-  const hour = new Date().getHours();
-
-  if (hour >= 19 || hour < 6) {
-    document.body.classList.add("night");
-  }
-
-  updateModeButton();
-}
-
-autoTheme();
-
-
-// ==========================================
-// PISTAS DEL MAPA
-// ==========================================
-
+// Pistas del mapa.
 const hintButton = document.getElementById("hint-toggle");
 const parkMap = document.getElementById("park-map");
 
 if (hintButton && parkMap) {
   hintButton.addEventListener("click", () => {
-    parkMap.classList.toggle("show-hints");
-
-    const showingHints = parkMap.classList.contains("show-hints");
-
-    hintButton.textContent = showingHints
-      ? "Ocultar pistas"
-      : "Mostrar pistas";
+    const active = parkMap.classList.toggle("show-hints");
+    hintButton.textContent = active ? "Ocultar pistas" : "Mostrar pistas";
+    hintButton.setAttribute("aria-pressed", String(active));
   });
 }
 
-
-// ==========================================
-// MENSAJES DE LOS SECRETOS
-// ==========================================
-
+// Mensajes secretos.
 const messages = {
-  paw:
-    "Encontraste las huellitas de Perli. Parece que la Segunda al Mando estuvo inspeccionando esta parte del parque.",
-
-  "flower-secret":
-    "Encontraste la flor especial. ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque",
-
-  "letter-secret":
-    "Debajo de la piedra había un sobre: ojala nunca te olvides de todo lo que significas para mi, y si algun dia te olvidas este lugar siempre va a estar aca para recordartelo",
-
-  "pastito-secret":
-    "Encontraste a El Pastito. esoo despues de tanto decirme que era un pasto termine teniendo un parque"
+  paw: "Encontraste las huellitas de Perli. Parece que la Segunda al Mando estuvo inspeccionando esta parte del parque.",
+  "flower-secret": "Encontraste la flor especial. ni mi amor ni esta flor se van a marchitar nunca, tienen un lugar especial en este parque",
+  "letter-secret": "Debajo de la piedra había un sobre: ojala nunca te olvides de todo lo que significas para mi, y si algun dia te olvidas este lugar siempre va a estar aca para recordartelo",
+  "pastito-secret": "Encontraste a El Pastito. esoo despues de tanto decirme que era un pasto termine teniendo un parque"
 };
 
-function reveal(key) {
-  const notice = document.getElementById("secret-notice");
+const notice = document.getElementById("secret-notice");
+let noticeTimer;
 
-  if (!notice || !messages[key]) return;
-
+function revealSecret(key) {
+  if (!notice || !Object.prototype.hasOwnProperty.call(messages, key)) return;
   notice.textContent = messages[key];
   notice.classList.add("show");
-
-  notice.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest"
-  });
+  window.clearTimeout(noticeTimer);
+  noticeTimer = window.setTimeout(() => notice.classList.remove("show"), 12000);
+  notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 document.querySelectorAll("[data-secret]").forEach((secret) => {
-  secret.addEventListener("click", () => {
-    reveal(secret.dataset.secret);
-  });
-
+  secret.addEventListener("click", () => revealSecret(secret.dataset.secret));
   secret.addEventListener("keydown", (event) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      reveal(secret.dataset.secret);
+      revealSecret(secret.dataset.secret);
     }
   });
 });
 
-
-// ==========================================
-// PUERTA DE PERLI
-// ==========================================
-
+// Recorrido de Perli: timers agrupados y cancelables.
 const doorButton = document.getElementById("door");
 const perliSecret = document.getElementById("perli-secret");
 const perliScene = document.getElementById("perli-scene");
-
 let perliBusy = false;
 let perliTimers = [];
 
 function clearPerliTimers() {
-  perliTimers.forEach((timer) => clearTimeout(timer));
+  perliTimers.forEach(window.clearTimeout);
   perliTimers = [];
 }
 
+function schedulePerli(callback, delay) {
+  perliTimers.push(window.setTimeout(callback, delay));
+}
+
 function startPerliVisit() {
-  if (!doorButton || !perliSecret || !perliScene || perliBusy) {
-    return;
-  }
-
+  if (!doorButton || !perliSecret || !perliScene || perliBusy) return;
   perliBusy = true;
-
   clearPerliTimers();
-
-  perliScene.classList.remove(
-    "door-ajar",
-    "returning"
-  );
-
+  perliScene.classList.remove("door-ajar", "returning");
   perliScene.classList.add("opening");
-
   doorButton.disabled = true;
   doorButton.textContent = "Perli está saliendo...";
-
   perliSecret.classList.remove("show");
 
-  // Perli termina de salir.
-
-  perliTimers.push(setTimeout(() => {
+  schedulePerli(() => {
     perliSecret.classList.add("show");
     doorButton.textContent = "Perli está inspeccionando";
-  }, 1500));
+  }, 1500);
 
-  // Perli vuelve a entrar.
-
-  perliTimers.push(setTimeout(() => {
+  schedulePerli(() => {
     perliScene.classList.add("returning");
     doorButton.textContent = "Perli está volviendo a entrar";
-  }, 4200));
+  }, 4200);
 
-  // La puerta queda entreabierta.
-
-  perliTimers.push(setTimeout(() => {
+  schedulePerli(() => {
     perliScene.classList.remove("opening", "returning");
     perliScene.classList.add("door-ajar");
-
     doorButton.disabled = false;
     doorButton.textContent = "Abrir la puerta";
-
     perliBusy = false;
-  }, 5600));
+    perliTimers = [];
+  }, 5600);
 }
 
-if (doorButton) {
-  doorButton.addEventListener("click", startPerliVisit);
-}
+if (doorButton) doorButton.addEventListener("click", startPerliVisit);
 
-
-// ==========================================
-// NAVEGACIÓN DEL MAPA
-// ==========================================
-
+// Navegación desde los sectores del mapa.
 document.querySelectorAll(".map-link").forEach((link) => {
   link.addEventListener("click", (event) => {
     const href = link.getAttribute("href");
-
     if (!href || !href.startsWith("#")) return;
-
     const destination = document.querySelector(href);
-
     if (!destination) return;
-
     event.preventDefault();
-
-    destination.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
+    destination.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
