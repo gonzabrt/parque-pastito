@@ -1,1135 +1,220 @@
+/* PARQUE PASTITO — hoja de estilos reconstruida */
 :root {
-  --paper: #f5f0df;
+  color-scheme: light;
+  --paper: #f3efdf;
+  --paper-deep: #e7e2cd;
   --ink: #354638;
-  --muted: #687865;
+  --muted: #71806c;
   --leaf: #78936d;
   --deep: #46644d;
   --pink: #d99b9a;
   --gold: #e4bd69;
   --card: #fffdf4;
   --line: #d9dfc9;
+  --shadow: 0 18px 45px rgba(49, 70, 48, .12);
 }
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: "DM Sans", sans-serif;
-  transition: background .7s, color .7s;
+  margin: 0; color: var(--ink); background:
+    radial-gradient(ellipse at 12% 8%, rgba(255,255,255,.62), transparent 28rem),
+    linear-gradient(180deg, var(--paper), #eee9d8 70%, #e8e5d3);
+  font-family: "DM Sans", sans-serif; transition: background .6s, color .6s;
 }
-
 body.night {
-  --paper: #202d2b;
-  --ink: #edf0dc;
-  --muted: #bdc9b2;
-  --card: #2d3c36;
-  --line: #526657;
+  color-scheme: dark;
+  --paper: #202d2b; --paper-deep: #293a32; --ink: #edf0dc; --muted: #bdc9b2;
+  --card: #2d3c36; --line: #526657; --shadow: 0 18px 45px rgba(0,0,0,.22);
+  background: radial-gradient(ellipse at 50% 0%, #344a3c, #202d2b 55%);
 }
-
-header {
-  text-align: center;
-  padding: 32px 16px 12px;
+button { font: inherit; cursor: pointer; }
+button:focus-visible, a:focus-visible, .hotspot:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.site-header { text-align: center; padding: 48px 18px 22px; }
+.eyebrow { color: var(--muted); font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; }
+.site-header h1 { margin: 8px 0 0; font: 500 clamp(3rem, 9vw, 6rem)/.98 "Fraunces", serif; letter-spacing: -.055em; }
+.site-header > p { margin: 13px 0 18px; color: var(--muted); }
+.theme-button, .map-hint button, .perli-copy button {
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  padding: 10px 17px; border-radius: 999px; box-shadow: 0 5px 15px rgba(50,70,48,.08);
+  transition: transform .2s, box-shadow .2s, background .2s;
 }
-
-.eyebrow {
-  font-size: .72rem;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-h1, h2, h3 {
-  font-family: "Fraunces", serif;
-  font-weight: 500;
-}
-
-h1 {
-  font-size: clamp(2.8rem, 8vw, 5.2rem);
-  margin: 7px 0 0;
-  letter-spacing: -.05em;
-}
-
-header p {
-  color: var(--muted);
-  margin: 8px auto;
-}
-
-.top-actions {
-  margin: 16px;
-}
-
-button {
-  border: 1px solid var(--line);
-  background: var(--card);
-  color: var(--ink);
-  padding: 10px 15px;
-  border-radius: 99px;
-  font: inherit;
-  cursor: pointer;
-  transition: transform .2s, background .2s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-button:focus-visible,
-a:focus-visible,
-.hotspot:focus-visible {
-  outline: 3px solid var(--gold);
-  outline-offset: 4px;
-}
-
-main {
-  max-width: 1120px;
-  margin: auto;
-  padding: 10px 18px 70px;
-}
-
-.intro {
-  text-align: center;
-  margin: 12px auto 25px;
-  max-width: 650px;
-}
-
-.intro h2 {
-  font-size: 1.8rem;
-  margin: 0 0 7px;
-}
-
-.intro p {
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-/* MAPA */
-
+.theme-button:hover, .map-hint button:hover, .perli-copy button:hover { transform: translateY(-2px); box-shadow: 0 9px 20px rgba(50,70,48,.14); }
+main { width: min(1160px, 100%); margin: 0 auto; padding: 0 24px 64px; }
+.welcome { text-align: center; padding: 18px 12px 28px; }
+.welcome h2 { margin: 8px 0; font: 500 clamp(1.8rem, 4vw, 2.5rem) "Fraunces", serif; }
+.welcome > p:last-child { margin: 0; color: var(--muted); line-height: 1.7; }
+.map-section { margin: 0 auto 76px; }
 .map-frame {
-  background: #e6e0c8;
-  padding: 12px;
-  border-radius: 30px;
-  box-shadow: 0 18px 48px #354b3220;
-  border: 1px solid #fff9e7;
+  padding: 14px; border: 1px solid rgba(255,255,255,.8); border-radius: 30px;
+  background: linear-gradient(145deg, #eee9d6, #dcd9c4); box-shadow: var(--shadow);
+}
+body.night .map-frame { background: #34483a; border-color: #50634e; }
+.map-topline { display: flex; justify-content: space-between; padding: 2px 7px 12px; color: #64765e; font-size: .66rem; font-weight: 700; letter-spacing: .13em; }
+body.night .map-topline { color: #d1ddc5; }
+.map { position: relative; overflow: hidden; isolation: isolate; border-radius: 21px; background: #a8c58f; box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
+.park-svg { display: block; width: 100%; height: auto; position: relative; z-index: 2; }
+.map-vignette { position: absolute; inset: 0; z-index: 3; pointer-events: none; box-shadow: inset 0 0 55px rgba(45,70,43,.15); }
+.path-edge { fill: none; stroke: #b5a17b; stroke-width: 67; stroke-linecap: round; stroke-linejoin: round; }
+.path-fill { fill: none; stroke: url(#path); stroke-width: 54; stroke-linecap: round; stroke-linejoin: round; }
+.stream .water-shadow { fill: none; stroke: #5e9288; stroke-width: 57; stroke-linecap: round; opacity: .43; }
+.stream .water-line { fill: none; stroke: url(#river); stroke-width: 43; stroke-linecap: round; stroke-dasharray: 20 12; animation: river-flow 14s linear infinite; }
+.stream .water-glint { fill: none; stroke: #e3f5e8; stroke-width: 4; stroke-linecap: round; opacity: .8; animation: glint 4s ease-in-out infinite; }
+@keyframes river-flow { to { stroke-dashoffset: -256; } }
+@keyframes glint { 50% { opacity: .28; } }
+.scenery use { transform-box: fill-box; transform-origin: bottom center; }
+.flower-meadow use { transform-box: fill-box; transform-origin: bottom center; animation: flower-sway 4s ease-in-out infinite; }
+.flower-meadow use:nth-child(even) { animation-delay: -1.4s; }
+@keyframes flower-sway { 0%,100% { rotate: -2deg; } 50% { rotate: 3deg; } }
+.pastito { transform-box: fill-box; transform-origin: bottom center; animation: pastito-bounce 3s ease-in-out infinite; }
+@keyframes pastito-bounce { 0%,100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+.paw-trail { animation: paw-fade 5s ease-in-out infinite; }
+@keyframes paw-fade { 50% { opacity: .3; } }
+.butterfly { animation: butterfly-flight 9s ease-in-out infinite alternate; }
+@keyframes butterfly-flight { 50% { translate: 16px -13px; } 100% { translate: -10px 8px; } }
+.fireflies { animation: firefly-glow 3s ease-in-out infinite; }
+@keyframes firefly-glow { 50% { opacity: .22; } }
+.sign-text { font: 700 13px "DM Sans", sans-serif; fill: #fff4d9; pointer-events: none; }
+.map-label-small { font: 700 13px "DM Sans", sans-serif; fill: #3e5d3d; }
+.guide-name { font: 700 14px "DM Sans", sans-serif; fill: #354638; stroke: #f6f0d9; stroke-width: 3px; paint-order: stroke; }
+.map-link { cursor: pointer; }
+.map-link ellipse { fill: transparent; stroke: transparent; transition: fill .2s, stroke .2s; }
+.map-link:hover ellipse, .map-link:focus ellipse { fill: #fff9e7; fill-opacity: .14; stroke: #fff9e7; stroke-opacity: .65; stroke-width: 3; }
+.hotspot { cursor: pointer; outline: none; }
+.secret-hit { fill: #fff; fill-opacity: .01; stroke: transparent; stroke-width: 2; }
+.secret-icon-bg { fill: #fff6d9; stroke: #987b4f; stroke-width: 2; opacity: .96; transition: transform .2s, fill .2s; transform-box: fill-box; transform-origin: center; }
+.secret-symbol { font: 22px sans-serif; pointer-events: none; }
+.hotspot:hover .secret-icon-bg, .hotspot:focus-visible .secret-icon-bg { fill: #fff; transform: scale(1.18); }
+.secret-dot { opacity: .9; }
+.map.show-hints .hotspot .secret-icon-bg { animation: secret-pulse 1.5s ease-in-out infinite; }
+@keyframes secret-pulse { 50% { filter: drop-shadow(0 0 8px #fff2a2); transform: scale(1.16); } }
+.map-hint { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 7px 2px; color: #5d745b; font-size: .84rem; }
+body.night .map-hint { color: #d5e1c8; }
+.map-hint button { padding: 8px 13px; font-size: .78rem; flex-shrink: 0; }
+.secret-message { display: none; margin: 13px auto 2px; max-width: 720px; padding: 15px 18px; border: 1px solid #d7dfc5; border-radius: 16px; background: #edf0df; color: #40543f; line-height: 1.65; }
+.secret-message.show { display: block; animation: appear .35s ease both; }
+body.night .secret-message { background: #3d5142; color: #edf0dc; border-color: #60745e; }
+@keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.map-caption { margin: 12px 0 0; text-align: center; color: var(--muted); font: italic 1rem "Fraunces", serif; }
+
+.content-section { position: relative; margin: 78px 0; scroll-margin-top: 22px; }
+.content-section::before { content: ""; position: absolute; z-index: -1; inset: -24px -18px; border-radius: 34px; background: rgba(255,253,244,.38); border: 1px solid rgba(255,255,255,.42); }
+body.night .content-section::before { background: rgba(65,85,68,.22); border-color: rgba(116,143,111,.2); }
+.section-head { text-align: center; margin: 0 auto 25px; max-width: 760px; }
+.section-head h2 { margin: 8px 0; font: 500 clamp(1.9rem, 5vw, 2.8rem)/1.08 "Fraunces", serif; letter-spacing: -.025em; }
+.section-head p { margin: 8px auto 0; color: var(--muted); line-height: 1.7; }
+.timeline { display: grid; gap: 17px; }
+.memory-card, .letter-card, .mission-card, .shop-window, .secret-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 23px;
+  box-shadow: 0 10px 28px rgba(49,70,48,.08);
+}
+.memory-card { display: grid; grid-template-columns: 145px 1fr; gap: 22px; padding: clamp(18px, 3.5vw, 30px); }
+.date { align-self: start; padding: 16px 12px; border-radius: 17px; background: #e7eddc; color: #476149; text-align: center; font-weight: 700; }
+.date span { display: block; font-size: .75rem; font-weight: 500; margin-top: 3px; }
+.memory-card h3, .letter-card h3, .mission-card h3 { margin: 0 0 12px; font: 500 1.45rem "Fraunces", serif; }
+.memory-card p, .letter-card p { margin: 0; line-height: 1.85; white-space: pre-line; }
+body.night .date { background: #3d5142; color: #e8eedb; }
+.letters-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
+.letter-card { padding: clamp(19px, 3.5vw, 30px); border-left: 5px solid var(--pink); }
+.letter-card p { font: 1.02rem/1.85 "Fraunces", serif; }
+.letter-label { color: var(--muted); text-transform: uppercase; letter-spacing: .15em; font-size: .65rem; font-weight: 700; margin-bottom: 13px; }
+.my-letter { margin-top: 18px; border-left-color: var(--gold); }
+.my-letter .letter-label { color: #a17b37; }
+.teddy { text-align: center; font-size: 3rem; margin: 25px 0 0; }
+.garden-layout { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 28px; padding: clamp(20px,4vw,38px); border-radius: 28px; background: linear-gradient(135deg, #e6edd8, #fff9e9); border: 1px solid #d6dfc8; box-shadow: var(--shadow); }
+body.night .garden-layout { background: linear-gradient(135deg, #344b3b, #3b4c3c); border-color: #536b56; }
+.garden-illustration { min-height: 230px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 14px; padding: 20px; border-radius: 50% 45% 48% 42%; background: radial-gradient(ellipse, #b6cf9a, #dce8c5 68%, transparent 70%); }
+.garden-illustration span { font-size: clamp(2.3rem, 6vw, 4rem); filter: drop-shadow(0 5px 3px rgba(52,75,46,.16)); animation: flower-sway 4s ease-in-out infinite; }
+.garden-illustration span:nth-child(even) { animation-delay: -1.5s; }
+.garden-copy { display: grid; gap: 18px; }
+.quote { margin: 0; text-align: center; font: 500 clamp(1.1rem, 2.5vw, 1.35rem)/1.7 "Fraunces", serif; }
+.garden-copy .quote + .quote { color: var(--deep); }
+body.night .garden-copy .quote + .quote { color: #e4d49e; }
+.mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.mission-card { padding: clamp(22px,4vw,34px); background: linear-gradient(145deg, var(--card), #f4f0df); }
+body.night .mission-card { background: linear-gradient(145deg, #304239, #293a32); }
+.dream-card { background: linear-gradient(145deg, #fffaf0, #f2e6df); }
+body.night .dream-card { background: linear-gradient(145deg, #443e3b, #354039); }
+.card-kicker { display: block; margin-bottom: 9px; color: var(--muted); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; }
+.mission-card ul { margin: 0; padding-left: 21px; }
+.mission-card li { padding: 7px 0; line-height: 1.55; }
+.mission-card li::marker { color: var(--leaf); }
+.shop-window { padding: clamp(24px,4vw,38px); background: linear-gradient(145deg, #fff7e7, #f2e6d2); }
+body.night .shop-window { background: linear-gradient(145deg, #3d493c, #354239); }
+.shop-items { display: flex; justify-content: center; align-items: center; gap: clamp(25px,7vw,70px); flex-wrap: wrap; }
+.shop-items span { display: grid; gap: 8px; text-align: center; font-size: 3rem; }
+.shop-items small { color: var(--muted); font-size: .8rem; }
+.shop-window .quote { margin-top: 24px; }
+.perli-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 20px; padding: 20px; border-radius: 28px; background: linear-gradient(145deg, #e8eddc, #f8f0dc); border: 1px solid #d6dfc8; box-shadow: var(--shadow); }
+body.night .perli-layout { background: linear-gradient(145deg, #354b3d, #3b4538); border-color: #536b56; }
+.perli-scene { display: flex; justify-content: center; align-items: end; min-height: 310px; padding: 25px 10px 15px; overflow: hidden; }
+.perli-house { position: relative; width: min(100%, 330px); padding-top: 80px; }
+.house-roof { position: absolute; z-index: 2; top: 8px; left: 50%; width: 230px; height: 125px; transform: translateX(-50%) rotate(45deg) skew(-8deg,-8deg); background: linear-gradient(135deg,#bd7958,#80503e); border: 5px solid #704735; border-radius: 12px 0 0; }
+.house-wall { position: relative; z-index: 3; width: 260px; height: 190px; margin: 0 auto; background: #d4ae82; border: 5px solid #886247; border-radius: 5px; box-shadow: 0 14px 25px rgba(53,75,50,.2); }
+.house-window { position: absolute; top: 25px; right: 22px; width: 42px; height: 48px; border: 4px solid #886247; border-radius: 5px; background: #f7df9d; }
+.house-window::before,.house-window::after { content:""; position:absolute; background:#a36d46; }
+.house-window::before { width:3px; height:100%; left:50%; }
+.house-window::after { height:3px; width:100%; top:50%; }
+.doorway { position:absolute; bottom:0; left:50%; width:88px; height:132px; transform:translateX(-50%); overflow:hidden; border-radius:48px 48px 0 0; background:#684733; }
+.door-panel { position:absolute; inset:0; z-index:4; transform-origin:left center; background:linear-gradient(90deg,#9a6c48,#bd9061); border:4px solid #704c35; transition:transform 1.1s ease; }
+.door-panel::after { content:""; position:absolute; right:12px; top:55%; width:8px; height:8px; border-radius:50%; background:#e6c778; }
+.perli-dog { position:absolute; z-index:3; bottom:0; left:50%; width:78px; height:103px; transform:translateX(-50%) translateY(35px); opacity:0; transition:transform .8s .35s, opacity .4s .35s; }
+.dog-head { position:absolute; top:9px; left:12px; width:55px; height:54px; border-radius:48% 48% 45% 45%; background:#c88f58; box-shadow:inset 7px 0 #d9aa73; }
+.dog-ear { position:absolute; top:0; width:22px; height:34px; background:#ad7448; border-radius:80% 20% 55% 45%; }
+.dog-ear.left { left:8px; transform:rotate(-22deg); }
+.dog-ear.right { right:4px; transform:rotate(22deg) scaleX(-1); }
+.eye { position:absolute; top:21px; width:6px; height:7px; border-radius:50%; background:#28231d; }
+.eye.left { left:13px; } .eye.right { right:13px; }
+.muzzle { position:absolute; left:16px; top:32px; width:25px; height:16px; border-radius:50%; background:#e4c49c; }
+.nose { position:absolute; left:25px; top:31px; width:8px; height:6px; border-radius:50%; background:#28231d; }
+.dog-body { position:absolute; bottom:0; left:15px; width:50px; height:55px; border-radius:48% 48% 25% 25%; background:#bd8550; }
+.dog-paw { position:absolute; bottom:0; width:17px; height:27px; border-radius:50%; background:#d6a36d; }
+.dog-paw.left { left:12px; } .dog-paw.right { right:12px; }
+.house-sign { margin-top:12px; color:var(--muted); text-align:center; font:1rem "Fraunces",serif; }
+.perli-scene.opening .door-panel { transform:perspective(300px) rotateY(-105deg); }
+.perli-scene.opening .perli-dog { transform:translateX(-50%) translateY(0); opacity:1; }
+.perli-scene.returning .perli-dog { transform:translateX(-50%) translateY(35px); opacity:0; }
+.perli-scene.returning .door-panel { transform:perspective(300px) rotateY(-35deg); }
+.perli-scene.door-ajar .door-panel { transform:perspective(300px) rotateY(-35deg); }
+.perli-copy { text-align:center; }
+.perli-copy > p { color:var(--muted); font:1.1rem "Fraunces",serif; }
+.perli-copy .secret-message { text-align:left; }
+.secret-card { padding:34px 20px; background:linear-gradient(145deg,#fffdf4,#f1ead7); }
+body.night .secret-card { background:linear-gradient(145deg,#35483b,#2d3c36); }
+.secret-stars { text-align:center; margin-top:15px; color:var(--gold); font-size:1.5rem; letter-spacing:.4em; }
+footer { padding: 25px 16px 40px; text-align:center; color:var(--muted); font-size:.85rem; }
+
+body.night .park-svg { filter: brightness(.78) saturate(.83); }
+body.night .fireflies { filter: brightness(1.8); opacity:1; }
+body.night .secret-icon-bg { fill:#f7e9b9; }
+body.night .guide-name { fill:#fff4d9; stroke:#344a3c; }
+body.night .map { background:#526c56; }
+body.night .map-vignette { box-shadow:inset 0 0 70px rgba(12,25,18,.35); }
+
+@media (max-width: 760px) {
+  .site-header { padding-top:34px; }
+  main { padding-left:15px; padding-right:15px; }
+  .map-frame { padding:8px; border-radius:22px; }
+  .map { border-radius:15px; }
+  .map-topline { font-size:.58rem; }
+  .content-section { margin:60px 0; }
+  .content-section::before { inset:-15px -7px; border-radius:25px; }
+  .letters-grid, .mission-grid, .garden-layout, .perli-layout { grid-template-columns:1fr; }
+  .garden-illustration { min-height:190px; }
+  .perli-scene { min-height:290px; }
+}
+@media (max-width: 520px) {
+  .site-header h1 { font-size:clamp(2.8rem,14vw,4rem); }
+  .welcome { padding-top:10px; }
+  .map-hint { align-items:flex-start; font-size:.75rem; }
+  .map-hint button { padding:8px 10px; font-size:.72rem; }
+  .memory-card { grid-template-columns:1fr; gap:13px; }
+  .date { width:fit-content; min-width:135px; text-align:left; padding:11px 14px; }
+  .letters-grid { gap:13px; }
+  .letter-card { padding:20px; }
+  .perli-house { transform:scale(.88); transform-origin:top center; margin-bottom:-20px; }
+  .perli-scene { min-height:265px; }
+  .shop-items { gap:24px; }
 }
-
-.map {
-  position: relative;
-  overflow: hidden;
-  border-radius: 22px;
-  background: #b8d1a2;
-  isolation: isolate;
-}
-
-.map svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.paths path {
-  transition: opacity .4s;
-}
-
-.stream path:nth-child(2) {
-  stroke-dasharray: 22 15;
-  animation: water-flow 12s linear infinite;
-}
-
-.stream path:nth-child(3) {
-  animation: water-shimmer 4s ease-in-out infinite;
-}
-
-@keyframes water-flow {
-  to {
-    stroke-dashoffset: -148;
-  }
-}
-
-@keyframes water-shimmer {
-  50% {
-    opacity: .35;
-  }
-}
-
-.tree,
-.bush {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-}
-
-.flower-meadow use,
-.little-flowers use {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-  animation: flower-sway 4s ease-in-out infinite;
-}
-
-.flower-meadow use:nth-child(even),
-.little-flowers use:nth-child(even) {
-  animation-delay: -1.5s;
-}
-
-@keyframes flower-sway {
-  0%, 100% { rotate: -2deg; }
-  50% { rotate: 3deg; }
-}
-
-.butterfly {
-  animation: butterfly-flight 9s ease-in-out infinite alternate;
-  transform-box: fill-box;
-}
-
-@keyframes butterfly-flight {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(20px, -16px); }
-  100% { transform: translate(-12px, 10px); }
-}
-
-.fireflies {
-  animation: firefly-glow 3s ease-in-out infinite;
-}
-
-@keyframes firefly-glow {
-  0%, 100% { opacity: .9; }
-  50% { opacity: .25; }
-}
-
-.sign-text {
-  font: 600 13px "DM Sans", sans-serif;
-  fill: #fff4d9;
-  pointer-events: none;
-}
-
-.map-link {
-  cursor: pointer;
-}
-
-.map-link ellipse {
-  fill: transparent;
-  stroke: transparent;
-  transition: fill .2s, stroke .2s;
-}
-
-.map-link:hover ellipse,
-.map-link:focus ellipse {
-  fill: #fff9e7;
-  fill-opacity: .12;
-  stroke: #fff9e7;
-  stroke-opacity: .55;
-  stroke-width: 3;
-}
-
-.hotspot {
-  cursor: pointer;
-  outline: none;
-}
-
-.hotspot .target {
-  fill: #fff;
-  fill-opacity: .01;
-  stroke: transparent;
-  stroke-width: 3;
-  transition: fill-opacity .2s, stroke .2s;
-}
-
-.hotspot:hover .target,
-.hotspot:focus-visible .target {
-  fill-opacity: .18;
-  stroke: #fff9e7;
-  filter: drop-shadow(0 3px 4px #30452d66);
-}
-
-.secret-dot {
-  opacity: .01;
-  pointer-events: none;
-  transition: opacity .25s;
-}
-
-.map.show-hints .secret-dot {
-  opacity: .85;
-}
-
-.paw-trail {
-  animation: paw-fade 5s ease-in-out infinite;
-}
-
-@keyframes paw-fade {
-  50% { opacity: .35; }
-}
-
-.pastito {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-  animation: pastito-bounce 3s ease-in-out infinite;
-}
-
-.pastito-small {
-  transform-box: fill-box;
-  transform-origin: bottom center;
-  animation: pastito-bounce 3.5s ease-in-out infinite;
-}
-
-@keyframes pastito-bounce {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -5px; }
-}
-
-.map-hint {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-  padding: 11px 6px 2px;
-  color: #5d745b;
-  font-size: .84rem;
-}
-
-.map-hint button {
-  padding: 7px 12px;
-  font-size: .8rem;
-  flex-shrink: 0;
-}
-
-/* SECCIONES */
-
-section {
-  scroll-margin-top: 18px;
-  margin: 38px 0;
-}
-
-.section-head {
-  text-align: center;
-  margin-bottom: 18px;
-}
-
-.section-head .eyebrow {
-  margin-bottom: 6px;
-}
-
-.section-head h2 {
-  font-size: 2.2rem;
-  margin: 0;
-}
-
-.section-head p {
-  color: var(--muted);
-  margin: 7px auto;
-  max-width: 650px;
-  line-height: 1.65;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  padding: clamp(18px, 4vw, 30px);
-  box-shadow: 0 8px 25px #314a3510;
-}
-
-/* RECORRIDO */
-
-.timeline {
-  display: grid;
-  gap: 16px;
-}
-
-.memory {
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 18px;
-  align-items: start;
-}
-
-.date {
-  background: #e7eddc;
-  color: #476149;
-  border-radius: 18px;
-  padding: 16px;
-  text-align: center;
-  font-weight: 700;
-}
-
-.date span {
-  display: block;
-  font-size: .75rem;
-  font-weight: 500;
-}
-
-.memory p,
-.letter p {
-  line-height: 1.8;
-  white-space: pre-line;
-  margin: 0 0 12px;
-}
-
-.memory h3 {
-  margin: 0 0 10px;
-  font-size: 1.35rem;
-}
-
-/* CARTAS */
-
-.letters {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.letter {
-  border-left: 4px solid var(--pink);
-  position: relative;
-}
-
-.letter h3 {
-  margin: 0 0 14px;
-}
-
-.letter p {
-  font-family: "Fraunces", serif;
-  font-size: 1.03rem;
-}
-
-.letter-label {
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: .14em;
-  font-size: .65rem;
-  margin-bottom: 12px;
-}
-
-.my-letter {
-  margin-top: 16px;
-  border-left-color: var(--gold);
-}
-
-.my-letter .letter-label {
-  color: #a17b37;
-}
-
-/* MISIONES */
-
-.list-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.list-grid h3 {
-  margin-top: 0;
-}
-
-.list-grid li {
-  margin: 12px 0;
-  line-height: 1.5;
-}
-
-.list-grid ul {
-  padding-left: 22px;
-}
-
-/* FLORES */
-
-.garden-card {
-  overflow: hidden;
-}
-
-.flowers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.flower {
-  font-size: 2rem;
-  display: inline-block;
-  animation: sway 3s ease-in-out infinite;
-}
-
-.flower:nth-child(even) {
-  animation-delay: .8s;
-}
-
-@keyframes sway {
-  50% { transform: rotate(10deg) translateY(-3px); }
-}
-
-.quote {
-  text-align: center;
-  font-family: "Fraunces", serif;
-  font-size: 1.25rem;
-  line-height: 1.65;
-  max-width: 720px;
-  margin: auto;
-}
-
-.bouquet {
-  text-align: center;
-  font-size: 3rem;
-  margin: 14px;
-}
-
-/* BOLUCOMPRAS */
-
-.shop-items {
-  display: flex;
-  justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  font-size: 2.5rem;
-}
-
-.shop-items span {
-  display: grid;
-  gap: 5px;
-  text-align: center;
-}
-
-.shop-items small {
-  font-size: .8rem;
-  color: var(--muted);
-}
-
-.shop-quote {
-  margin-top: 20px;
-}
-
-/* PERLI Y SU CASITA */
-
-.dog-area {
-  text-align: center;
-}
-
-.perli-scene {
-  display: flex;
-  justify-content: center;
-  padding: 25px 10px 35px;
-  overflow: hidden;
-}
-
-.perli-house {
-  position: relative;
-  width: min(100%, 330px);
-  padding-top: 80px;
-}
-
-.house-roof {
-  position: absolute;
-  z-index: 2;
-  top: 8px;
-  left: 50%;
-  width: 230px;
-  height: 125px;
-  transform: translateX(-50%) rotate(45deg) skew(-8deg, -8deg);
-  background: linear-gradient(135deg, #bd7958, #80503e);
-  border: 5px solid #704735;
-  border-radius: 12px 0 0;
-}
-
-.house-wall {
-  position: relative;
-  z-index: 3;
-  width: 260px;
-  height: 190px;
-  margin: 0 auto;
-  background: #d4ae82;
-  border: 5px solid #886247;
-  border-radius: 5px;
-  box-shadow: 0 14px 25px #354b3220;
-}
-
-.house-window {
-  position: absolute;
-  top: 25px;
-  right: 22px;
-  width: 42px;
-  height: 48px;
-  border: 4px solid #886247;
-  border-radius: 5px;
-  background: #f7df9d;
-}
-
-.house-window::before,
-.house-window::after {
-  content: "";
-  position: absolute;
-  background: #a36d46;
-}
-
-.house-window::before {
-  width: 3px;
-  height: 100%;
-  left: 50%;
-}
-
-.house-window::after {
-  height: 3px;
-  width: 100%;
-  top: 50%;
-}
-
-.doorway {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 88px;
-  height: 132px;
-  transform: translateX(-50%);
-  overflow: hidden;
-  border-radius: 48px 48px 0 0;
-  background: #684733;
-}
-
-.door-panel {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  transform-origin: left center;
-  background: linear-gradient(90deg, #9a6c48, #bd9061);
-  border: 4px solid #704c35;
-  transition: transform 1.1s ease;
-}
-
-.door-panel::after {
-  content: "";
-  position: absolute;
-  right: 12px;
-  top: 55%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #e6c778;
-}
-
-.perli-dog {
-  position: absolute;
-  z-index: 3;
-  bottom: 0;
-  left: 50%;
-  width: 78px;
-  height: 103px;
-  transform: translateX(-50%) translateY(35px);
-  opacity: 0;
-  transition: transform .8s .35s, opacity .4s .35s;
-}
-
-.dog-head {
-  position: absolute;
-  top: 9px;
-  left: 12px;
-  width: 55px;
-  height: 54px;
-  border-radius: 48% 48% 45% 45%;
-  background: #c88f58;
-  box-shadow: inset 7px 0 #d9aa73;
-}
-
-.dog-ear {
-  position: absolute;
-  top: 0;
-  width: 22px;
-  height: 34px;
-  background: #ad7448;
-  border-radius: 80% 20% 55% 45%;
-}
-
-.dog-ear.left {
-  left: 8px;
-  transform: rotate(-22deg);
-}
-
-.dog-ear.right {
-  right: 4px;
-  transform: rotate(22deg) scaleX(-1);
-}
-
-.eye {
-  position: absolute;
-  top: 21px;
-  width: 6px;
-  height: 7px;
-  border-radius: 50%;
-  background: #28231d;
-}
-
-.eye.left { left: 13px; }
-.eye.right { right: 13px; }
-
-.muzzle {
-  position: absolute;
-  left: 16px;
-  top: 32px;
-  width: 25px;
-  height: 16px;
-  border-radius: 50%;
-  background: #e4c49c;
-}
-
-.nose {
-  position: absolute;
-  left: 25px;
-  top: 31px;
-  width: 8px;
-  height: 6px;
-  border-radius: 50%;
-  background: #28231d;
-}
-
-.dog-body {
-  position: absolute;
-  bottom: 0;
-  left: 15px;
-  width: 50px;
-  height: 55px;
-  border-radius: 48% 48% 25% 25%;
-  background: #bd8550;
-}
-
-.dog-paw {
-  position: absolute;
-  bottom: 0;
-  width: 17px;
-  height: 27px;
-  border-radius: 50%;
-  background: #d6a36d;
-}
-
-.dog-paw.left { left: 12px; }
-.dog-paw.right { right: 12px; }
-
-.house-sign {
-  margin-top: 12px;
-  color: var(--muted);
-  font-family: "Fraunces", serif;
-  font-size: 1rem;
-}
-
-.perli-scene.opening .door-panel {
-  transform: perspective(300px) rotateY(-105deg);
-}
-
-.perli-scene.opening .perli-dog {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-.perli-scene.returning .perli-dog {
-  transform: translateX(-50%) translateY(35px);
-  opacity: 0;
-}
-
-.perli-scene.returning .door-panel {
-  transform: perspective(300px) rotateY(-35deg);
-}
-
-/* MENSAJES SECRETOS */
-
-.secret-message {
-  display: none;
-  margin: 14px auto 0;
-  padding: 14px;
-  border-radius: 16px;
-  background: #edf0df;
-  color: #40543f;
-  max-width: 620px;
-  line-height: 1.6;
-}
-
-.secret-message.show {
-  display: block;
-  animation: reveal-message .35s ease both;
-}
-
-@keyframes reveal-message {
-  from { opacity: 0; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* NOCHE */
-
-body.night .map-frame {
-  background: #394c3d;
-  border-color: #526657;
-}
-
-body.night .map {
-  background: #526c56;
-}
-
-body.night .map svg {
-  filter: brightness(.76) saturate(.85);
-}
-
-body.night .map .fireflies {
-  filter: brightness(1.6);
-  opacity: 1;
-}
-
-body.night .map .secret-dot {
-  filter: brightness(1.5);
-}
-
-body.night .map-hint {
-  color: #d5e1c8;
-}
-
-body.night .date {
-  background: #3d5142;
-  color: #e8eedb;
-}
-
-body.night .secret-message {
-  background: #3d5142;
-  color: #edf0dc;
-}
-
-body.night .house-wall {
-  border-color: #526657;
-}
-
-body.night .house-sign {
-  color: #bdc9b2;
-}
-
-/* PIE */
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  padding: 30px 10px;
-  font-size: .85rem;
-}
-
-/* CELULARES */
-
-@media (max-width: 650px) {
-  header {
-    padding-top: 25px;
-  }
-
-  main {
-    padding-left: 12px;
-    padding-right: 12px;
-  }
-
-  .map-frame {
-    padding: 6px;
-    border-radius: 20px;
-  }
-
-  .map {
-    border-radius: 15px;
-  }
-
-  .map-hint {
-    font-size: .76rem;
-    align-items: flex-start;
-  }
-
-  .map-hint button {
-    padding: 7px 9px;
-  }
-
-  .memory {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .date {
-    text-align: left;
-    width: fit-content;
-    min-width: 135px;
-  }
-
-  .letters,
-  .list-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-head h2 {
-    font-size: 1.9rem;
-  }
-
-  .quote {
-    font-size: 1.12rem;
-  }
-
-  .perli-house {
-    transform: scale(.88);
-    transform-origin: top center;
-    margin-bottom: -20px;
-  }
-
-  .card {
-    border-radius: 19px;
-  }
-}
-
-@media (max-width: 390px) {
-  .map-hint {
-    flex-direction: column;
-  }
-
-  .map-hint button {
-    align-self: flex-end;
-  }
-
-  .shop-items {
-    gap: 18px;
-  }
-}
-
-/* ACCESIBILIDAD: RESPETAR REDUCCIÓN DE MOVIMIENTO */
-
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
-}
-.perli-scene.door-ajar .door-panel {
-  transform: perspective(300px) rotateY(-35deg);
-}
-/* ==========================================
-   REDISEÑO DEL PARQUE — PROFUNDIDAD Y RELIEVE
-========================================== */
-
-.map {
-  background:
-    radial-gradient(ellipse at 18% 20%, #dce8bd 0%, transparent 34%),
-    radial-gradient(ellipse at 78% 70%, #9fbd83 0%, transparent 42%),
-    linear-gradient(145deg, #c9dda9, #a9ca91 55%, #91b47c);
-  box-shadow:
-    inset 0 0 45px #54744a30,
-    inset 0 0 12px #f8f4d5a0,
-    0 12px 28px #344d3330;
-}
-
-/* Textura sutil del terreno */
-.map::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: .23;
-  background:
-    radial-gradient(ellipse at 15% 25%, #f5f0d0 0 2px, transparent 3px),
-    radial-gradient(ellipse at 72% 18%, #587d4e 0 2px, transparent 3px),
-    radial-gradient(ellipse at 45% 72%, #e9edc7 0 2px, transparent 3px),
-    radial-gradient(ellipse at 88% 55%, #557c4c 0 2px, transparent 3px);
-  background-size: 47px 53px, 61px 67px, 73px 59px, 83px 71px;
-  mix-blend-mode: multiply;
-}
-
-/* Bordes con profundidad */
-.map::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: inherit;
-  box-shadow:
-    inset 0 0 35px #405b3d25,
-    inset 0 -18px 30px #405b3d13;
-}
-
-/* Los elementos del mapa quedan por encima de la textura */
-.map svg {
-  position: relative;
-  z-index: 3;
-  overflow: visible;
-}
-
-/* Terreno: variaciones de luz */
-.map svg > path:first-of-type {
-  filter: drop-shadow(0 2px 1px #617d4b18);
-}
-
-/* Caminos con bordes suaves */
-.paths {
-  filter: drop-shadow(0 4px 3px #65553b30);
-}
-
-.paths path:nth-child(even) {
-  filter: drop-shadow(0 1px 1px #fff6df80);
-}
-
-/* Pequeñas irregularidades visuales en el camino */
-.paths path {
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Arroyo con orillas y profundidad */
-.stream {
-  filter: drop-shadow(0 5px 4px #416c653d);
-}
-
-.stream path:first-child {
-  stroke: #557f77;
-  opacity: .65;
-}
-
-.stream path:nth-child(2) {
-  stroke-width: 42px;
-}
-
-.stream path:nth-child(3) {
-  stroke-width: 4px;
-  stroke-linecap: round;
-}
-
-/* Árboles: volumen y sombra sobre el terreno */
-.map svg use[href="#tree"] {
-  filter: drop-shadow(0 7px 5px #35543845);
-  transform-box: fill-box;
-  transform-origin: center bottom;
-  transition: filter .3s;
-}
-
-.map svg use[href="#tree"]:hover {
-  filter: drop-shadow(0 9px 7px #35543865);
-}
-
-/* Arbustos con sombra más pequeña */
-.map svg use[href="#bush"] {
-  filter: drop-shadow(0 4px 3px #35543840);
-}
-
-/* Flores con pequeñas sombras */
-.flower-meadow use,
-.little-flowers use {
-  filter: drop-shadow(0 2px 2px #486b423d);
-}
-
-/* Puente con más volumen */
-.bridge {
-  filter: drop-shadow(0 8px 6px #3d51433d);
-}
-
-/* Carteles de madera */
-.wood-sign {
-  filter: drop-shadow(0 5px 4px #40563c55);
-}
-
-.sign-text {
-  paint-order: stroke;
-  stroke: #80583e;
-  stroke-width: .4px;
-}
-
-/* Casitas y objetos */
-.map svg g[transform*="translate(175 300)"],
-.map svg g[transform*="translate(805 565)"] {
-  filter: drop-shadow(0 8px 7px #354b3245);
-}
-
-/* Pastito con un poco más de presencia */
-.pastito,
-.pastito-small {
-  filter: drop-shadow(0 4px 3px #405e3d45);
-}
-
-/* Banca y osito */
-.bear {
-  filter: drop-shadow(0 5px 4px #40563c45);
-}
-
-/* Secretos: interacción sin revelar su posición */
-.hotspot {
-  cursor: pointer;
-}
-
-.hotspot .target {
-  transition: fill .25s, stroke .25s, r .25s;
-}
-
-.hotspot:active .target {
-  fill: #fff9e7;
-  fill-opacity: .25;
-}
-
-/* Puerta de Perli */
-.perli-house {
-  filter: drop-shadow(0 12px 12px #344b3530);
-}
-
-.house-roof {
-  box-shadow: inset 0 5px 10px #ffffff20;
-}
-
-.door-panel {
-  backface-visibility: hidden;
-}
-
-.perli-scene.door-ajar .door-panel {
-  transform: perspective(300px) rotateY(-35deg);
-}
-
-/* Animaciones más naturales */
-.flower-meadow use:nth-child(3n) {
-  animation-delay: -2s;
-}
-
-.little-flowers use:nth-child(3n) {
-  animation-delay: -2.5s;
-}
-
-.map svg use[href="#tree"]:nth-of-type(even) {
-  animation: tree-sway 7s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center bottom;
-}
-
-@keyframes tree-sway {
-  0%, 100% { rotate: 0deg; }
-  50% { rotate: .7deg; }
-}
-
-/* Modo noche: mantener visibles los detalles */
-body.night .map {
-  background:
-    radial-gradient(ellipse at 50% 10%, #61745c 0%, transparent 55%),
-    linear-gradient(145deg, #526c56, #344c40);
-}
-
-body.night .map::before {
-  opacity: .12;
-}
-
-body.night .map::after {
-  box-shadow:
-    inset 0 0 45px #101e1c55,
-    inset 0 -18px 30px #101e1c35;
-}
-
-body.night .map svg {
-  filter: brightness(.82) saturate(.88);
-}
-
-body.night .map .fireflies {
-  filter: brightness(1.8);
-  opacity: 1;
-}
-
-/* Movimiento reducido */
-@media (prefers-reduced-motion: reduce) {
-  .map svg use[href="#tree"] {
-    animation: none;
-  }
+  *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
