@@ -34,8 +34,6 @@ body.night {
   --line: #526657;
 }
 
-/* Encabezado */
-
 header {
   text-align: center;
   padding: 32px 16px 12px;
@@ -76,14 +74,19 @@ button {
   border-radius: 99px;
   font: inherit;
   cursor: pointer;
-  transition: .2s;
+  transition: transform .2s, background .2s;
 }
 
 button:hover {
   transform: translateY(-2px);
 }
 
-/* Contenido general */
+button:focus-visible,
+a:focus-visible,
+.hotspot:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
 
 main {
   max-width: 1120px;
@@ -107,7 +110,7 @@ main {
   line-height: 1.7;
 }
 
-/* Mapa */
+/* MAPA */
 
 .map-frame {
   background: #e6e0c8;
@@ -121,12 +124,7 @@ main {
   position: relative;
   overflow: hidden;
   border-radius: 22px;
-  background: linear-gradient(
-    145deg,
-    #b8d1a2,
-    #d0dfb4 48%,
-    #a9c68f
-  );
+  background: #b8d1a2;
   isolation: isolate;
 }
 
@@ -136,28 +134,97 @@ main {
   height: auto;
 }
 
-.map-title {
-  position: absolute;
-  left: 50%;
-  top: 12px;
-  transform: translateX(-50%);
-  z-index: 3;
-  background: #fff8e7d9;
-  border: 1px solid #fff;
-  padding: 7px 15px;
-  border-radius: 30px;
-  font: 500 1rem "Fraunces", serif;
-  color: #466044;
-  white-space: nowrap;
+.paths path {
+  transition: opacity .4s;
 }
 
-.place-label {
-  font: 600 14px "DM Sans", sans-serif;
-  fill: #3d573e;
-  paint-order: stroke;
-  stroke: #f8f0d9;
-  stroke-width: 5px;
-  stroke-linejoin: round;
+.stream path:nth-child(2) {
+  stroke-dasharray: 22 15;
+  animation: water-flow 12s linear infinite;
+}
+
+.stream path:nth-child(3) {
+  animation: water-shimmer 4s ease-in-out infinite;
+}
+
+@keyframes water-flow {
+  to {
+    stroke-dashoffset: -148;
+  }
+}
+
+@keyframes water-shimmer {
+  50% {
+    opacity: .35;
+  }
+}
+
+.tree,
+.bush {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.flower-meadow use,
+.little-flowers use {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: flower-sway 4s ease-in-out infinite;
+}
+
+.flower-meadow use:nth-child(even),
+.little-flowers use:nth-child(even) {
+  animation-delay: -1.5s;
+}
+
+@keyframes flower-sway {
+  0%, 100% { rotate: -2deg; }
+  50% { rotate: 3deg; }
+}
+
+.butterfly {
+  animation: butterfly-flight 9s ease-in-out infinite alternate;
+  transform-box: fill-box;
+}
+
+@keyframes butterfly-flight {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -16px); }
+  100% { transform: translate(-12px, 10px); }
+}
+
+.fireflies {
+  animation: firefly-glow 3s ease-in-out infinite;
+}
+
+@keyframes firefly-glow {
+  0%, 100% { opacity: .9; }
+  50% { opacity: .25; }
+}
+
+.sign-text {
+  font: 600 13px "DM Sans", sans-serif;
+  fill: #fff4d9;
+  pointer-events: none;
+}
+
+.map-link {
+  cursor: pointer;
+}
+
+.map-link ellipse {
+  fill: transparent;
+  stroke: transparent;
+  transition: fill .2s, stroke .2s;
+}
+
+.map-link:hover ellipse,
+.map-link:focus ellipse {
+  fill: #fff9e7;
+  fill-opacity: .12;
+  stroke: #fff9e7;
+  stroke-opacity: .55;
+  stroke-width: 3;
 }
 
 .hotspot {
@@ -165,25 +232,54 @@ main {
   outline: none;
 }
 
-.hotspot:focus .target,
-.hotspot:hover .target {
-  stroke: #fff;
-  stroke-width: 4;
+.hotspot .target {
+  fill: #fff;
+  fill-opacity: .01;
+  stroke: transparent;
+  stroke-width: 3;
+  transition: fill-opacity .2s, stroke .2s;
+}
+
+.hotspot:hover .target,
+.hotspot:focus-visible .target {
+  fill-opacity: .18;
+  stroke: #fff9e7;
   filter: drop-shadow(0 3px 4px #30452d66);
 }
 
 .secret-dot {
   opacity: .01;
-  transition: opacity .25s;
   pointer-events: none;
+  transition: opacity .25s;
 }
 
 .map.show-hints .secret-dot {
-  opacity: .75;
+  opacity: .85;
 }
 
-.map-link {
-  cursor: pointer;
+.paw-trail {
+  animation: paw-fade 5s ease-in-out infinite;
+}
+
+@keyframes paw-fade {
+  50% { opacity: .35; }
+}
+
+.pastito {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: pastito-bounce 3s ease-in-out infinite;
+}
+
+.pastito-small {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: pastito-bounce 3.5s ease-in-out infinite;
+}
+
+@keyframes pastito-bounce {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -5px; }
 }
 
 .map-hint {
@@ -199,9 +295,10 @@ main {
 .map-hint button {
   padding: 7px 12px;
   font-size: .8rem;
+  flex-shrink: 0;
 }
 
-/* Secciones */
+/* SECCIONES */
 
 section {
   scroll-margin-top: 18px;
@@ -237,7 +334,7 @@ section {
   box-shadow: 0 8px 25px #314a3510;
 }
 
-/* Recorrido */
+/* RECORRIDO */
 
 .timeline {
   display: grid;
@@ -278,7 +375,7 @@ section {
   font-size: 1.35rem;
 }
 
-/* Cartas */
+/* CARTAS */
 
 .letters {
   display: grid;
@@ -288,6 +385,7 @@ section {
 
 .letter {
   border-left: 4px solid var(--pink);
+  position: relative;
 }
 
 .letter h3 {
@@ -299,12 +397,24 @@ section {
   font-size: 1.03rem;
 }
 
+.letter-label {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .65rem;
+  margin-bottom: 12px;
+}
+
 .my-letter {
   margin-top: 16px;
   border-left-color: var(--gold);
 }
 
-/* Misiones */
+.my-letter .letter-label {
+  color: #a17b37;
+}
+
+/* MISIONES */
 
 .list-grid {
   display: grid;
@@ -321,7 +431,15 @@ section {
   line-height: 1.5;
 }
 
-/* Flores */
+.list-grid ul {
+  padding-left: 22px;
+}
+
+/* FLORES */
+
+.garden-card {
+  overflow: hidden;
+}
 
 .flowers {
   display: flex;
@@ -333,6 +451,7 @@ section {
 
 .flower {
   font-size: 2rem;
+  display: inline-block;
   animation: sway 3s ease-in-out infinite;
 }
 
@@ -341,9 +460,7 @@ section {
 }
 
 @keyframes sway {
-  50% {
-    transform: rotate(10deg);
-  }
+  50% { transform: rotate(10deg) translateY(-3px); }
 }
 
 .quote {
@@ -361,7 +478,7 @@ section {
   margin: 14px;
 }
 
-/* Bolucompras */
+/* BOLUCOMPRAS */
 
 .shop-items {
   display: flex;
@@ -386,25 +503,235 @@ section {
   margin-top: 20px;
 }
 
-/* Perli */
+/* PERLI Y SU CASITA */
 
 .dog-area {
   text-align: center;
 }
 
-.dog {
-  font-size: 4rem;
-  display: inline-block;
-  animation: bob 2.5s infinite;
+.perli-scene {
+  display: flex;
+  justify-content: center;
+  padding: 25px 10px 35px;
+  overflow: hidden;
 }
 
-@keyframes bob {
-  50% {
-    transform: translateY(-7px);
-  }
+.perli-house {
+  position: relative;
+  width: min(100%, 330px);
+  padding-top: 80px;
 }
 
-/* Mensajes secretos */
+.house-roof {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  left: 50%;
+  width: 230px;
+  height: 125px;
+  transform: translateX(-50%) rotate(45deg) skew(-8deg, -8deg);
+  background: linear-gradient(135deg, #bd7958, #80503e);
+  border: 5px solid #704735;
+  border-radius: 12px 0 0;
+}
+
+.house-wall {
+  position: relative;
+  z-index: 3;
+  width: 260px;
+  height: 190px;
+  margin: 0 auto;
+  background: #d4ae82;
+  border: 5px solid #886247;
+  border-radius: 5px;
+  box-shadow: 0 14px 25px #354b3220;
+}
+
+.house-window {
+  position: absolute;
+  top: 25px;
+  right: 22px;
+  width: 42px;
+  height: 48px;
+  border: 4px solid #886247;
+  border-radius: 5px;
+  background: #f7df9d;
+}
+
+.house-window::before,
+.house-window::after {
+  content: "";
+  position: absolute;
+  background: #a36d46;
+}
+
+.house-window::before {
+  width: 3px;
+  height: 100%;
+  left: 50%;
+}
+
+.house-window::after {
+  height: 3px;
+  width: 100%;
+  top: 50%;
+}
+
+.doorway {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 88px;
+  height: 132px;
+  transform: translateX(-50%);
+  overflow: hidden;
+  border-radius: 48px 48px 0 0;
+  background: #684733;
+}
+
+.door-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #9a6c48, #bd9061);
+  border: 4px solid #704c35;
+  transition: transform 1.1s ease;
+}
+
+.door-panel::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 55%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e6c778;
+}
+
+.perli-dog {
+  position: absolute;
+  z-index: 3;
+  bottom: 0;
+  left: 50%;
+  width: 78px;
+  height: 103px;
+  transform: translateX(-50%) translateY(35px);
+  opacity: 0;
+  transition: transform .8s .35s, opacity .4s .35s;
+}
+
+.dog-head {
+  position: absolute;
+  top: 9px;
+  left: 12px;
+  width: 55px;
+  height: 54px;
+  border-radius: 48% 48% 45% 45%;
+  background: #c88f58;
+  box-shadow: inset 7px 0 #d9aa73;
+}
+
+.dog-ear {
+  position: absolute;
+  top: 0;
+  width: 22px;
+  height: 34px;
+  background: #ad7448;
+  border-radius: 80% 20% 55% 45%;
+}
+
+.dog-ear.left {
+  left: 8px;
+  transform: rotate(-22deg);
+}
+
+.dog-ear.right {
+  right: 4px;
+  transform: rotate(22deg) scaleX(-1);
+}
+
+.eye {
+  position: absolute;
+  top: 21px;
+  width: 6px;
+  height: 7px;
+  border-radius: 50%;
+  background: #28231d;
+}
+
+.eye.left { left: 13px; }
+.eye.right { right: 13px; }
+
+.muzzle {
+  position: absolute;
+  left: 16px;
+  top: 32px;
+  width: 25px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e4c49c;
+}
+
+.nose {
+  position: absolute;
+  left: 25px;
+  top: 31px;
+  width: 8px;
+  height: 6px;
+  border-radius: 50%;
+  background: #28231d;
+}
+
+.dog-body {
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  width: 50px;
+  height: 55px;
+  border-radius: 48% 48% 25% 25%;
+  background: #bd8550;
+}
+
+.dog-paw {
+  position: absolute;
+  bottom: 0;
+  width: 17px;
+  height: 27px;
+  border-radius: 50%;
+  background: #d6a36d;
+}
+
+.dog-paw.left { left: 12px; }
+.dog-paw.right { right: 12px; }
+
+.house-sign {
+  margin-top: 12px;
+  color: var(--muted);
+  font-family: "Fraunces", serif;
+  font-size: 1rem;
+}
+
+.perli-scene.opening .door-panel {
+  transform: perspective(300px) rotateY(-105deg);
+}
+
+.perli-scene.opening .perli-dog {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.perli-scene.returning .perli-dog {
+  transform: translateX(-50%) translateY(35px);
+  opacity: 0;
+}
+
+.perli-scene.returning .door-panel {
+  transform: perspective(300px) rotateY(-35deg);
+}
+
+/* MENSAJES SECRETOS */
 
 .secret-message {
   display: none;
@@ -419,43 +746,36 @@ section {
 
 .secret-message.show {
   display: block;
+  animation: reveal-message .35s ease both;
 }
 
-/* Detalles nocturnos */
-
-.firefly {
-  animation: glow 2.8s ease-in-out infinite;
+@keyframes reveal-message {
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes glow {
-  50% {
-    opacity: .35;
-  }
-}
+/* NOCHE */
 
 body.night .map-frame {
-  background: #52634c;
-  border-color: #39483c;
+  background: #394c3d;
+  border-color: #526657;
 }
 
 body.night .map {
-  background: linear-gradient(
-    145deg,
-    #526c56,
-    #667a5a 48%,
-    #425c49
-  );
+  background: #526c56;
 }
 
-body.night .map-title {
-  background: #26372ee8;
-  color: #e9eedb;
-  border-color: #61765e;
+body.night .map svg {
+  filter: brightness(.76) saturate(.85);
 }
 
-body.night .place-label {
-  fill: #f0f1d9;
-  stroke: #425b48;
+body.night .map .fireflies {
+  filter: brightness(1.6);
+  opacity: 1;
+}
+
+body.night .map .secret-dot {
+  filter: brightness(1.5);
 }
 
 body.night .map-hint {
@@ -467,7 +787,20 @@ body.night .date {
   color: #e8eedb;
 }
 
-/* Pie */
+body.night .secret-message {
+  background: #3d5142;
+  color: #edf0dc;
+}
+
+body.night .house-wall {
+  border-color: #526657;
+}
+
+body.night .house-sign {
+  color: #bdc9b2;
+}
+
+/* PIE */
 
 footer {
   text-align: center;
@@ -476,23 +809,45 @@ footer {
   font-size: .85rem;
 }
 
-/* Celulares */
+/* CELULARES */
 
 @media (max-width: 650px) {
+  header {
+    padding-top: 25px;
+  }
+
+  main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
   .map-frame {
-    padding: 7px;
+    padding: 6px;
+    border-radius: 20px;
+  }
+
+  .map {
+    border-radius: 15px;
   }
 
   .map-hint {
     font-size: .76rem;
+    align-items: flex-start;
+  }
+
+  .map-hint button {
+    padding: 7px 9px;
   }
 
   .memory {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .date {
     text-align: left;
+    width: fit-content;
+    min-width: 135px;
   }
 
   .letters,
@@ -503,4 +858,45 @@ footer {
   .section-head h2 {
     font-size: 1.9rem;
   }
+
+  .quote {
+    font-size: 1.12rem;
   }
+
+  .perli-house {
+    transform: scale(.88);
+    transform-origin: top center;
+    margin-bottom: -20px;
+  }
+
+  .card {
+    border-radius: 19px;
+  }
+}
+
+@media (max-width: 390px) {
+  .map-hint {
+    flex-direction: column;
+  }
+
+  .map-hint button {
+    align-self: flex-end;
+  }
+
+  .shop-items {
+    gap: 18px;
+  }
+}
+
+/* ACCESIBILIDAD: RESPETAR REDUCCIÓN DE MOVIMIENTO */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
