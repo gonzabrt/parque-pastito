@@ -903,3 +903,233 @@ footer {
 .perli-scene.door-ajar .door-panel {
   transform: perspective(300px) rotateY(-35deg);
 }
+/* ==========================================
+   REDISEÑO DEL PARQUE — PROFUNDIDAD Y RELIEVE
+========================================== */
+
+.map {
+  background:
+    radial-gradient(ellipse at 18% 20%, #dce8bd 0%, transparent 34%),
+    radial-gradient(ellipse at 78% 70%, #9fbd83 0%, transparent 42%),
+    linear-gradient(145deg, #c9dda9, #a9ca91 55%, #91b47c);
+  box-shadow:
+    inset 0 0 45px #54744a30,
+    inset 0 0 12px #f8f4d5a0,
+    0 12px 28px #344d3330;
+}
+
+/* Textura sutil del terreno */
+.map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: .23;
+  background:
+    radial-gradient(ellipse at 15% 25%, #f5f0d0 0 2px, transparent 3px),
+    radial-gradient(ellipse at 72% 18%, #587d4e 0 2px, transparent 3px),
+    radial-gradient(ellipse at 45% 72%, #e9edc7 0 2px, transparent 3px),
+    radial-gradient(ellipse at 88% 55%, #557c4c 0 2px, transparent 3px);
+  background-size: 47px 53px, 61px 67px, 73px 59px, 83px 71px;
+  mix-blend-mode: multiply;
+}
+
+/* Bordes con profundidad */
+.map::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 35px #405b3d25,
+    inset 0 -18px 30px #405b3d13;
+}
+
+/* Los elementos del mapa quedan por encima de la textura */
+.map svg {
+  position: relative;
+  z-index: 3;
+  overflow: visible;
+}
+
+/* Terreno: variaciones de luz */
+.map svg > path:first-of-type {
+  filter: drop-shadow(0 2px 1px #617d4b18);
+}
+
+/* Caminos con bordes suaves */
+.paths {
+  filter: drop-shadow(0 4px 3px #65553b30);
+}
+
+.paths path:nth-child(even) {
+  filter: drop-shadow(0 1px 1px #fff6df80);
+}
+
+/* Pequeñas irregularidades visuales en el camino */
+.paths path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Arroyo con orillas y profundidad */
+.stream {
+  filter: drop-shadow(0 5px 4px #416c653d);
+}
+
+.stream path:first-child {
+  stroke: #557f77;
+  opacity: .65;
+}
+
+.stream path:nth-child(2) {
+  stroke-width: 42px;
+}
+
+.stream path:nth-child(3) {
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+/* Árboles: volumen y sombra sobre el terreno */
+.map svg use[href="#tree"] {
+  filter: drop-shadow(0 7px 5px #35543845);
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  transition: filter .3s;
+}
+
+.map svg use[href="#tree"]:hover {
+  filter: drop-shadow(0 9px 7px #35543865);
+}
+
+/* Arbustos con sombra más pequeña */
+.map svg use[href="#bush"] {
+  filter: drop-shadow(0 4px 3px #35543840);
+}
+
+/* Flores con pequeñas sombras */
+.flower-meadow use,
+.little-flowers use {
+  filter: drop-shadow(0 2px 2px #486b423d);
+}
+
+/* Puente con más volumen */
+.bridge {
+  filter: drop-shadow(0 8px 6px #3d51433d);
+}
+
+/* Carteles de madera */
+.wood-sign {
+  filter: drop-shadow(0 5px 4px #40563c55);
+}
+
+.sign-text {
+  paint-order: stroke;
+  stroke: #80583e;
+  stroke-width: .4px;
+}
+
+/* Casitas y objetos */
+.map svg g[transform*="translate(175 300)"],
+.map svg g[transform*="translate(805 565)"] {
+  filter: drop-shadow(0 8px 7px #354b3245);
+}
+
+/* Pastito con un poco más de presencia */
+.pastito,
+.pastito-small {
+  filter: drop-shadow(0 4px 3px #405e3d45);
+}
+
+/* Banca y osito */
+.bear {
+  filter: drop-shadow(0 5px 4px #40563c45);
+}
+
+/* Secretos: interacción sin revelar su posición */
+.hotspot {
+  cursor: pointer;
+}
+
+.hotspot .target {
+  transition: fill .25s, stroke .25s, r .25s;
+}
+
+.hotspot:active .target {
+  fill: #fff9e7;
+  fill-opacity: .25;
+}
+
+/* Puerta de Perli */
+.perli-house {
+  filter: drop-shadow(0 12px 12px #344b3530);
+}
+
+.house-roof {
+  box-shadow: inset 0 5px 10px #ffffff20;
+}
+
+.door-panel {
+  backface-visibility: hidden;
+}
+
+.perli-scene.door-ajar .door-panel {
+  transform: perspective(300px) rotateY(-35deg);
+}
+
+/* Animaciones más naturales */
+.flower-meadow use:nth-child(3n) {
+  animation-delay: -2s;
+}
+
+.little-flowers use:nth-child(3n) {
+  animation-delay: -2.5s;
+}
+
+.map svg use[href="#tree"]:nth-of-type(even) {
+  animation: tree-sway 7s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+}
+
+@keyframes tree-sway {
+  0%, 100% { rotate: 0deg; }
+  50% { rotate: .7deg; }
+}
+
+/* Modo noche: mantener visibles los detalles */
+body.night .map {
+  background:
+    radial-gradient(ellipse at 50% 10%, #61745c 0%, transparent 55%),
+    linear-gradient(145deg, #526c56, #344c40);
+}
+
+body.night .map::before {
+  opacity: .12;
+}
+
+body.night .map::after {
+  box-shadow:
+    inset 0 0 45px #101e1c55,
+    inset 0 -18px 30px #101e1c35;
+}
+
+body.night .map svg {
+  filter: brightness(.82) saturate(.88);
+}
+
+body.night .map .fireflies {
+  filter: brightness(1.8);
+  opacity: 1;
+}
+
+/* Movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .map svg use[href="#tree"] {
+    animation: none;
+  }
+}
