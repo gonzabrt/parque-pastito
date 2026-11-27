@@ -6,6 +6,8 @@
 const modeButton = document.getElementById("mode");
 
 function updateModeButton() {
+  if (!modeButton) return;
+
   const isNight = document.body.classList.contains("night");
 
   modeButton.textContent = isNight
@@ -18,11 +20,9 @@ function toggleTheme() {
   updateModeButton();
 }
 
-modeButton.addEventListener("click", toggleTheme);
-
-
-// Elegir tema inicial según la hora.
-// El botón manual siempre permite cambiarlo después.
+if (modeButton) {
+  modeButton.addEventListener("click", toggleTheme);
+}
 
 function autoTheme() {
   const hour = new Date().getHours();
@@ -44,15 +44,17 @@ autoTheme();
 const hintButton = document.getElementById("hint-toggle");
 const parkMap = document.getElementById("park-map");
 
-hintButton.addEventListener("click", () => {
-  parkMap.classList.toggle("show-hints");
+if (hintButton && parkMap) {
+  hintButton.addEventListener("click", () => {
+    parkMap.classList.toggle("show-hints");
 
-  const showingHints = parkMap.classList.contains("show-hints");
+    const showingHints = parkMap.classList.contains("show-hints");
 
-  hintButton.textContent = showingHints
-    ? "Ocultar pistas"
-    : "Mostrar pistas";
-});
+    hintButton.textContent = showingHints
+      ? "Ocultar pistas"
+      : "Mostrar pistas";
+  });
+}
 
 
 // ==========================================
@@ -73,13 +75,10 @@ const messages = {
     "Encontraste a El Pastito. esoo despues de tanto decirme que era un pasto termine teniendo un parque"
 };
 
-
-// Mostrar un secreto.
-
 function reveal(key) {
   const notice = document.getElementById("secret-notice");
 
-  if (!messages[key]) return;
+  if (!notice || !messages[key]) return;
 
   notice.textContent = messages[key];
   notice.classList.add("show");
@@ -89,9 +88,6 @@ function reveal(key) {
     block: "nearest"
   });
 }
-
-
-// Activar secretos con clic o teclado.
 
 document.querySelectorAll("[data-secret]").forEach((secret) => {
   secret.addEventListener("click", () => {
@@ -116,17 +112,27 @@ const perliSecret = document.getElementById("perli-secret");
 const perliScene = document.getElementById("perli-scene");
 
 let perliBusy = false;
-let perliTimer;
+let perliTimers = [];
+
+function clearPerliTimers() {
+  perliTimers.forEach((timer) => clearTimeout(timer));
+  perliTimers = [];
+}
 
 function startPerliVisit() {
-  if (perliBusy) return;
+  if (!doorButton || !perliSecret || !perliScene || perliBusy) {
+    return;
+  }
 
   perliBusy = true;
 
-  clearTimeout(perliTimer);
-  perliScene.classList.remove("door-ajar");
+  clearPerliTimers();
 
-  perliScene.classList.remove("returning");
+  perliScene.classList.remove(
+    "door-ajar",
+    "returning"
+  );
+
   perliScene.classList.add("opening");
 
   doorButton.disabled = true;
@@ -134,49 +140,49 @@ function startPerliVisit() {
 
   perliSecret.classList.remove("show");
 
-  // Perli termina de salir y aparece el mensaje.
+  // Perli termina de salir.
 
-  perliTimer = setTimeout(() => {
+  perliTimers.push(setTimeout(() => {
     perliSecret.classList.add("show");
     doorButton.textContent = "Perli está inspeccionando";
-  }, 1500);
+  }, 1500));
 
   // Perli vuelve a entrar.
 
-  perliTimer = setTimeout(() => {
+  perliTimers.push(setTimeout(() => {
     perliScene.classList.add("returning");
     doorButton.textContent = "Perli está volviendo a entrar";
-  }, 4200);
+  }, 4200));
 
   // La puerta queda entreabierta.
 
-  perliTimer = setTimeout(() => {
-    perliScene.classList.remove("opening");
-    perliScene.classList.remove("returning");
-
+  perliTimers.push(setTimeout(() => {
+    perliScene.classList.remove("opening", "returning");
     perliScene.classList.add("door-ajar");
 
     doorButton.disabled = false;
     doorButton.textContent = "Abrir la puerta";
 
     perliBusy = false;
-  }, 5600);
+  }, 5600));
 }
 
-doorButton.addEventListener("click", startPerliVisit);
+if (doorButton) {
+  doorButton.addEventListener("click", startPerliVisit);
+}
 
 
 // ==========================================
 // NAVEGACIÓN DEL MAPA
 // ==========================================
 
-// Los enlaces del mapa llevan a cada sección.
-// Evitamos que un clic en un secreto se confunda
-// con la navegación de una zona cercana.
-
 document.querySelectorAll(".map-link").forEach((link) => {
   link.addEventListener("click", (event) => {
-    const destination = document.querySelector(link.getAttribute("href"));
+    const href = link.getAttribute("href");
+
+    if (!href || !href.startsWith("#")) return;
+
+    const destination = document.querySelector(href);
 
     if (!destination) return;
 
