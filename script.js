@@ -1,10 +1,11 @@
+
+// ==========================================
 // MODO DÍA Y NOCHE
+// ==========================================
 
 const modeButton = document.getElementById("mode");
 
-function toggleTheme() {
-  document.body.classList.toggle("night");
-
+function updateModeButton() {
   const isNight = document.body.classList.contains("night");
 
   modeButton.textContent = isNight
@@ -12,24 +13,33 @@ function toggleTheme() {
     : "☾ Cambiar a noche";
 }
 
+function toggleTheme() {
+  document.body.classList.toggle("night");
+  updateModeButton();
+}
+
 modeButton.addEventListener("click", toggleTheme);
 
 
-// DETECTAR LA HORA PARA ELEGIR EL TEMA
+// Elegir tema inicial según la hora.
+// El botón manual siempre permite cambiarlo después.
 
 function autoTheme() {
   const hour = new Date().getHours();
 
   if (hour >= 19 || hour < 6) {
     document.body.classList.add("night");
-    modeButton.textContent = "☀ Cambiar a día";
   }
+
+  updateModeButton();
 }
 
 autoTheme();
 
 
-// MOSTRAR U OCULTAR PISTAS DEL MAPA
+// ==========================================
+// PISTAS DEL MAPA
+// ==========================================
 
 const hintButton = document.getElementById("hint-toggle");
 const parkMap = document.getElementById("park-map");
@@ -45,7 +55,9 @@ hintButton.addEventListener("click", () => {
 });
 
 
+// ==========================================
 // MENSAJES DE LOS SECRETOS
+// ==========================================
 
 const messages = {
   paw:
@@ -62,7 +74,7 @@ const messages = {
 };
 
 
-// MOSTRAR UN SECRETO
+// Mostrar un secreto.
 
 function reveal(key) {
   const notice = document.getElementById("secret-notice");
@@ -79,7 +91,7 @@ function reveal(key) {
 }
 
 
-// ACTIVAR SECRETOS CON CLIC O TECLADO
+// Activar secretos con clic o teclado.
 
 document.querySelectorAll("[data-secret]").forEach((secret) => {
   secret.addEventListener("click", () => {
@@ -95,17 +107,83 @@ document.querySelectorAll("[data-secret]").forEach((secret) => {
 });
 
 
+// ==========================================
 // PUERTA DE PERLI
+// ==========================================
 
 const doorButton = document.getElementById("door");
 const perliSecret = document.getElementById("perli-secret");
+const perliScene = document.getElementById("perli-scene");
 
-doorButton.addEventListener("click", () => {
-  perliSecret.classList.toggle("show");
+let perliBusy = false;
+let perliTimer;
 
-  const isOpen = perliSecret.classList.contains("show");
+function startPerliVisit() {
+  if (perliBusy) return;
 
-  doorButton.textContent = isOpen
-    ? "Perli ya terminó la inspección"
-    : "Tocar la puerta";
+  perliBusy = true;
+
+  clearTimeout(perliTimer);
+
+  perliScene.classList.remove("returning");
+  perliScene.classList.add("opening");
+
+  doorButton.disabled = true;
+  doorButton.textContent = "Perli está saliendo...";
+
+  perliSecret.classList.remove("show");
+
+  // Perli termina de salir y aparece el mensaje.
+
+  perliTimer = setTimeout(() => {
+    perliSecret.classList.add("show");
+    doorButton.textContent = "Perli está inspeccionando";
+  }, 1500);
+
+  // Perli vuelve a entrar.
+
+  perliTimer = setTimeout(() => {
+    perliScene.classList.add("returning");
+    doorButton.textContent = "Perli está volviendo a entrar";
+  }, 4200);
+
+  // La puerta queda entreabierta.
+
+  perliTimer = setTimeout(() => {
+    perliScene.classList.remove("opening");
+    perliScene.classList.remove("returning");
+
+    perliScene.classList.add("door-ajar");
+
+    doorButton.disabled = false;
+    doorButton.textContent = "Abrir la puerta";
+
+    perliBusy = false;
+  }, 5600);
+}
+
+doorButton.addEventListener("click", startPerliVisit);
+
+
+// ==========================================
+// NAVEGACIÓN DEL MAPA
+// ==========================================
+
+// Los enlaces del mapa llevan a cada sección.
+// Evitamos que un clic en un secreto se confunda
+// con la navegación de una zona cercana.
+
+document.querySelectorAll(".map-link").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    const destination = document.querySelector(link.getAttribute("href"));
+
+    if (!destination) return;
+
+    event.preventDefault();
+
+    destination.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
 });
